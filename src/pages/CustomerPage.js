@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomer } from "../actions/customer.actions";
 
 const TABLE_HEAD =[
-  "#",
+  "Action",
   "Last Name",
   "First Name",
   "Country",
@@ -19,7 +19,7 @@ const TABLE_HEAD =[
   "Email",
   "Address",
   "Orders",
-  "Action",
+  
 ]
 
 export const CustomerPage = () => {
@@ -85,7 +85,11 @@ export const CustomerPage = () => {
                         return (
                           <>
                             <TableRow key={element._id}>
-                              <TableCell>{index + 1}</TableCell>
+                              <TableCell fixed align="right">
+                                <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                                  <Iconify icon={'eva:more-vertical-fill'} />
+                                </IconButton>
+                              </TableCell>
                               <TableCell>{element.lastName}</TableCell>
                               <TableCell>{element.firstName}</TableCell>
                               <TableCell>{element.country}</TableCell>
@@ -94,11 +98,6 @@ export const CustomerPage = () => {
                               <TableCell>{element.email}</TableCell>
                               <TableCell>{element.address}</TableCell>
                               <TableCell>{element.orders.map((order, index) => `${order} `)}</TableCell>
-                              <TableCell fixed align="right">
-                                <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                                  <Iconify icon={'eva:more-vertical-fill'} />
-                                </IconButton>
-                              </TableCell>
                             </TableRow>
                           </>)
                       })}
@@ -109,7 +108,7 @@ export const CustomerPage = () => {
             </>
           }
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[5, 10, 25,50,100]}
             component="div"
             count={totalCustomer}
             rowsPerPage={rowsPerPage}
@@ -125,7 +124,7 @@ export const CustomerPage = () => {
         anchorEl={open}
         onClose={handleCloseMenu}
         anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         PaperProps={{
           sx: {
             p: 1,
@@ -139,11 +138,11 @@ export const CustomerPage = () => {
         }}
       >
         <MenuItem sx={{ color: '#3f51b5' }}>
-          <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
+          <Iconify icon={'eva:edit-fill'} sx={{ ml: 2 }} />
           Edit
         </MenuItem>
         <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
+          <Iconify icon={'eva:trash-2-outline'} sx={{ ml: 2 }} />
           Delete
         </MenuItem>
       </Popover>

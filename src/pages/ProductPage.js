@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../actions/product.actions";
 
 const TABLE_HEAD = [
+  "Action",
   "Image",
   "Brand",
   "Name",
@@ -19,7 +20,6 @@ const TABLE_HEAD = [
   "Amount",
   "Category",
   "Inventory",
-  "Action",
 ]
 
 export const ProductPage = () => {
@@ -86,6 +86,11 @@ export const ProductPage = () => {
                         return (
                           <>
                             <TableRow key={element._id}>
+                            <TableCell fixed align="right">
+                              <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                                <Iconify icon={'eva:more-vertical-fill'} />
+                              </IconButton>
+                            </TableCell>
                               <TableCell>
                                 <Grid container direction="column" justifyContent="flex-start" alignItems="center">
                                   <img src={element.imageUrl} maxWidth="100px" />
@@ -99,14 +104,9 @@ export const ProductPage = () => {
                               <TableCell>{element.amount}</TableCell>
                               <TableCell>{element.category}</TableCell>
                               <TableCell>
-                                {element.amount > 0 ? 
-                                 <Button color={('success')}>Is In Inventory</Button>:
-                                 <Button color={( 'banned' && 'error')}>Not In Inventory</Button>}
-                              </TableCell>
-                              <TableCell fixed align="right">
-                                <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                                  <Iconify icon={'eva:more-vertical-fill'} />
-                                </IconButton>
+                                {element.amount > 0 ?
+                                  <Button color={('success')}>Is In Inventory</Button> :
+                                  <Button color={('banned' && 'error')}>Not In Inventory</Button>}
                               </TableCell>
                             </TableRow>
                           </>)
