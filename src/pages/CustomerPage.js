@@ -8,6 +8,9 @@ import Scrollbar from '../components/scrollbar';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCustomer } from "../actions/customer.actions";
+import { NewCustomer } from '../components/customerPage/NewCustomer';
+import { EditCustomer } from '../components/customerPage/EditCustomer';
+import { DeleteCustomer } from '../components/customerPage/DeleteCustomer';
 
 const TABLE_HEAD =[
   "Action",
@@ -19,7 +22,6 @@ const TABLE_HEAD =[
   "Email",
   "Address",
   "Orders",
-  
 ]
 
 export const CustomerPage = () => {
@@ -57,9 +59,7 @@ export const CustomerPage = () => {
           <Typography variant="h4" gutterBottom>
             Customer
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New Customer
-          </Button>
+          <NewCustomer/>
         </Stack>
 
         <Card>
@@ -137,14 +137,8 @@ export const CustomerPage = () => {
           },
         }}
       >
-        <MenuItem sx={{ color: '#3f51b5' }}>
-          <Iconify icon={'eva:edit-fill'} sx={{ ml: 2 }} />
-          Edit
-        </MenuItem>
-        <MenuItem sx={{ color: 'error.main' }}>
-          <Iconify icon={'eva:trash-2-outline'} sx={{ ml: 2 }} />
-          Delete
-        </MenuItem>
+        <EditCustomer/>
+        <DeleteCustomer/>
       </Popover>
 
     </React.Fragment>
