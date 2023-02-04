@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
-import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup,IconButton } from '@mui/material';
+import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup, IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCities, fetchCountries, fetchCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
 
@@ -21,20 +21,44 @@ const style = {
     p: 4,
 };
 
-export const EditCustomer = ({paramCustomer}) => {
+export const EditCustomer = ({ paramCustomer }) => {
     const dispatch = useDispatch();
+    const [email, setEmail] = React.useState(paramCustomer.email);
+    const [firstName, setFirstName] = React.useState(paramCustomer.firstName)
+    const [lastName, setLastName] = React.useState(paramCustomer.lastName)
+    const [phone, setPhone] = React.useState(paramCustomer.phone)
+    const [country, setCountry] = React.useState(paramCustomer.country)
+    const [city, setCity] = React.useState(paramCustomer.city)
+    const [address, setAddress] = React.useState(paramCustomer.address)
+    // const [firstName, setFirstName] = React.useState(paramCustomer.firstName);
+    // const [lastName, setLastName] = React.useState(paramCustomer.lastName);
+    // const [phone, setPhone] = React.useState(paramCustomer.phone);
+    // const [firstName, setFirstName] = React.useState(paramCustomer.firstName);
+    // const [firstName, setFirstName] = React.useState(paramCustomer.firstName);
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const handleChangeEmail = (event) => {
+        setEmail(event.target.value)
+    }
+    const handleChangeFirstName = (event) => {
+        setFirstName(event.target.value)
+    }
+    const handleChangeLastName = (event) => {
+        setLastName(event.target.value)
+    }
+    const handleChangePhone = (event) => {
+        setPhone(event.target.value)
+    }
 
     // console.log(paramCustomer)
     const {
-        loadCountriesPending,
         countryOptions,
         cityOptions,
-        country,
-        address,
-        city,
+        // country,
+        // address,
+        // city,
         createNewCustomer,
     } = useSelector((reduxData) => reduxData.customerReducers);
 
@@ -59,7 +83,7 @@ export const EditCustomer = ({paramCustomer}) => {
 
     return (
         <React.Fragment>
-            <IconButton sx={{ color: '#3f51b5'}} onClick={handleOpen}>
+            <IconButton sx={{ color: '#3f51b5' }} onClick={handleOpen}>
                 <Iconify icon={'eva:edit-fill'} />
             </IconButton>
             <Modal
@@ -77,16 +101,16 @@ export const EditCustomer = ({paramCustomer}) => {
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name" />
+                                    <TextField size="small" required fullWidth id="firstName" label="First Name" name="firstName" value={firstName} onChange={handleChangeFirstName} />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField size="small" required fullWidth id="lastName" label="Last Name" name="lastName" />
+                                    <TextField size="small" required fullWidth id="lastName" label="Last Name" name="lastName" value={lastName} onChange={handleChangeLastName} />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField size="small" required fullWidth id="phone" label="Phone" name="phone" />
+                                    <TextField size="small" required fullWidth id="phone" label="Phone" value={phone} name="phone" onChange={handleChangePhone} />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField size="small" required fullWidth id="email" label="Email" name="email" />
+                                    <TextField size="small" required fullWidth id="email" label="Email" value={email} name="email" onChange={handleChangeEmail} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl size="small" required fullWidth>
@@ -105,7 +129,7 @@ export const EditCustomer = ({paramCustomer}) => {
                                         <InputLabel id="select-city">City</InputLabel>
                                         <Select onChange={handleCityChange} size="small" required autoWidth id="city" labelId="select-city" label="City" name="city" value={city}>
                                             {cityOptions ?
-                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) : null
+                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.id}>{cityOptions.name}</MenuItem>) : null
                                             }
                                         </Select>
                                     </FormControl>

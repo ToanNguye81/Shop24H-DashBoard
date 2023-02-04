@@ -15,6 +15,10 @@ import {
     CREATE_CUSTOMER_SUCCESS,
     CREATE_CUSTOMER_ERROR,
 
+    UPDATE_CUSTOMER_PENDING,
+    UPDATE_CUSTOMER_SUCCESS,
+    UPDATE_CUSTOMER_ERROR,
+
     DELETE_CUSTOMER_PENDING,
     DELETE_CUSTOMER_SUCCESS,
     DELETE_CUSTOMER_ERROR,
@@ -31,7 +35,7 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-    
+
     //Modal create new customer
     createCustomerPending: false,
     loadCountriesPending: false,
@@ -43,14 +47,17 @@ const initialState = {
     address: null,
     createRes: null,
 
-    //Delete Customer
+    //Modal update customer
+    updateCustomerPending: false,
+
+    //Modal Delete Customer
     deleteCustomerPending: false,
 
 }
 
 export default function customerReducers(state = initialState, action) {
     switch (action.type) {
-        //Table Customer
+        //Load Customer
         case FETCH_CUSTOMERS_PENDING:
             state.pending = true;
             break;
@@ -61,6 +68,36 @@ export default function customerReducers(state = initialState, action) {
             state.customers = action.customers;
             break;
         case FETCH_CUSTOMERS_ERROR:
+            break;
+
+        //Create Customer
+        case CREATE_CUSTOMER_PENDING:
+            state.createCustomerPending = true
+            break;
+        case CREATE_CUSTOMER_SUCCESS:
+            state.createCustomerPending = false
+            break;
+        case CREATE_CUSTOMER_ERROR:
+            break;
+
+        //Update Customer
+        case UPDATE_CUSTOMER_PENDING:
+            state.updateCustomerPending = true
+            break;
+        case UPDATE_CUSTOMER_SUCCESS:
+            state.updateCustomerPending = false
+            break;
+        case UPDATE_CUSTOMER_ERROR:
+            break;
+
+        //Delete Customer
+        case DELETE_CUSTOMER_PENDING:
+            state.deleteCustomerPending = true
+            break;
+        case DELETE_CUSTOMER_SUCCESS:
+            state.deleteCustomerPending = false
+            break;
+        case DELETE_CUSTOMER_ERROR:
             break;
 
         //Modal Create New Customer
@@ -95,26 +132,6 @@ export default function customerReducers(state = initialState, action) {
             break;
         case GET_ADDRESS:
             state.address = action.address
-            break;
-
-        //Create Customer
-        case CREATE_CUSTOMER_PENDING:
-            state.createCustomerPending = true
-            break;
-        case CREATE_CUSTOMER_SUCCESS:
-            state.createCustomerPending = false
-            break;
-        case CREATE_CUSTOMER_ERROR:
-            break;
-
-        //Delete Customer
-        case DELETE_CUSTOMER_PENDING:
-            state.deleteCustomerPending = true
-            break;
-        case DELETE_CUSTOMER_SUCCESS:
-            state.deleteCustomerPending = false
-            break;
-        case DELETE_CUSTOMER_ERROR:
             break;
 
         default:

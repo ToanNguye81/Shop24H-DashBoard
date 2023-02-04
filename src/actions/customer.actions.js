@@ -1,8 +1,4 @@
 import {
-    FETCH_CUSTOMERS_ERROR,
-    FETCH_CUSTOMERS_PENDING,
-    FETCH_CUSTOMERS_SUCCESS,
-
     FETCH_COUNTRIES_ERROR,
     FETCH_COUNTRIES_PENDING,
     FETCH_COUNTRIES_SUCCESS,
@@ -15,9 +11,17 @@ import {
     FETCH_CITIES_PENDING,
     FETCH_CITIES_SUCCESS,
 
+    FETCH_CUSTOMERS_ERROR,
+    FETCH_CUSTOMERS_PENDING,
+    FETCH_CUSTOMERS_SUCCESS,
+
     CREATE_CUSTOMER_PENDING,
     CREATE_CUSTOMER_SUCCESS,
     CREATE_CUSTOMER_ERROR,
+
+    UPDATE_CUSTOMER_PENDING,
+    UPDATE_CUSTOMER_SUCCESS,
+    UPDATE_CUSTOMER_ERROR,
 
     DELETE_CUSTOMER_PENDING,
     DELETE_CUSTOMER_SUCCESS,
@@ -74,8 +78,6 @@ export const fetchCustomer = (paramLimit, paramPage, paramCondition) => {
         }
     }
 }
-
-
 
 //Load cities list with REST_API
 export const fetchCities = (paramIsoCountry) => {
@@ -211,6 +213,52 @@ export const createNewCustomer = (paramCustomer) => {
     }
 }
 
+// Update customer
+export const updateCustomer = async (paramCustomer) => {
+    // get customer info
+    const customerInfo = await getCustomerInfo(paramCustomer);
+    // validate data
+    const isValid = await validateCustomer(customerInfo);
+    //call PUT API 
+    if (isValid) {
+      return async (dispatch) => {
+        const requestOptions = {
+          method: 'PUT',
+          headers: {
+            "Content-Type": 'application/json',
+          },
+          body: JSON.stringify(customerInfo),
+        };
+  
+        await dispatch({
+          type: UPDATE_CUSTOMER_PENDING,
+        });
+  
+        try {
+          const res = await fetch(gCUSTOMERS_API_URL, requestOptions);
+          const resObj = await res.json();
+  
+          if (!res.ok) {
+            return dispatch({
+              type: UPDATE_CUSTOMER_ERROR,
+            });
+          }
+  
+          return dispatch({
+            type: UPDATE_CUSTOMER_SUCCESS,
+            data: resObj,
+          });
+        } catch (err) {
+          return dispatch({
+            type: UPDATE_CUSTOMER_ERROR,
+            error: err,
+          });
+        }
+      };
+    }
+    return isValid;
+  };
+
 //Delete customer
 export const deleteCustomer = (paramCustomerId) => {
     return async (dispatch) => {
@@ -241,9 +289,8 @@ export const deleteCustomer = (paramCustomerId) => {
     }
 }
 
-
 //Get Customer Information 
-const getCustomerInfo = (paramCustomer) => {
+export const getCustomerInfo = (paramCustomer) => {
     return {
         email: paramCustomer.get('email'),
         phone: paramCustomer.get('phone'),
