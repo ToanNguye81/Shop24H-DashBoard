@@ -2,12 +2,12 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Iconify from '../iconify/Iconify';
-import { useEffect } from 'react';
-import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
+import { IconButton,Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewCustomer, fetchCities, fetchCountries, fetchCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
+import { deleteCustomer } from '../../actions/customer.actions';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+
 
 const style = {
     position: 'absolute',
@@ -21,27 +21,15 @@ const style = {
     p: 4,
 };
 
-export const DeleteCustomer = () => {
+export const DeleteCustomer = ({ idValue }) => {
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const {
-        loadCountriesPending,
-        countryOptions,
-        cityOptions,
-        country,
-        address,
-        city,
         createNewCustomer,
     } = useSelector((reduxData) => reduxData.customerReducers);
-
-
-    useEffect(() => {
-        dispatch(fetchCountries());
-    }, []);
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -49,26 +37,15 @@ export const DeleteCustomer = () => {
         dispatch(createNewCustomer(data));
     };
 
-    const handleCountryChange = (event) => {
-        dispatch(getCountry(event.target.value));
-        dispatch(fetchCities(event.target.value));
-    }
-
-    const handleCityChange = (event) => {
-        dispatch(getCity(event.target.value));
-    }
-
-    const handleAddressChange = (event) => {
-        dispatch(getAddress(event.target.value));
+    const handleDeleteCustomer = () => {
+        dispatch(deleteCustomer(idValue))
     }
 
     return (
         <React.Fragment>
-            <MenuItem sx={{ color: 'error.main' }} onClick={handleOpen}>
-                <Iconify icon={'eva:trash-2-outline'} sx={{ ml: 2 }} />
-                Delete
-            </MenuItem>
-
+            <IconButton sx={{ color: 'error.main' }} onClick={handleOpen}>
+                <Iconify icon={'eva:trash-2-outline'} />
+            </IconButton>
             <Modal
                 keepMounted
                 open={open}
@@ -77,58 +54,31 @@ export const DeleteCustomer = () => {
                 aria-describedby="keep-mounted-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                        New Customer
-                    </Typography>
+                    <Grid
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Grid item>
+                            <HighlightOffIcon sx={{ fontSize: 80, color: "#FF4842" }} />
+                        </Grid>
+                        <Grid item sx={{ color: "#FF4842" }} align="center">
+                            <h3>Are you sure want to delete this customer?</h3>
+                            <h3>Customer's Id = {idValue}</h3>
+                        </Grid>
+                    </Grid>
+
                     <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                         <Box component="form" noValidate onSubmit={handleSubmit}>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name" />
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField size="small" required fullWidth id="lastName" label="Last Name" name="lastName" />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField size="small" required fullWidth id="phone" label="Phone" name="phone" />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField size="small" required fullWidth id="email" label="Email" name="email" />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControl size="small" required fullWidth>
-                                        <InputLabel id="select-country">Country</InputLabel>
-                                        <Select onChange={handleCountryChange} labelId="select-country" autoWidth id="country" label="Country" name="country" value={country}>
-                                            {countryOptions ?
-                                                countryOptions.map((countryOption, index) => <MenuItem key={countryOption.id} value={countryOption.iso2}>{countryOption.name}</MenuItem>) :
-                                                null
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <FormControl size="small" required fullWidth>
-                                        <InputLabel id="select-city">City</InputLabel>
-                                        <Select onChange={handleCityChange} size="small" required autoWidth id="city" labelId="select-city" label="City" name="city" value={city}>
-                                            {cityOptions ?
-                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) : null
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField onChange={handleAddressChange} size="small" required fullWidth id="address" label="Address" name="address" value={address} />
-                                </Grid>
-                            </Grid>
                             <Grid container justifyContent="flex-end" spacing={2}>
                                 <Grid item>
-                                    <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2 }}>
-                                        Send
+                                    <Button variant="contained" onClick={handleDeleteCustomer}>
+                                        Delete
                                     </Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button onClick={handleClose} variant="contained" color='warning' sx={{ mt: 3, mb: 2 }}>
+                                    <Button onClick={handleClose} variant="contained" color='warning'>
                                         Cancel
                                     </Button>
                                 </Grid>

@@ -15,20 +15,25 @@ import {
     CREATE_CUSTOMER_SUCCESS,
     CREATE_CUSTOMER_ERROR,
 
+    DELETE_CUSTOMER_PENDING,
+    DELETE_CUSTOMER_SUCCESS,
+    DELETE_CUSTOMER_ERROR,
+
     GET_COUNTRY,
     GET_CITY,
     GET_ADDRESS
 } from "../constants/customer.constants";
 
 const initialState = {
-    //Table customer
+    //Load customer
     totalCustomer: 0,
     customers: [],
     pending: false,
     error: null,
     currentPage: 1,
+    
     //Modal create new customer
-    createNewUserPending: false,
+    createCustomerPending: false,
     loadCountriesPending: false,
     loadCitiesPending: false,
     countryOptions: null,
@@ -37,6 +42,10 @@ const initialState = {
     city: null,
     address: null,
     createRes: null,
+
+    //Delete Customer
+    deleteCustomerPending: false,
+
 }
 
 export default function customerReducers(state = initialState, action) {
@@ -90,12 +99,22 @@ export default function customerReducers(state = initialState, action) {
 
         //Create Customer
         case CREATE_CUSTOMER_PENDING:
-            state.createNewUserPending = true
+            state.createCustomerPending = true
             break;
         case CREATE_CUSTOMER_SUCCESS:
-            state.createNewUserPending = false
+            state.createCustomerPending = false
             break;
         case CREATE_CUSTOMER_ERROR:
+            break;
+
+        //Delete Customer
+        case DELETE_CUSTOMER_PENDING:
+            state.deleteCustomerPending = true
+            break;
+        case DELETE_CUSTOMER_SUCCESS:
+            state.deleteCustomerPending = false
+            break;
+        case DELETE_CUSTOMER_ERROR:
             break;
 
         default:

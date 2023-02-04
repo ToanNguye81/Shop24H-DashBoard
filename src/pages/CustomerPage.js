@@ -1,9 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 // @mui
-import {Card,Table,Stack,Button,Popover,TableRow,MenuItem,TableBody,TableCell,Container,Typography,IconButton,TableContainer,Grid,TableHead, CircularProgress, TablePagination} from '@mui/material';
+import { Card, Table, Stack, Popover, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, CircularProgress, TablePagination } from '@mui/material';
 // components
-import Iconify from '../components/iconify';
 import Scrollbar from '../components/scrollbar';
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,7 +11,7 @@ import { NewCustomer } from '../components/customerPage/NewCustomer';
 import { EditCustomer } from '../components/customerPage/EditCustomer';
 import { DeleteCustomer } from '../components/customerPage/DeleteCustomer';
 
-const TABLE_HEAD =[
+const TABLE_HEAD = [
   "Action",
   "Last Name",
   "First Name",
@@ -35,9 +34,6 @@ export const CustomerPage = () => {
     dispatch(fetchCustomer(rowsPerPage, page));
   }, [rowsPerPage, page]);
 
-  const handleOpenMenu = (event) => {
-    setOpen(event.currentTarget);
-  };
   const handleCloseMenu = () => {
     setOpen(null);
   };
@@ -59,7 +55,7 @@ export const CustomerPage = () => {
           <Typography variant="h4" gutterBottom>
             Customer
           </Typography>
-          <NewCustomer/>
+          <NewCustomer />
         </Stack>
 
         <Card>
@@ -73,9 +69,10 @@ export const CustomerPage = () => {
                 <TableContainer sx={{ minWidth: 800 }} >
                   <Table >
                     <TableHead>
-                      <TableRow>
-                        {TABLE_HEAD.map((title,index)=>{return(
-                          <TableCell key={index}>{title}</TableCell>
+                      <TableRow >
+                        {TABLE_HEAD.map((title, index) => {
+                          return (
+                            <TableCell align="left" key={index}>{title}</TableCell>
                           )
                         })}
                       </TableRow>
@@ -85,10 +82,9 @@ export const CustomerPage = () => {
                         return (
                           <>
                             <TableRow key={element._id}>
-                              <TableCell fixed align="right">
-                                <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
-                                  <Iconify icon={'eva:more-vertical-fill'} />
-                                </IconButton>
+                              <TableCell align="left">
+                                    <EditCustomer paramCustomer={element}/>
+                                    <DeleteCustomer idValue={element._id}/>
                               </TableCell>
                               <TableCell>{element.lastName}</TableCell>
                               <TableCell>{element.firstName}</TableCell>
@@ -108,7 +104,7 @@ export const CustomerPage = () => {
             </>
           }
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25,50,100]}
+            rowsPerPageOptions={[5, 10, 25, 50, 100]}
             component="div"
             count={totalCustomer}
             rowsPerPage={rowsPerPage}
@@ -137,10 +133,8 @@ export const CustomerPage = () => {
           },
         }}
       >
-        <EditCustomer/>
-        <DeleteCustomer/>
-      </Popover>
 
+      </Popover>
     </React.Fragment>
   )
 }

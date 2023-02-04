@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
-import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup } from '@mui/material';
+import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup,IconButton } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewCustomer, fetchCities, fetchCountries, fetchCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
+import { fetchCities, fetchCountries, fetchCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
 
 const style = {
     position: 'absolute',
@@ -21,12 +21,13 @@ const style = {
     p: 4,
 };
 
-export const EditCustomer = () => {
+export const EditCustomer = ({paramCustomer}) => {
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
+    // console.log(paramCustomer)
     const {
         loadCountriesPending,
         countryOptions,
@@ -36,12 +37,6 @@ export const EditCustomer = () => {
         city,
         createNewCustomer,
     } = useSelector((reduxData) => reduxData.customerReducers);
-
-
-    useEffect(() => {
-        dispatch(fetchCountries());
-    }, []);
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -64,10 +59,9 @@ export const EditCustomer = () => {
 
     return (
         <React.Fragment>
-            <MenuItem sx={{ color: '#3f51b5' }} onClick={handleOpen}>
-                <Iconify icon={'eva:edit-fill'} sx={{ ml: 2 }} />
-                Edit
-            </MenuItem>
+            <IconButton sx={{ color: '#3f51b5'}} onClick={handleOpen}>
+                <Iconify icon={'eva:edit-fill'} />
+            </IconButton>
             <Modal
                 keepMounted
                 open={open}
@@ -76,8 +70,8 @@ export const EditCustomer = () => {
                 aria-describedby="keep-mounted-modal-description"
             >
                 <Box sx={style}>
-                    <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                        New Customer
+                    <Typography id="keep-mounted-modal-title" variant="h6" component="h2" >
+                        Edit Customer
                     </Typography>
                     <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                         <Box component="form" noValidate onSubmit={handleSubmit}>
