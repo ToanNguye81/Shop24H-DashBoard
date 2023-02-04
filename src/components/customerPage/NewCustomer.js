@@ -34,7 +34,7 @@ export const NewCustomer = () => {
         country,
         address,
         city,
-        createNewCustomer,
+        createCustomer,
     } = useSelector((reduxData) => reduxData.customerReducers);
 
 

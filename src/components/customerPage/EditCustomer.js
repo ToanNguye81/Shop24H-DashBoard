@@ -23,6 +23,12 @@ const style = {
 
 export const EditCustomer = ({ paramCustomer }) => {
     const dispatch = useDispatch();
+    const {
+        countryOptions,
+        cityOptions,
+        createNewCustomer,
+    } = useSelector((reduxData) => reduxData.customerReducers);
+
     const [email, setEmail] = React.useState(paramCustomer.email);
     const [firstName, setFirstName] = React.useState(paramCustomer.firstName)
     const [lastName, setLastName] = React.useState(paramCustomer.lastName)
@@ -30,15 +36,21 @@ export const EditCustomer = ({ paramCustomer }) => {
     const [country, setCountry] = React.useState(paramCustomer.country)
     const [city, setCity] = React.useState(paramCustomer.city)
     const [address, setAddress] = React.useState(paramCustomer.address)
-    // const [firstName, setFirstName] = React.useState(paramCustomer.firstName);
-    // const [lastName, setLastName] = React.useState(paramCustomer.lastName);
-    // const [phone, setPhone] = React.useState(paramCustomer.phone);
-    // const [firstName, setFirstName] = React.useState(paramCustomer.firstName);
-    // const [firstName, setFirstName] = React.useState(paramCustomer.firstName);
-
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    console.log(city)
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        dispatch(createNewCustomer(data));
+    };
+    
+    useEffect(() => {
+        dispatch(fetchCountries());
+        dispatch(fetchCities(country))
+    }, []);
+    
     const handleChangeEmail = (event) => {
         setEmail(event.target.value)
     }
@@ -51,34 +63,15 @@ export const EditCustomer = ({ paramCustomer }) => {
     const handleChangePhone = (event) => {
         setPhone(event.target.value)
     }
-
-    // console.log(paramCustomer)
-    const {
-        countryOptions,
-        cityOptions,
-        // country,
-        // address,
-        // city,
-        createNewCustomer,
-    } = useSelector((reduxData) => reduxData.customerReducers);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        dispatch(createNewCustomer(data));
-    };
-
     const handleCountryChange = (event) => {
-        dispatch(getCountry(event.target.value));
+        setCountry(event.target.value);
         dispatch(fetchCities(event.target.value));
     }
-
     const handleCityChange = (event) => {
-        dispatch(getCity(event.target.value));
+        setCity(event.target.value)
     }
-
     const handleAddressChange = (event) => {
-        dispatch(getAddress(event.target.value));
+        setAddress(event.target.value)
     }
 
     return (
@@ -127,9 +120,9 @@ export const EditCustomer = ({ paramCustomer }) => {
                                 <Grid item xs={12}>
                                     <FormControl size="small" required fullWidth>
                                         <InputLabel id="select-city">City</InputLabel>
-                                        <Select onChange={handleCityChange} size="small" required autoWidth id="city" labelId="select-city" label="City" name="city" value={city}>
+                                        <Select onChange={handleCityChange} labelId="select-city" autoWidth id="city" label="City" name="city" value={city}>
                                             {cityOptions ?
-                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.id}>{cityOptions.name}</MenuItem>) : null
+                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) : null
                                             }
                                         </Select>
                                     </FormControl>
