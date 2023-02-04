@@ -35,13 +35,15 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-
+    
+    //generation
+    countryOptions: null,
+    cityOptions: null,
+    
     //Modal create new customer
     createCustomerPending: false,
     loadCountriesPending: false,
     loadCitiesPending: false,
-    countryOptions: null,
-    cityOptions: null,
     country: null,
     city: null,
     address: null,

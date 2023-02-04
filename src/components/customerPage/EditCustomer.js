@@ -5,9 +5,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
-import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup, IconButton } from '@mui/material';
+import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup, IconButton, Menu } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCities, fetchCountries, fetchCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
+import { fetchCities, fetchCountries,  getAddress, getCity, getCountry } from '../../actions/customer.actions';
 
 const style = {
     position: 'absolute',
@@ -23,12 +23,6 @@ const style = {
 
 export const EditCustomer = ({ paramCustomer }) => {
     const dispatch = useDispatch();
-    const {
-        countryOptions,
-        cityOptions,
-        createNewCustomer,
-    } = useSelector((reduxData) => reduxData.customerReducers);
-
     const [email, setEmail] = React.useState(paramCustomer.email);
     const [firstName, setFirstName] = React.useState(paramCustomer.firstName)
     const [lastName, setLastName] = React.useState(paramCustomer.lastName)
@@ -39,7 +33,13 @@ export const EditCustomer = ({ paramCustomer }) => {
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    console.log(city)
+
+    const {
+        countryOptions,
+        cityOptions,
+        createNewCustomer,
+    } = useSelector((reduxData) => reduxData.customerReducers);
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -48,7 +48,6 @@ export const EditCustomer = ({ paramCustomer }) => {
     
     useEffect(() => {
         dispatch(fetchCountries());
-        dispatch(fetchCities(country))
     }, []);
     
     const handleChangeEmail = (event) => {
