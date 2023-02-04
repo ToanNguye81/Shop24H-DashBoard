@@ -6,18 +6,22 @@ import {
     FETCH_COUNTRIES_ERROR,
     FETCH_COUNTRIES_PENDING,
     FETCH_COUNTRIES_SUCCESS,
-    
+
     GET_CITY,
     GET_ADDRESS,
     GET_COUNTRY,
-    
+
     FETCH_CITIES_ERROR,
     FETCH_CITIES_PENDING,
     FETCH_CITIES_SUCCESS,
-    
+
     CREATE_CUSTOMER_PENDING,
     CREATE_CUSTOMER_SUCCESS,
     CREATE_CUSTOMER_ERROR,
+
+    DELETE_CUSTOMER_PENDING,
+    DELETE_CUSTOMER_SUCCESS,
+    DELETE_CUSTOMER_ERROR,
 } from "../constants/customer.constants";
 
 const gCUSTOMERS_API_URL = '//localhost:8000/customers';
@@ -28,7 +32,7 @@ const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=
 
 export const fetchCustomer = (paramLimit, paramPage, paramCondition) => {
     // build the request string
-    let condition = encodeURIComponent(JSON.stringify(paramCondition?paramCondition:{}));
+    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
 
     // options for the fetch request
@@ -42,7 +46,7 @@ export const fetchCustomer = (paramLimit, paramPage, paramCondition) => {
             // dispatch pending state to update the UI
             await dispatch({
                 type: FETCH_CUSTOMERS_PENDING
-            }); 
+            });
 
             //fetch Customer
             const res = await fetch(`${gCUSTOMERS_API_URL}?${request}`, requestOptions);
@@ -206,6 +210,37 @@ export const createNewCustomer = (paramCustomer) => {
         }
     }
 }
+
+//Delete customer
+export const deleteCustomer = (paramCustomerId) => {
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'DELETE',
+        };
+
+        await dispatch({
+            type: DELETE_CUSTOMER_PENDING
+        });
+
+        try {
+            const res = await fetch(gCUSTOMERS_API_URL+`/${paramCustomerId}`, requestOptions);
+            const resObj = await res.json();
+            console.log(res.ok)
+            if (!res.ok) {
+                return dispatch({
+                    type: DELETE_CUSTOMER_ERROR,
+                })
+            }
+            console.log(resObj)
+            return dispatch({
+                type: DELETE_CUSTOMER_SUCCESS,
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+}
+
 
 //Get Customer Information 
 const getCustomerInfo = (paramCustomer) => {
