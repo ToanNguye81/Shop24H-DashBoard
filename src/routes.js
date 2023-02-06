@@ -11,6 +11,8 @@ import { DashboardLayout } from './layouts/dashboard/DashboardLayout';
 import { CustomerPage } from './pages/CustomerPage';
 import DemoPage from './pages/DemoPage';
 import { ProductPage } from './pages/ProductPage';
+import { OrderPage } from './pages/OrderPage';
+import { OrderDetailPage } from './pages/OrderDetailPage';
 
 // ----------------------------------------------------------------------
 
@@ -22,13 +24,13 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DemoPage /> },
+        { path: 'orders', element: <OrderPage /> },
+        { path: 'order-detail', element: <OrderDetailPage  /> },
         { path: 'customers', element: <CustomerPage /> },
-        { path: 'products', element: <ProductPage /> },
+        { path: 'products', element: <ProductPage/> },
         { path: 'demo', element: <DemoPage /> },
         { path: 'demo2', element: <ProductsPage /> },
-        { path: 'orders', element: <ProductsPage /> },
         { path: 'product-type', element: <ProductsPage /> },
-        { path: 'order-detail', element: <ProductsPage  /> },
         { path: 'blog', element: <BlogPage /> },
       ],
     },
