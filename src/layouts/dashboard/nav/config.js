@@ -18,7 +18,7 @@ const navConfig = [
   },
   {
     title: 'order detail',
-    path: '/dashboard/order-detail',
+    path: '/dashboard/orderDetails',
     icon: icon('ic_orderDetail'),
   },
   {

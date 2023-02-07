@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 // @mui
-import { Card, Table, Stack, Popover, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, CircularProgress, TablePagination } from '@mui/material';
+import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, CircularProgress, TablePagination } from '@mui/material';
 // components
 import Scrollbar from '../components/scrollbar';
 import React, { useEffect } from "react";
@@ -25,7 +25,6 @@ const TABLE_HEAD = [
 
 export const CustomerPage = () => {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(null);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { customers, pending, totalCustomer } = useSelector((reduxData) => reduxData.customerReducers);
@@ -33,10 +32,6 @@ export const CustomerPage = () => {
   useEffect(() => {
     dispatch(fetchCustomer(rowsPerPage, page));
   }, [rowsPerPage, page]);
-
-  const handleCloseMenu = () => {
-    setOpen(null);
-  };
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -93,7 +88,7 @@ export const CustomerPage = () => {
                               <TableCell>{element.phone}</TableCell>
                               <TableCell>{element.email}</TableCell>
                               <TableCell>{element.address}</TableCell>
-                              <TableCell>{element.orders.map((order, index) => `${order} `)}</TableCell>
+                              <TableCell>{element.orders.map((order, index) => <div>{order}</div>)}</TableCell>
                             </TableRow>
                           </>)
                       })}
@@ -114,27 +109,6 @@ export const CustomerPage = () => {
           />
         </Card>
       </Container>
-
-      <Popover
-        open={Boolean(open)}
-        anchorEl={open}
-        onClose={handleCloseMenu}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        PaperProps={{
-          sx: {
-            p: 1,
-            width: 140,
-            '& .MuiMenuItem-root': {
-              px: 1,
-              typography: 'body2',
-              borderRadius: 0.75,
-            },
-          },
-        }}
-      >
-
-      </Popover>
     </React.Fragment>
   )
 }

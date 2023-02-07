@@ -38,7 +38,7 @@ export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
-
+    console.log(paramLimit, paramPage, paramCondition)
     // options for the fetch request
     const requestOptions = {
         method: 'GET',

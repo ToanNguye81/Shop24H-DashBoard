@@ -1,5 +1,5 @@
 import { format, getTime, formatDistanceToNow } from 'date-fns';
-
+import moment from 'moment';
 // ----------------------------------------------------------------------
 
 export function fDate(date, newFormat) {
@@ -24,4 +24,8 @@ export function fToNow(date) {
         addSuffix: true,
       })
     : '';
+}
+
+export const formatTime=(dateString)=> {
+  return moment(dateString).format("YYYY-MM-DD HH:mm:ss");
 }
