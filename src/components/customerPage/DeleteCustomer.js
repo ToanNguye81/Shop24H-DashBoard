@@ -2,11 +2,11 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
-import Iconify from '../iconify/Iconify';
 import { IconButton,Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCustomer } from '../../actions/customer.actions';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Iconify from '../iconify/Iconify';
 
 
 const style = {
