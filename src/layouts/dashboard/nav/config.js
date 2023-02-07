@@ -12,6 +12,16 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
+    title: 'General',
+    path: '/dashboard/general',
+    icon: icon('ic_general'),
+  },
+  {
+    title: 'customers',
+    path: '/dashboard/customers',
+    icon: icon('ic_customer'),
+  },
+  {
     title: 'orders',
     path: '/dashboard/orders',
     icon: icon('ic_order'),
@@ -20,11 +30,6 @@ const navConfig = [
     title: 'order detail',
     path: '/dashboard/orderDetails',
     icon: icon('ic_orderDetail'),
-  },
-  {
-    title: 'customers',
-    path: '/dashboard/customers',
-    icon: icon('ic_customer'),
   },
   {
     title: 'products',
