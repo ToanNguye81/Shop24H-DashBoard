@@ -24,6 +24,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DemoPage /> },
+        { path: 'general', element: <DashboardLayout /> },
         { path: 'orders', element: <OrderPage /> },
         { path: 'orderDetails', element: <OrderDetailPage  /> },
         { path: 'customers', element: <CustomerPage /> },
