@@ -13,6 +13,7 @@ import DemoPage from './pages/DemoPage';
 import { ProductPage } from './pages/ProductPage';
 import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
+import { NewCustomer } from './components/customerPage/NewCustomer';
 
 // ----------------------------------------------------------------------
 
@@ -24,7 +25,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DemoPage /> },
-        { path: 'general', element: <DashboardLayout /> },
+        { path: 'general', element: <NewCustomer /> },
         { path: 'orders', element: <OrderPage /> },
         { path: 'orderDetails', element: <OrderDetailPage  /> },
         { path: 'customers', element: <CustomerPage /> },

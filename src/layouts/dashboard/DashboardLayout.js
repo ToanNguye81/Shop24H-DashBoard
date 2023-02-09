@@ -36,10 +36,8 @@ export const DashboardLayout=()=> {
   const [open, setOpen] = useState(false);
   return (
     <StyledRoot>
-      {/* Header */}
       <Header onOpenNav={() => setOpen(true)} />
       
-      {/* Navbar */}
       <Nav openNav={open} onCloseNav={() => setOpen(false)} />
 
       <Main>

@@ -16,7 +16,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     border: '0.1 solid pink',
-    width:"60%",
+    width: "60%",
     boxShadow: 24,
     p: 4,
 };
@@ -80,18 +80,18 @@ export const NewCustomer = () => {
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name"/>
+                                    <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name" />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField size="small" required fullWidth id="lastName" label="Last Name" name="lastName" />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sm={6}>
                                     <TextField size="small" required fullWidth id="phone" label="Phone" name="phone" />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sm={6}>
                                     <TextField size="small" required fullWidth id="email" label="Email" name="email" />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sm={6}>
                                     <FormControl size="small" required fullWidth>
                                         <InputLabel id="select-country">Country</InputLabel>
                                         <Select onChange={handleCountryChange} labelId="select-country" autoWidth id="country" label="Country" name="country" value={country}>
@@ -103,7 +103,7 @@ export const NewCustomer = () => {
                                     </FormControl>
                                 </Grid>
 
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sm={6}>
                                     <FormControl size="small" required fullWidth>
                                         <InputLabel id="select-city">City</InputLabel>
                                         <Select onChange={handleCityChange} size="small" required autoWidth id="city" labelId="select-city" label="City" name="city" value={city}>
