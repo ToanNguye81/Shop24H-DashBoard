@@ -14,11 +14,16 @@ import StepContent from '@mui/material/StepContent';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { AddToCart } from './NewOrder/AddToCart';
+import { Detail } from './NewOrder/Detail';
 
 const steps = [
     {
         label: 'Add To Cart',
         element: <AddToCart />
+    },
+    {
+        label: 'Detail',
+        element:<Detail/>
     },
     {
         label: 'Fill Customer',
@@ -71,7 +76,7 @@ export const NewOrder = () => {
                             <Step key={step.label}>
                                 <StepLabel
                                     optional={
-                                        index === 2 ? (
+                                        index === 3 ? (
                                             <Typography variant="caption">Last step</Typography>
                                         ) : null
                                     }
