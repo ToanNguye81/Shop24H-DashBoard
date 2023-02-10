@@ -15,6 +15,7 @@ import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import { AddToCart } from './NewOrder/AddToCart';
 import { Detail } from './NewOrder/Detail';
+import { FillCustomer } from './NewOrder/FillCustomer';
 
 const steps = [
     {
@@ -27,8 +28,7 @@ const steps = [
     },
     {
         label: 'Fill Customer',
-        element:
-            'An ad group contains one or more ads which target a shared set of keywords.',
+        element:<FillCustomer/>,
     },
     {
         label: 'Create Order',
