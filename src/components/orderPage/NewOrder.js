@@ -13,12 +13,12 @@ import StepLabel from '@mui/material/StepLabel';
 import StepContent from '@mui/material/StepContent';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
+import { AddToCart } from './NewOrder/AddToCart';
 
 const steps = [
     {
         label: 'Add To Cart',
-        element: "dssdsd"
+        element: <AddToCart />
     },
     {
         label: 'Fill Customer',
@@ -34,7 +34,9 @@ const steps = [
 
 export const NewOrder = () => {
     const dispatch = useDispatch();
+
     const [open, setOpen] = React.useState(false);
+    const [activeStep, setActiveStep] = React.useState(0);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -43,7 +45,6 @@ export const NewOrder = () => {
     const handleClose = () => {
         setOpen(false);
     };
-    const [activeStep, setActiveStep] = React.useState(0);
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -62,7 +63,7 @@ export const NewOrder = () => {
             <Button onClick={handleClickOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
                 New Order
             </Button>
-            <Dialog open={open} onClose={handleClose} fullWidth  maxWidth="md">
+            <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
                 <DialogTitle>New Order</DialogTitle>
                 <DialogContent>
                     <Stepper activeStep={activeStep} orientation="vertical">
@@ -78,32 +79,24 @@ export const NewOrder = () => {
                                     {step.label}
                                 </StepLabel>
                                 <StepContent>
-                                    <Box sx={{ width: '100%' }}>
-                                        <Grid container>
-                                            <Grid item xs={12} md={8}>
-                                                <Typography>{step.element}</Typography>
-
-
-                                                <Box sx={{ mb: 2 }}>
-                                                    <div>
-                                                        <Button
-                                                            variant="contained"
-                                                            onClick={handleNext}
-                                                            sx={{ mt: 1, mr: 1 }}
-                                                        >
-                                                            {index === steps.length - 1 ? 'Finish' : 'Continue'}
-                                                        </Button>
-                                                        <Button
-                                                            disabled={index === 0}
-                                                            onClick={handleBack}
-                                                            sx={{ mt: 1, mr: 1 }}
-                                                        >
-                                                            Back
-                                                        </Button>
-                                                    </div>
-                                                </Box>
-                                            </Grid>
-                                        </Grid>
+                                    <Typography>{step.element}</Typography>
+                                    <Box sx={{ mb: 2,mt:2 }}>
+                                        <div>
+                                            <Button
+                                                variant="contained"
+                                                onClick={handleNext}
+                                                sx={{ mt: 1, mr: 1 }}
+                                            >
+                                                {index === steps.length - 1 ? 'Finish' : 'Continue'}
+                                            </Button>
+                                            <Button
+                                                disabled={index === 0}
+                                                onClick={handleBack}
+                                                sx={{ mt: 1, mr: 1 }}
+                                            >
+                                                Back
+                                            </Button>
+                                        </div>
                                     </Box>
                                 </StepContent>
                             </Step>
@@ -119,7 +112,7 @@ export const NewOrder = () => {
                     )}
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose}>Cancel</Button>
+                    <Button onClick={handleClose} variant="contained">Cancel</Button>
                 </DialogActions>
             </Dialog>
         </React.Fragment>
