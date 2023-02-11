@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from 'react';
 // @mui
-import {TextField,Table,Button,TableRow,TableBody,TableCell,TableContainer,Grid, TableHead,CircularProgress,TablePagination} from '@mui/material';
+import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../../actions/product.actions";
+import { AddShoppingCartSharp } from "@mui/icons-material";
+import { element } from "prop-types";
 
 
 const TABLE_HEAD = [
@@ -14,25 +16,38 @@ const TABLE_HEAD = [
   "Promotion Price",
   "Add to cart",
 ]
-export const AddToCart = () => {
 
+export const AddToCart = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
+  const [name, setName] = useState("")
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { products, pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
+  const condition = name.trim()? { name: name.trim() } : undefined;
+  const handleClickFind = () => {
+    dispatch(fetchProduct(5, 0, condition))
+  }
 
-  useEffect(() => {
-    dispatch(fetchProduct(rowsPerPage, page));
-  }, [rowsPerPage, page]);
-
- 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+
+  const handelChangeName = (event) => {
+    setName(event.target.value)
+  }
+
+  const handleClickAdd=(paramId)=>{
+    console.log(paramId)
+    dispatch(AddToCart(paramId))
+  }
+  useEffect(() => {
+    dispatch(fetchProduct(rowsPerPage, page));
+  }, [rowsPerPage, page]);
 
   return (
     <React.Fragment>
@@ -40,10 +55,10 @@ export const AddToCart = () => {
         {/* Search */}
         <Grid container fullWidth columnSpacing={1}>
           <Grid item xs={8} sm={8} md={8}>
-            <TextField fullWidth size="small" label="Find Products by name" />
+            <TextField fullWidth size="small" label="Find Products by name" onChange={handelChangeName} value={name} />
           </Grid>
           <Grid item xs={4} sm={4} md={4}>
-            <Button variant="contained" sx={{ p: 1 }} fullWidth>Find</Button>
+            <Button variant="contained" sx={{ p: 1 }} fullWidth onClick={handleClickFind}>Find</Button>
           </Grid>
         </Grid>
 
@@ -61,7 +76,7 @@ export const AddToCart = () => {
             <TableContainer>
               <Table >
                 <TableHead>
-                  <TableRow>
+                  <TableRow key="head">
                     {TABLE_HEAD.map((title, index) => {
                       return (
                         <TableCell key={index}>{title}</TableCell>
@@ -82,10 +97,10 @@ export const AddToCart = () => {
                           <TableCell>{element.name}</TableCell>
                           <TableCell>{element.buyPrice}</TableCell>
                           <TableCell>{element.promotionPrice}</TableCell>
-                          <TableCell fixed align="right">
-                            <Button size="small" variant="contained" ml={0}>
-                              Add To Cart
-                            </Button>
+                          <TableCell fixed align="center">
+                            <IconButton variant="outline" ml={0} onClick={()=>handleClickAdd(element._id)}>
+                              <AddShoppingCartSharp variant="outline"/>
+                            </IconButton>
                           </TableCell>
                         </TableRow>
                       </>)
