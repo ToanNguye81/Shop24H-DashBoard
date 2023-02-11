@@ -1,15 +1,15 @@
 import {
-    FETCH_COUNTRIES_ERROR,
-    FETCH_COUNTRIES_PENDING,
-    FETCH_COUNTRIES_SUCCESS,
+    FETCH_COUNTRY_ERROR,
+    FETCH_COUNTRY_PENDING,
+    FETCH_COUNTRY_SUCCESS,
 
     GET_CITY,
     GET_ADDRESS,
     GET_COUNTRY,
 
-    FETCH_CITIES_ERROR,
-    FETCH_CITIES_PENDING,
-    FETCH_CITIES_SUCCESS,
+    FETCH_CITY_ERROR,
+    FETCH_CITY_PENDING,
+    FETCH_CITY_SUCCESS,
 
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_PENDING,
@@ -26,6 +26,11 @@ import {
     DELETE_ORDER_PENDING,
     DELETE_ORDER_SUCCESS,
     DELETE_ORDER_ERROR,
+
+    DECREASE_QUANTITY,
+    INCREASE_QUANTITY,
+    ADD_NEW_PRODUCT,
+    ADD_FIRST_PRODUCT
 } from "../constants/order.constants";
 
 const gORDERS_API_URL = '//localhost:8000/orders';
@@ -80,7 +85,7 @@ export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
 }
 
 //Load cities list with REST_API
-export const fetchCities = (paramIsoCountry) => {
+export const fetchCity = (paramIsoCountry) => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -92,7 +97,7 @@ export const fetchCities = (paramIsoCountry) => {
         };
 
         await dispatch({
-            type: FETCH_CITIES_PENDING
+            type: FETCH_CITY_PENDING
         });
 
         try {
@@ -100,12 +105,12 @@ export const fetchCities = (paramIsoCountry) => {
             const allCitiesObj = await allCitiesRes.json();
             console.log(allCitiesObj)
             return dispatch({
-                type: FETCH_CITIES_SUCCESS,
+                type: FETCH_CITY_SUCCESS,
                 cityOptions: allCitiesObj
             })
         } catch (err) {
             return dispatch({
-                type: FETCH_CITIES_ERROR,
+                type: FETCH_CITY_ERROR,
                 error: err
             })
         }
@@ -113,7 +118,7 @@ export const fetchCities = (paramIsoCountry) => {
 }
 
 //Load country list
-export const fetchCountries = () => {
+export const fetchCountry = () => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -125,19 +130,19 @@ export const fetchCountries = () => {
         };
 
         await dispatch({
-            type: FETCH_COUNTRIES_PENDING
+            type: FETCH_COUNTRY_PENDING
         });
 
         try {
             const allCountriesRes = await fetch(gCOUNTRY_API_URL, requestOptions);
             const allCountriesObj = await allCountriesRes.json();
             return dispatch({
-                type: FETCH_COUNTRIES_SUCCESS,
+                type: FETCH_COUNTRY_SUCCESS,
                 countryOptions: allCountriesObj
             })
         } catch (err) {
             return dispatch({
-                type: FETCH_COUNTRIES_ERROR,
+                type: FETCH_COUNTRY_ERROR,
                 error: err
             })
         }
@@ -221,43 +226,43 @@ export const updateOrder = async (paramOrder) => {
     const isValid = await validateOrder(orderInfo);
     //call PUT API 
     if (isValid) {
-      return async (dispatch) => {
-        const requestOptions = {
-          method: 'PUT',
-          headers: {
-            "Content-Type": 'application/json',
-          },
-          body: JSON.stringify(orderInfo),
-        };
-  
-        await dispatch({
-          type: UPDATE_ORDER_PENDING,
-        });
-  
-        try {
-          const res = await fetch(gORDERS_API_URL, requestOptions);
-          const resObj = await res.json();
-  
-          if (!res.ok) {
-            return dispatch({
-              type: UPDATE_ORDER_ERROR,
+        return async (dispatch) => {
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(orderInfo),
+            };
+
+            await dispatch({
+                type: UPDATE_ORDER_PENDING,
             });
-          }
-  
-          return dispatch({
-            type: UPDATE_ORDER_SUCCESS,
-            data: resObj,
-          });
-        } catch (err) {
-          return dispatch({
-            type: UPDATE_ORDER_ERROR,
-            error: err,
-          });
-        }
-      };
+
+            try {
+                const res = await fetch(gORDERS_API_URL, requestOptions);
+                const resObj = await res.json();
+
+                if (!res.ok) {
+                    return dispatch({
+                        type: UPDATE_ORDER_ERROR,
+                    });
+                }
+
+                return dispatch({
+                    type: UPDATE_ORDER_SUCCESS,
+                    data: resObj,
+                });
+            } catch (err) {
+                return dispatch({
+                    type: UPDATE_ORDER_ERROR,
+                    error: err,
+                });
+            }
+        };
     }
     return isValid;
-  };
+};
 
 //Delete order
 export const deleteOrder = (paramOrderId) => {
@@ -271,7 +276,7 @@ export const deleteOrder = (paramOrderId) => {
         });
 
         try {
-            const res = await fetch(gORDERS_API_URL+`/${paramOrderId}`, requestOptions);
+            const res = await fetch(gORDERS_API_URL + `/${paramOrderId}`, requestOptions);
             const resObj = await res.json();
             console.log(res.ok)
             if (!res.ok) {
@@ -351,5 +356,55 @@ export const validatePhone = (paramPhone) => {
     }
     else {
         return false;
+    }
+}
+
+//Xử lý nút giảm quantity
+export const decreaseQuantity = (paramIndex) => {
+    return {
+        type: DECREASE_QUANTITY,
+        index: paramIndex
+    }
+}
+
+//Xử lý nút tăng quantity
+export const increaseQuantity = (paramIndex) => {
+    return {
+        type: INCREASE_QUANTITY,
+        index: paramIndex
+    }
+}
+
+
+//Xử lý sự kiện nút AddToCart
+export const addToCart = (cart, product) => {
+    console.log(product)
+    //Hàm xử lý thêm sản phẩm lần đầu
+    if (cart.length === 0) {
+        console.log(product)
+        return {
+            type: ADD_FIRST_PRODUCT,
+            product: product,
+            quantity: 1
+        }
+    }
+
+    // Hàm tăng số lượng nếu sản phẩm đã có trong cart
+    else {
+        for (let index = 0; index < cart.length; index++) {
+            if (product._id === cart[index].product._id) {
+                return {
+                    type: INCREASE_QUANTITY,
+                    index: index,
+                }
+            }
+        }
+    }
+
+    //Thêm một sản phẩm mới nếu cart có trên 1 sp
+    return {
+        type: ADD_NEW_PRODUCT,
+        product: product,
+        quantity: 1,
     }
 }

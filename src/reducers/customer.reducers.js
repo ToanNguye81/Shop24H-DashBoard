@@ -1,15 +1,15 @@
 import {
-    FETCH_CUSTOMERS_PENDING,
-    FETCH_CUSTOMERS_ERROR,
-    FETCH_CUSTOMERS_SUCCESS,
+    FETCH_CUSTOMER_PENDING,
+    FETCH_CUSTOMER_ERROR,
+    FETCH_CUSTOMER_SUCCESS,
 
-    FETCH_COUNTRIES_PENDING,
-    FETCH_COUNTRIES_SUCCESS,
-    FETCH_COUNTRIES_ERROR,
+    FETCH_COUNTRY_PENDING,
+    FETCH_COUNTRY_SUCCESS,
+    FETCH_COUNTRY_ERROR,
 
-    FETCH_CITIES_PENDING,
-    FETCH_CITIES_SUCCESS,
-    FETCH_CITIES_ERROR,
+    FETCH_CITY_PENDING,
+    FETCH_CITY_SUCCESS,
+    FETCH_CITY_ERROR,
 
     CREATE_CUSTOMER_PENDING,
     CREATE_CUSTOMER_SUCCESS,
@@ -54,22 +54,21 @@ const initialState = {
 
     //Modal Delete Customer
     deleteCustomerPending: false,
-
 }
 
 export default function customerReducers(state = initialState, action) {
     switch (action.type) {
         //Load Customer
-        case FETCH_CUSTOMERS_PENDING:
+        case FETCH_CUSTOMER_PENDING:
             state.pending = true;
             break;
-        case FETCH_CUSTOMERS_SUCCESS:
+        case FETCH_CUSTOMER_SUCCESS:
             console.log(action.customers)
             state.pending = false;
             state.totalCustomer = action.totalCustomer;
             state.customers = action.customers;
             break;
-        case FETCH_CUSTOMERS_ERROR:
+        case FETCH_CUSTOMER_ERROR:
             break;
 
         //Create Customer
@@ -103,26 +102,26 @@ export default function customerReducers(state = initialState, action) {
             break;
 
         //Modal Create New Customer
-        case FETCH_COUNTRIES_PENDING:
+        case FETCH_COUNTRY_PENDING:
             state.loadCountriesPending = true
             break;
-        case FETCH_COUNTRIES_SUCCESS:
+        case FETCH_COUNTRY_SUCCESS:
             state.loadCountriesPending = false
             state.countryOptions = action.countryOptions
             console.log(action.countryOptions)
             break;
-        case FETCH_COUNTRIES_ERROR:
+        case FETCH_COUNTRY_ERROR:
             break;
 
         //Load Cities List
-        case FETCH_CITIES_PENDING:
+        case FETCH_CITY_PENDING:
             state.loadCitiesPending = true
             break;
-        case FETCH_CITIES_SUCCESS:
+        case FETCH_CITY_SUCCESS:
             state.loadCitiesPending = false
             state.cityOptions = action.cityOptions
             break;
-        case FETCH_CITIES_ERROR:
+        case FETCH_CITY_ERROR:
             break;
 
         //Get address select
@@ -135,7 +134,6 @@ export default function customerReducers(state = initialState, action) {
         case GET_ADDRESS:
             state.address = action.address
             break;
-
         default:
             break;
     }

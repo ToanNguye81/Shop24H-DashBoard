@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { createTheme } from '@mui/material/styles';
-// import { fetchCountries, getCountry, fetchCities, getCity, getAddress,createNewUser } from '../actions/signUp.actions';
+// import { fetchCountry, getCountry, fetchCity, getCity, getAddress,createNewUser } from '../actions/signUp.actions';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 
 const theme = createTheme();
@@ -17,7 +17,7 @@ export const FillCustomer = () => {
     // console.log(loadCountriesPending)
 
     // useEffect(() => {
-    //     dispatch(fetchCountries());
+    //     dispatch(fetchCountry());
     // }, []);
 
     // console.log(countryOptions)
@@ -30,7 +30,7 @@ export const FillCustomer = () => {
 
     // const handleCountryChange = (event) => {
     //     dispatch(getCountry(event.target.value));
-    //     dispatch(fetchCities(event.target.value));
+    //     dispatch(fetchCity(event.target.value));
     // }
 
     // const handleCityChange = (event) => {

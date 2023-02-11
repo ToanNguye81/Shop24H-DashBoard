@@ -3,13 +3,13 @@ import {
     FETCH_ORDER_DETAILS_ERROR,
     FETCH_ORDER_DETAILS_SUCCESS,
 
-    FETCH_COUNTRIES_PENDING,
-    FETCH_COUNTRIES_SUCCESS,
-    FETCH_COUNTRIES_ERROR,
+    FETCH_COUNTRY_PENDING,
+    FETCH_COUNTRY_SUCCESS,
+    FETCH_COUNTRY_ERROR,
 
-    FETCH_CITIES_PENDING,
-    FETCH_CITIES_SUCCESS,
-    FETCH_CITIES_ERROR,
+    FETCH_CITY_PENDING,
+    FETCH_CITY_SUCCESS,
+    FETCH_CITY_ERROR,
 
     CREATE_ORDER_DETAIL_PENDING,
     CREATE_ORDER_DETAIL_SUCCESS,
@@ -103,26 +103,26 @@ export default function orderDetailReducers(state = initialState, action) {
             break;
 
         //Modal Create New OrderDetail
-        case FETCH_COUNTRIES_PENDING:
+        case FETCH_COUNTRY_PENDING:
             state.loadCountriesPending = true
             break;
-        case FETCH_COUNTRIES_SUCCESS:
+        case FETCH_COUNTRY_SUCCESS:
             state.loadCountriesPending = false
             state.countryOptions = action.countryOptions
             console.log(action.countryOptions)
             break;
-        case FETCH_COUNTRIES_ERROR:
+        case FETCH_COUNTRY_ERROR:
             break;
 
         //Load Cities List
-        case FETCH_CITIES_PENDING:
+        case FETCH_CITY_PENDING:
             state.loadCitiesPending = true
             break;
-        case FETCH_CITIES_SUCCESS:
+        case FETCH_CITY_SUCCESS:
             state.loadCitiesPending = false
             state.cityOptions = action.cityOptions
             break;
-        case FETCH_CITIES_ERROR:
+        case FETCH_CITY_ERROR:
             break;
 
         //Get address select

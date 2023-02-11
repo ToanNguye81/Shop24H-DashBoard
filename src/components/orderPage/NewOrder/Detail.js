@@ -6,6 +6,7 @@ import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContaine
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../../actions/product.actions";
 import { Add, Remove } from "@mui/icons-material";
+import { decreaseQuantity, increaseQuantity } from "../../../actions/order.actions";
 
 
 const TABLE_HEAD = [
@@ -19,10 +20,12 @@ export const Detail = () => {
 
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
-  const [count, setCount] = React.useState(0);
+  // const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { products, pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
+  const { pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
+  const { cart } = useSelector((reduxData) => reduxData.orderReducers);
 
+  console.log(cart)
   useEffect(() => {
     dispatch(fetchProduct(rowsPerPage, page));
   }, [rowsPerPage, page]);
@@ -35,6 +38,12 @@ export const Detail = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  const handleClickIncrease =(index)=>{
+    dispatch(increaseQuantity(index))
+  }
+  const handleClickDecrease =(index)=>{
+    dispatch(decreaseQuantity(index))
+  }
 
   return (
     <React.Fragment>
@@ -62,57 +71,48 @@ export const Detail = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {products.map((element, index) => {
+                  {cart?cart.map((element, index) => {
                     return (
                       <>
-                        <TableRow key={element._id}>
+                        <TableRow key={element.product._id}>
                           <TableCell>
                             <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
-                              <img src={element.imageUrl} />
+                              <img src={element.product.imageUrl} />
                             </Grid>
                           </TableCell>
-                          <TableCell>{element.name}</TableCell>
-                          <TableCell>{element.promotionPrice}</TableCell>
+                          <TableCell>{element.product.name}</TableCell>
+                          <TableCell>{element.product.promotionPrice}</TableCell>
                           <TableCell>
                             <Box sx={{display: 'flex',alignItems: 'center',gap: 2}}>
                               <Box sx={{border: "0.2px solid #EDEFF1"}}>
-                              <IconButton size="sm" variant="outlined" onClick={() => setCount((c) => c - 1)} >
+                              <IconButton size="sm" variant="outlined" onClick={()=>handleClickDecrease(index)} >
                                 <Remove />
                               </IconButton>
                               </Box>
                               <Typography textColor="text.secondary">
-                                {count}
+                                {element.quantity}
                               </Typography>
                               <Box sx={{border: "0.2px solid #EDEFF1"}}>
-                              <IconButton size="sm" variant="outlined" onClick={() => setCount((c) => c + 1)}>
+                              <IconButton size="sm" variant="outlined" onClick={()=>handleClickIncrease(index)}>
                                 <Add />
                               </IconButton>
                               </Box>
                             </Box>
                           </TableCell>
                           <TableCell align="left">
-                            {count*element.promotionPrice}
+                            {element.quantity*element.product.promotionPrice}
                           </TableCell>
                         </TableRow>
                       </>)
-                  })}
+                  }):null}
                 </TableBody>
               </Table>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={totalProduct}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
             </TableContainer>
           }
         </Grid>
       </Grid>
       <Grid >
-      <Typography level="display2">Total: $ {count}</Typography>
+      <Typography level="display2">Total:</Typography>
       </Grid>
     </React.Fragment>
 

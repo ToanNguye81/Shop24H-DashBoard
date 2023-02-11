@@ -1,15 +1,15 @@
 import {
-    FETCH_COUNTRIES_ERROR,
-    FETCH_COUNTRIES_PENDING,
-    FETCH_COUNTRIES_SUCCESS,
+    FETCH_COUNTRY_ERROR,
+    FETCH_COUNTRY_PENDING,
+    FETCH_COUNTRY_SUCCESS,
 
     GET_CITY,
     GET_ADDRESS,
     GET_COUNTRY,
 
-    FETCH_CITIES_ERROR,
-    FETCH_CITIES_PENDING,
-    FETCH_CITIES_SUCCESS,
+    FETCH_CITY_ERROR,
+    FETCH_CITY_PENDING,
+    FETCH_CITY_SUCCESS,
 
     FETCH_ORDER_DETAILS_ERROR,
     FETCH_ORDER_DETAILS_PENDING,
@@ -26,6 +26,11 @@ import {
     DELETE_ORDER_DETAIL_PENDING,
     DELETE_ORDER_DETAIL_SUCCESS,
     DELETE_ORDER_DETAIL_ERROR,
+
+    DECREASE_QUANTITY,
+    INCREASE_QUANTITY,
+    ADD_NEW_PRODUCT,
+    ADD_FIRST_PRODUCT
 } from "../constants/orderDetail.constants";
 
 const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
@@ -81,7 +86,7 @@ export const fetchOrderDetail = (paramLimit, paramPage, paramCondition) => {
 }
 
 //Load cities list with REST_API
-export const fetchCities = (paramIsoCountry) => {
+export const fetchCity = (paramIsoCountry) => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -93,7 +98,7 @@ export const fetchCities = (paramIsoCountry) => {
         };
 
         await dispatch({
-            type: FETCH_CITIES_PENDING
+            type: FETCH_CITY_PENDING
         });
 
         try {
@@ -101,12 +106,12 @@ export const fetchCities = (paramIsoCountry) => {
             const allCitiesObj = await allCitiesRes.json();
             console.log(allCitiesObj)
             return dispatch({
-                type: FETCH_CITIES_SUCCESS,
+                type: FETCH_CITY_SUCCESS,
                 cityOptions: allCitiesObj
             })
         } catch (err) {
             return dispatch({
-                type: FETCH_CITIES_ERROR,
+                type: FETCH_CITY_ERROR,
                 error: err
             })
         }
@@ -114,7 +119,7 @@ export const fetchCities = (paramIsoCountry) => {
 }
 
 //Load country list
-export const fetchCountries = () => {
+export const fetchCountry = () => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -126,19 +131,19 @@ export const fetchCountries = () => {
         };
 
         await dispatch({
-            type: FETCH_COUNTRIES_PENDING
+            type: FETCH_COUNTRY_PENDING
         });
 
         try {
             const allCountriesRes = await fetch(gCOUNTRY_API_URL, requestOptions);
             const allCountriesObj = await allCountriesRes.json();
             return dispatch({
-                type: FETCH_COUNTRIES_SUCCESS,
+                type: FETCH_COUNTRY_SUCCESS,
                 countryOptions: allCountriesObj
             })
         } catch (err) {
             return dispatch({
-                type: FETCH_COUNTRIES_ERROR,
+                type: FETCH_COUNTRY_ERROR,
                 error: err
             })
         }

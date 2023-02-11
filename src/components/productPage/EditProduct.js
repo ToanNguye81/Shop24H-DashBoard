@@ -7,7 +7,7 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup, IconButton, Menu } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCities, fetchCountries,  getAddress, getCity, getCountry } from '../../actions/order.actions';
+import { fetchCity, fetchCountry,  getAddress, getCity, getCountry } from '../../actions/order.actions';
 
 const style = {
     position: 'absolute',
@@ -47,7 +47,7 @@ export const EditOrder = ({ paramOrder }) => {
     };
     
     useEffect(() => {
-        dispatch(fetchCountries());
+        dispatch(fetchCountry());
     }, []);
     
     const handleChangeEmail = (event) => {
@@ -64,7 +64,7 @@ export const EditOrder = ({ paramOrder }) => {
     }
     const handleCountryChange = (event) => {
         setCountry(event.target.value);
-        dispatch(fetchCities(event.target.value));
+        dispatch(fetchCity(event.target.value));
     }
     const handleCityChange = (event) => {
         setCity(event.target.value)

@@ -6,7 +6,7 @@ import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContaine
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../../../actions/product.actions";
 import { AddShoppingCartSharp } from "@mui/icons-material";
-import { element } from "prop-types";
+import { addToCart } from "../../../actions/order.actions";
 
 
 const TABLE_HEAD = [
@@ -23,6 +23,9 @@ export const AddToCart = () => {
   const [name, setName] = useState("")
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { products, pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
+  const { cart} = useSelector((reduxData) => reduxData.orderReducers);
+
+  console.log(cart)
   const condition = name.trim()? { name: name.trim() } : undefined;
   const handleClickFind = () => {
     dispatch(fetchProduct(5, 0, condition))
@@ -41,10 +44,11 @@ export const AddToCart = () => {
     setName(event.target.value)
   }
 
-  const handleClickAdd=(paramId)=>{
-    console.log(paramId)
-    dispatch(AddToCart(paramId))
+  const handleClickAdd=(product)=>{
+    console.log(product)
+      dispatch(addToCart(cart,product))
   }
+
   useEffect(() => {
     dispatch(fetchProduct(rowsPerPage, page));
   }, [rowsPerPage, page]);
@@ -98,7 +102,7 @@ export const AddToCart = () => {
                           <TableCell>{element.buyPrice}</TableCell>
                           <TableCell>{element.promotionPrice}</TableCell>
                           <TableCell fixed align="center">
-                            <IconButton variant="outline" ml={0} onClick={()=>handleClickAdd(element._id)}>
+                            <IconButton variant="outline" ml={0} onClick={()=>handleClickAdd(element)}>
                               <AddShoppingCartSharp variant="outline"/>
                             </IconButton>
                           </TableCell>

@@ -7,7 +7,7 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewOrderDetail, fetchCities, fetchCountries, fetchOrderDetail, getAddress, getCity, getCountry } from '../../actions/orderDetail.actions';
+import { createNewOrderDetail, fetchCity, fetchCountry, fetchOrderDetail, getAddress, getCity, getCountry } from '../../actions/orderDetail.actions';
 
 const style = {
     position: 'absolute',
@@ -39,7 +39,7 @@ export const NewOrderDetail = () => {
 
 
     useEffect(() => {
-        dispatch(fetchCountries());
+        dispatch(fetchCountry());
     }, []);
 
 
@@ -51,7 +51,7 @@ export const NewOrderDetail = () => {
 
     const handleCountryChange = (event) => {
         dispatch(getCountry(event.target.value));
-        dispatch(fetchCities(event.target.value));
+        dispatch(fetchCity(event.target.value));
     }
 
     const handleCityChange = (event) => {

@@ -7,7 +7,7 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewProduct, fetchCities, fetchCountries, fetchProduct, getAddress, getCity, getCountry } from '../../actions/product.actions';
+import { createNewProduct, fetchCity, fetchCountry, fetchProduct, getAddress, getCity, getCountry } from '../../actions/product.actions';
 
 const style = {
     position: 'absolute',
@@ -39,7 +39,7 @@ export const NewProduct = () => {
 
 
     useEffect(() => {
-        dispatch(fetchCountries());
+        dispatch(fetchCountry());
     }, []);
 
 
@@ -51,7 +51,7 @@ export const NewProduct = () => {
 
     const handleCountryChange = (event) => {
         dispatch(getCountry(event.target.value));
-        dispatch(fetchCities(event.target.value));
+        dispatch(fetchCity(event.target.value));
     }
 
     const handleCityChange = (event) => {
