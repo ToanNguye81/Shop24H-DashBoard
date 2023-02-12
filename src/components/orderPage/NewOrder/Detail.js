@@ -74,7 +74,7 @@ export const Detail = () => {
                   {cart?cart.map((element, index) => {
                     return (
                       <>
-                        <TableRow key={element.product._id}>
+                        <TableRow key={index}>
                           <TableCell>
                             <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
                               <img src={element.product.imageUrl} />
