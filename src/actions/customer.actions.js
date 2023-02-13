@@ -6,6 +6,10 @@ import {
     GET_CITY,
     GET_ADDRESS,
     GET_COUNTRY,
+    GET_FIRST_NAME,
+    GET_LAST_NAME,
+    GET_PHONE,
+    GET_EMAIL,
 
     FETCH_CITY_ERROR,
     FETCH_CITY_PENDING,
@@ -168,6 +172,39 @@ export const getAddress = (paramAddress) => {
     }
 }
 
+//get firstName 
+export const getFirstName = (paramFirstName) => {
+    return {
+        type:  GET_FIRST_NAME,
+        firstName: paramFirstName,
+    }
+}
+
+//get lastName 
+export const getLastName = (paramLastName) => {
+    return {
+        type:   GET_LAST_NAME,
+        lastName: paramLastName,
+    }
+}
+
+//get email 
+export const getEmail = (paramEmail) => {
+    return {
+        type: GET_EMAIL,
+        email: paramEmail,
+    }
+}
+
+//get phone 
+export const getPhone = (paramPhone) => {
+    return {
+        type:  GET_PHONE,
+        phone: paramPhone,
+    }
+}
+
+
 //Create new customer
 export const createNewCustomer = (paramCustomer) => {
 
@@ -198,10 +235,9 @@ export const createNewCustomer = (paramCustomer) => {
                         type: CREATE_CUSTOMER_ERROR,
                     })
                 }
-                console.log(resObj)
                 return dispatch({
                     type: CREATE_CUSTOMER_SUCCESS,
-                    data: resObj
+                    resObj: resObj
                 })
             } catch (err) {
                 return dispatch({

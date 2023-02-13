@@ -25,7 +25,11 @@ import {
 
     GET_COUNTRY,
     GET_CITY,
-    GET_ADDRESS
+    GET_ADDRESS,
+    GET_FIRST_NAME,
+    GET_LAST_NAME,
+    GET_PHONE,
+    GET_EMAIL,
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -35,25 +39,31 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-    
+
     //generation
     countryOptions: null,
-    cityOptions: null,
-    
+    cityOptions: [],
+
     //Modal create new customer
     createCustomerPending: false,
-    loadCountriesPending: false,
-    loadCitiesPending: false,
-    country: null,
-    city: null,
-    address: null,
-    createRes: null,
+    country: "",
+    city: "",
+    address: "",
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    resObj: null,
 
     //Modal update customer
     updateCustomerPending: false,
 
     //Modal Delete Customer
     deleteCustomerPending: false,
+
+    //Load country-city
+    loadCountriesPending: false,
+    loadCitiesPending: false,
 }
 
 export default function customerReducers(state = initialState, action) {
@@ -79,6 +89,7 @@ export default function customerReducers(state = initialState, action) {
             state.createCustomerPending = false
             break;
         case CREATE_CUSTOMER_ERROR:
+            state.resObj = resObj
             break;
 
         //Update Customer
@@ -101,14 +112,13 @@ export default function customerReducers(state = initialState, action) {
         case DELETE_CUSTOMER_ERROR:
             break;
 
-        //Modal Create New Customer
+        //Modal component select  
         case FETCH_COUNTRY_PENDING:
             state.loadCountriesPending = true
             break;
         case FETCH_COUNTRY_SUCCESS:
             state.loadCountriesPending = false
             state.countryOptions = action.countryOptions
-            console.log(action.countryOptions)
             break;
         case FETCH_COUNTRY_ERROR:
             break;
@@ -124,7 +134,7 @@ export default function customerReducers(state = initialState, action) {
         case FETCH_CITY_ERROR:
             break;
 
-        //Get address select
+        //Get customer data
         case GET_COUNTRY:
             state.country = action.country
             break;
@@ -133,6 +143,18 @@ export default function customerReducers(state = initialState, action) {
             break;
         case GET_ADDRESS:
             state.address = action.address
+            break;
+        case GET_FIRST_NAME:
+            state.firstName = action.firstName
+            break;
+        case GET_LAST_NAME:
+            state.lastName = action.lastName
+            break;
+        case GET_PHONE:
+            state.phone = action.phone
+            break;
+        case GET_EMAIL:
+            state.email = action.email
             break;
         default:
             break;

@@ -3,10 +3,6 @@ import {
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_SUCCESS,
 
-    FETCH_COUNTRY_PENDING,
-    FETCH_COUNTRY_SUCCESS,
-    FETCH_COUNTRY_ERROR,
-
     FETCH_CITY_PENDING,
     FETCH_CITY_SUCCESS,
     FETCH_CITY_ERROR,
@@ -41,18 +37,14 @@ const initialState = {
     error: null,
     currentPage: 1,
 
-    //generation
-    countryOptions: null,
-    cityOptions: null,
-
-    //Modal create new order
-    createOrderPending: false,
-    loadCountriesPending: false,
-    loadCitiesPending: false,
-    country: null,
-    city: null,
-    address: null,
-    createRes: null,
+    // //Modal create new order
+    // createOrderPending: false,
+    // loadCountriesPending: false,
+    // loadCitiesPending: false,
+    // country: null,
+    // city: null,
+    // address: null,
+    // createRes: null,
 
     //Modal update order
     updateOrderPending: false,
@@ -62,6 +54,9 @@ const initialState = {
 
     //Add To Cart
     cart: [],//{product:...,quantity:...}
+    // productDetail:[],
+    // customer:null,
+    order:null,
 }
 
 export default function orderReducers(state = initialState, action) {
@@ -106,18 +101,6 @@ export default function orderReducers(state = initialState, action) {
             state.deleteOrderPending = false
             break;
         case DELETE_ORDER_ERROR:
-            break;
-
-        //Modal Create New Order
-        case FETCH_COUNTRY_PENDING:
-            state.loadCountriesPending = true
-            break;
-        case FETCH_COUNTRY_SUCCESS:
-            state.loadCountriesPending = false
-            state.countryOptions = action.countryOptions
-            console.log(action.countryOptions)
-            break;
-        case FETCH_COUNTRY_ERROR:
             break;
 
         //Load Cities List
