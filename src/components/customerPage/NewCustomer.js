@@ -27,15 +27,15 @@ export const NewCustomer = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const {
-        loadCountriesPending,
-        countryOptions,
-        cityOptions,
-        country,
-        address,
-        city,
-        createCustomer,
-    } = useSelector((reduxData) => reduxData.customerReducers);
+        const {
+            loadCountriesPending,
+            countryOptions,
+            cityOptions,
+            country,
+            address,
+            city,
+            createCustomer,
+        } = useSelector((reduxData) => reduxData.customerReducers);
 
 
     useEffect(() => {

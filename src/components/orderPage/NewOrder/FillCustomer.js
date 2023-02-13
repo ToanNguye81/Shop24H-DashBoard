@@ -16,16 +16,17 @@ import {
     getEmail,
     getAddress
 } from '../../../actions/customer.actions';
-
-const theme = createTheme();
+import GoogleMaps from './Map';
 
 export const FillCustomer = () => {
     const dispatch = useDispatch();
     const {countryOptions,cityOptions,country,city,firstName,lastName,phone,email,address } = useSelector((reduxData) => reduxData.customerReducers);
 
     React.useEffect(() => {
-        dispatch(fetchCountry());
-    }, [countryOptions]);
+        if(!countryOptions.length){
+            dispatch(fetchCountry())
+        }
+    }, []);
 
     const handleCountryChange = (event) => {
         dispatch(getCountry(event.target.value));
@@ -51,12 +52,8 @@ export const FillCustomer = () => {
         dispatch(getAddress(event.target.value))
     }
 
-    const handleSubmit = (event) => {
-    };
-
     return (
         <Box component="form" noValidate
-            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
         >
             <Grid container spacing={2}>
@@ -104,6 +101,19 @@ export const FillCustomer = () => {
                     />
                 </Grid>
                 <Grid item xs={12}>
+                    {/* <TextField size="small"
+                        required
+                        fullWidth
+                        id="address"
+                        label="Address"
+                        type="address"
+                        name="address"
+                        value={address}
+                        onChange={handleChangeAddress}
+                    /> */}
+                    <GoogleMaps/>
+                </Grid>
+                <Grid item xs={12}>
                     <FormControl size="small" required fullWidth>
                         <InputLabel id="select-country">Country</InputLabel>
                         <Select
@@ -143,18 +153,7 @@ export const FillCustomer = () => {
                         
                     </FormControl>
                 </Grid>
-                <Grid item xs={12}>
-                    <TextField size="small"
-                        required
-                        fullWidth
-                        id="address"
-                        label="Address"
-                        type="address"
-                        name="address"
-                        value={address}
-                        onChange={handleChangeAddress}
-                    />
-                </Grid>
+               
             </Grid>
         </Box>
     );

@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import { AddToCart } from './NewOrder/AddToCart';
 import { Detail } from './NewOrder/Detail';
 import { FillCustomer } from './NewOrder/FillCustomer';
+import { CreateOrder } from './NewOrder/CreateOrder';
 
 const steps = [
     {
@@ -32,7 +33,7 @@ const steps = [
     },
     {
         label: 'Create Order',
-        element: <></>
+        element: <CreateOrder/>
     },
 ];
 

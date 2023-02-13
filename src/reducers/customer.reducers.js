@@ -41,7 +41,7 @@ const initialState = {
     currentPage: 1,
 
     //generation
-    countryOptions: null,
+    countryOptions: [],
     cityOptions: [],
 
     //Modal create new customer
