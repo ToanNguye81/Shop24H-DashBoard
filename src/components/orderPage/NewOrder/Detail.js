@@ -112,7 +112,7 @@ export const Detail = () => {
         </Grid>
       </Grid>
       <Grid >
-      <Typography level="display2">Total:</Typography>
+      <Typography level="display2" sx={{mt:2}}>Total:</Typography>
       </Grid>
     </React.Fragment>
 

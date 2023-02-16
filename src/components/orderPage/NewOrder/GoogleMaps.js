@@ -1,3 +1,4 @@
+
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -8,15 +9,17 @@ import Typography from '@mui/material/Typography';
 import parse from 'autosuggest-highlight/parse';
 import { debounce } from '@mui/material/utils';
 
-// This key was created specifically for the demo in mui.com.
-// You need to create a new one for your application.
-const GOOGLE_MAPS_API_KEY = '	AIzaSyDNI_ZWPqvdS6r6gPVO50I4TlYkfkZdXh8';
+//B1: Bật API Key
+// You need to create a new one for your application.=> shop24h
+//Key chưa có hiệu lực
+const GOOGLE_MAPS_API_KEY = 'AIzaSyCTP0a187WwV4KN63-LlCzVQj6lHtkzN1M';
+
+//B2: import library
 
 function loadScript(src, position, id) {
   if (!position) {
     return;
   }
-
   const script = document.createElement('script');
   script.setAttribute('async', '');
   script.setAttribute('id', id);
@@ -26,7 +29,7 @@ function loadScript(src, position, id) {
 
 const autocompleteService = { current: null };
 
-export default function GoogleMaps() {
+export function GoogleMaps() {
   const [value, setValue] = React.useState(null);
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState([]);
@@ -79,7 +82,6 @@ export default function GoogleMaps() {
         if (results) {
           newOptions = [...newOptions, ...results];
         }
-
         setOptions(newOptions);
       }
     });
@@ -92,6 +94,7 @@ export default function GoogleMaps() {
   return (
     <Autocomplete
       id="google-map-demo"
+      fullWidth
       getOptionLabel={(option) =>
         typeof option === 'string' ? option : option.description
       }
@@ -110,7 +113,7 @@ export default function GoogleMaps() {
         setInputValue(newInputValue);
       }}
       renderInput={(params) => (
-        <TextField {...params} label="Add a location" fullWidth  size="small"/>
+        <TextField {...params} label="Add a location" fullWidth />
       )}
       renderOption={(props, option) => {
         const matches =
@@ -143,9 +146,10 @@ export default function GoogleMaps() {
                 </Typography>
               </Grid>
             </Grid>
-          </li>
+            </li>
         );
       }}
     />
   );
 }
+

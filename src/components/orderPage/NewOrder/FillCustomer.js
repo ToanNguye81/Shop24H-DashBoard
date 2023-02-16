@@ -2,7 +2,6 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import { createTheme } from '@mui/material/styles';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -16,7 +15,7 @@ import {
     getEmail,
     getAddress
 } from '../../../actions/customer.actions';
-import GoogleMaps from './Map';
+// import { GoogleMaps } from './GoogleMaps';
 
 export const FillCustomer = () => {
     const dispatch = useDispatch();
@@ -101,7 +100,7 @@ export const FillCustomer = () => {
                     />
                 </Grid>
                 <Grid item xs={12}>
-                    {/* <TextField size="small"
+                    <TextField size="small"
                         required
                         fullWidth
                         id="address"
@@ -110,8 +109,8 @@ export const FillCustomer = () => {
                         name="address"
                         value={address}
                         onChange={handleChangeAddress}
-                    /> */}
-                    <GoogleMaps/>
+                    />
+                    {/* <GoogleMaps/> */}
                 </Grid>
                 <Grid item xs={12}>
                     <FormControl size="small" required fullWidth>
@@ -150,10 +149,8 @@ export const FillCustomer = () => {
                                 <MenuItem key="0" value="none">Không có thành phố</MenuItem>
                             }
                         </Select>
-                        
                     </FormControl>
                 </Grid>
-               
             </Grid>
         </Box>
     );
