@@ -53,7 +53,6 @@ const initialState = {
     lastName: "",
     phone: "",
     email: "",
-    resObj: null,
     customerId:null,
 
     //Modal update customer
