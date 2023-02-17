@@ -19,6 +19,7 @@ const TABLE_HEAD = [
   "Shipped Date",
   "Note",
   "Cost",
+  "Status",
   "Order Details",
 ]
 
@@ -28,7 +29,7 @@ export const OrderPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { orders, pending, totalOrder } = useSelector((reduxData) => reduxData.orderReducers);
 
-  console.log(orders)
+  // console.log(orders)
 
   useEffect(() => {
     dispatch(fetchOrder(rowsPerPage, page));
@@ -87,6 +88,7 @@ export const OrderPage = () => {
                               <TableCell>{formatTime(element.shippedDate)}</TableCell>
                               <TableCell>{element.note}</TableCell>
                               <TableCell>{element.cost}</TableCell>
+                              <TableCell>{element.status}</TableCell>
                               <TableCell>{element.orderDetails.map((orderDetail, index) =>
                                 <div key={index}>{orderDetail}</div>)}
                               </TableCell>

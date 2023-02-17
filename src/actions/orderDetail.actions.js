@@ -1,16 +1,4 @@
 import {
-    FETCH_COUNTRY_ERROR,
-    FETCH_COUNTRY_PENDING,
-    FETCH_COUNTRY_SUCCESS,
-
-    GET_CITY,
-    GET_ADDRESS,
-    GET_COUNTRY,
-
-    FETCH_CITY_ERROR,
-    FETCH_CITY_PENDING,
-    FETCH_CITY_SUCCESS,
-
     FETCH_ORDER_DETAILS_ERROR,
     FETCH_ORDER_DETAILS_PENDING,
     FETCH_ORDER_DETAILS_SUCCESS,
@@ -34,6 +22,7 @@ import {
 } from "../constants/orderDetail.constants";
 
 const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
+const gORDERS_API_URL = '//localhost:8000/orders';
 const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
 // const gCOUNTRY_API_URL="https://restcountries.com/v3.1/all" 
 // const gCOUNTRY_API_URL="https://countriesnow.space/api/v0.1/countries/states" 
@@ -85,136 +74,46 @@ export const fetchOrderDetail = (paramLimit, paramPage, paramCondition) => {
     }
 }
 
-//Load cities list with REST_API
-export const fetchCity = (paramIsoCountry) => {
-    return async (dispatch) => {
-        var headers = new Headers();
-        headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            headers: headers,
-            redirect: 'follow'
-        };
-
-        await dispatch({
-            type: FETCH_CITY_PENDING
-        });
-
-        try {
-            const allCitiesRes = await fetch(gCOUNTRY_API_URL + paramIsoCountry + "/cities", requestOptions);
-            const allCitiesObj = await allCitiesRes.json();
-            console.log(allCitiesObj)
-            return dispatch({
-                type: FETCH_CITY_SUCCESS,
-                cityOptions: allCitiesObj
-            })
-        } catch (err) {
-            return dispatch({
-                type: FETCH_CITY_ERROR,
-                error: err
-            })
-        }
-    }
-}
-
-//Load country list
-export const fetchCountry = () => {
-    return async (dispatch) => {
-        var headers = new Headers();
-        headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            headers: headers,
-            redirect: 'follow'
-        };
-
-        await dispatch({
-            type: FETCH_COUNTRY_PENDING
-        });
-
-        try {
-            const allCountriesRes = await fetch(gCOUNTRY_API_URL, requestOptions);
-            const allCountriesObj = await allCountriesRes.json();
-            return dispatch({
-                type: FETCH_COUNTRY_SUCCESS,
-                countryOptions: allCountriesObj
-            })
-        } catch (err) {
-            return dispatch({
-                type: FETCH_COUNTRY_ERROR,
-                error: err
-            })
-        }
-    }
-}
-
-//get country name
-export const getCountry = (paramCountry) => {
-    return {
-        type: GET_COUNTRY,
-        country: paramCountry,
-    }
-}
-
-//get city name
-export const getCity = (paramCity) => {
-    return {
-        type: GET_CITY,
-        city: paramCity
-    }
-}
-
-//get address 
-export const getAddress = (paramAddress) => {
-    return {
-        type: GET_ADDRESS,
-        address: paramAddress,
-    }
-}
-
 //Create new orderDetail
-export const createNewOrderDetail = (paramOrderDetail) => {
+export const createNewOrderDetail = (orderId,orderDetail) => {
+    const dataReq ={
+        product: orderDetail.product._id,
+        quantity: orderDetail.quantity
+    }
+    console.log(dataReq)
+    
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(dataReq)
+        };
 
-    const orderDetailInfo = getOrderDetailInfo(paramOrderDetail)
+        await dispatch({
+            type: CREATE_ORDER_DETAIL_PENDING
+        });
 
-    const isValid = validateOrderDetail(orderDetailInfo)
-
-    if (isValid) {
-        return async (dispatch) => {
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify(orderDetailInfo)
-            };
-
-            await dispatch({
-                type: CREATE_ORDER_DETAIL_PENDING
-            });
-
-            try {
-                const res = await fetch(gORDER_DETAILS_API_URL, requestOptions);
-                const resObj = await res.json();
-                console.log(res.ok)
-                if (!res.ok) {
-                    return dispatch({
-                        type: CREATE_ORDER_DETAIL_ERROR,
-                    })
-                }
-                console.log(resObj)
-                return dispatch({
-                    type: CREATE_ORDER_DETAIL_SUCCESS,
-                    data: resObj
-                })
-            } catch (err) {
+        try {
+            const res = await fetch(`${gORDERS_API_URL}/${orderId}/orderDetails`, requestOptions);
+            const resObj = await res.json();
+            console.log(res.ok)
+            if (!res.ok) {
                 return dispatch({
                     type: CREATE_ORDER_DETAIL_ERROR,
-                    error: err
                 })
             }
+            console.log(resObj)
+            return dispatch({
+                type: CREATE_ORDER_DETAIL_SUCCESS,
+                data: resObj.data
+            })
+        } catch (err) {
+            return dispatch({
+                type: CREATE_ORDER_DETAIL_ERROR,
+                error: err
+            })
         }
     }
 }
@@ -227,43 +126,43 @@ export const updateOrderDetail = async (paramOrderDetail) => {
     const isValid = await validateOrderDetail(orderDetailInfo);
     //call PUT API 
     if (isValid) {
-      return async (dispatch) => {
-        const requestOptions = {
-          method: 'PUT',
-          headers: {
-            "Content-Type": 'application/json',
-          },
-          body: JSON.stringify(orderDetailInfo),
-        };
-  
-        await dispatch({
-          type: UPDATE_ORDER_DETAIL_PENDING,
-        });
-  
-        try {
-          const res = await fetch(gORDER_DETAILS_API_URL, requestOptions);
-          const resObj = await res.json();
-  
-          if (!res.ok) {
-            return dispatch({
-              type: UPDATE_ORDER_DETAIL_ERROR,
+        return async (dispatch) => {
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(orderDetailInfo),
+            };
+
+            await dispatch({
+                type: UPDATE_ORDER_DETAIL_PENDING,
             });
-          }
-  
-          return dispatch({
-            type: UPDATE_ORDER_DETAIL_SUCCESS,
-            data: resObj,
-          });
-        } catch (err) {
-          return dispatch({
-            type: UPDATE_ORDER_DETAIL_ERROR,
-            error: err,
-          });
-        }
-      };
+
+            try {
+                const res = await fetch(gORDER_DETAILS_API_URL, requestOptions);
+                const resObj = await res.json();
+
+                if (!res.ok) {
+                    return dispatch({
+                        type: UPDATE_ORDER_DETAIL_ERROR,
+                    });
+                }
+
+                return dispatch({
+                    type: UPDATE_ORDER_DETAIL_SUCCESS,
+                    data: resObj,
+                });
+            } catch (err) {
+                return dispatch({
+                    type: UPDATE_ORDER_DETAIL_ERROR,
+                    error: err,
+                });
+            }
+        };
     }
     return isValid;
-  };
+};
 
 //Delete orderDetail
 export const deleteOrderDetail = (paramOrderDetailId) => {
@@ -277,7 +176,7 @@ export const deleteOrderDetail = (paramOrderDetailId) => {
         });
 
         try {
-            const res = await fetch(gORDER_DETAILS_API_URL+`/${paramOrderDetailId}`, requestOptions);
+            const res = await fetch(gORDER_DETAILS_API_URL + `/${paramOrderDetailId}`, requestOptions);
             const resObj = await res.json();
             console.log(res.ok)
             if (!res.ok) {
@@ -292,19 +191,6 @@ export const deleteOrderDetail = (paramOrderDetailId) => {
         } catch (err) {
             console.log(err)
         }
-    }
-}
-
-//Get OrderDetail Information 
-export const getOrderDetailInfo = (paramOrderDetail) => {
-    return {
-        email: paramOrderDetail.get('email'),
-        phone: paramOrderDetail.get('phone'),
-        firstName: paramOrderDetail.get('firstName'),
-        lastName: paramOrderDetail.get('lastName'),
-        country: paramOrderDetail.get('country'),
-        city: paramOrderDetail.get('city'),
-        address: paramOrderDetail.get('address'),
     }
 }
 

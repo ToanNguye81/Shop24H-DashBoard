@@ -205,12 +205,54 @@ export const getPhone = (paramPhone) => {
 }
 
 
+// //Create new customer
+// export const createNewCustomer = (paramCustomer) => {
+
+//     const customerInfo = getCustomerInfo(paramCustomer)
+
+//     const isValid = validateCustomer(customerInfo)
+
+//     if (isValid) {
+//         return async (dispatch) => {
+//             const requestOptions = {
+//                 method: 'POST',
+//                 headers: {
+//                     "Content-Type": 'application/json'
+//                 },
+//                 body: JSON.stringify(customerInfo)
+//             };
+
+//             await dispatch({
+//                 type: CREATE_CUSTOMER_PENDING
+//             });
+
+//             try {
+//                 const res = await fetch(gCUSTOMER_API_URL, requestOptions);
+//                 const resObj = await res.json();
+//                 console.log(res.ok)
+//                 if (!res.ok) {
+//                     return dispatch({
+//                         type: CREATE_CUSTOMER_ERROR,
+//                     })
+//                 }
+//                 return dispatch({
+//                     type: CREATE_CUSTOMER_SUCCESS,
+//                     resObj: resObj
+//                 })
+//             } catch (err) {
+//                 return dispatch({
+//                     type: CREATE_CUSTOMER_ERROR,
+//                     error: err
+//                 })
+//             }
+//         }
+//     }
+// }
+
 //Create new customer
-export const createNewCustomer = (paramCustomer) => {
+export const createNewCustomer = (customerData) => {
 
-    const customerInfo = getCustomerInfo(paramCustomer)
-
-    const isValid = validateCustomer(customerInfo)
+    const isValid = validateCustomer(customerData)
 
     if (isValid) {
         return async (dispatch) => {
@@ -219,7 +261,7 @@ export const createNewCustomer = (paramCustomer) => {
                 headers: {
                     "Content-Type": 'application/json'
                 },
-                body: JSON.stringify(customerInfo)
+                body: JSON.stringify(customerData)
             };
 
             await dispatch({
@@ -237,7 +279,7 @@ export const createNewCustomer = (paramCustomer) => {
                 }
                 return dispatch({
                     type: CREATE_CUSTOMER_SUCCESS,
-                    resObj: resObj
+                    data: resObj.data
                 })
             } catch (err) {
                 return dispatch({

@@ -3,14 +3,6 @@ import {
     FETCH_ORDER_DETAILS_ERROR,
     FETCH_ORDER_DETAILS_SUCCESS,
 
-    FETCH_COUNTRY_PENDING,
-    FETCH_COUNTRY_SUCCESS,
-    FETCH_COUNTRY_ERROR,
-
-    FETCH_CITY_PENDING,
-    FETCH_CITY_SUCCESS,
-    FETCH_CITY_ERROR,
-
     CREATE_ORDER_DETAIL_PENDING,
     CREATE_ORDER_DETAIL_SUCCESS,
     CREATE_ORDER_DETAIL_ERROR,
@@ -23,9 +15,6 @@ import {
     DELETE_ORDER_DETAIL_SUCCESS,
     DELETE_ORDER_DETAIL_ERROR,
 
-    GET_COUNTRY,
-    GET_CITY,
-    GET_ADDRESS
 } from "../constants/orderDetail.constants";
 
 const initialState = {
@@ -35,25 +24,15 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-    
-    //generation
-    countryOptions: null,
-    cityOptions: null,
-    
-    //Modal create new orderDetail
-    createOrderDetailPending: false,
-    loadCountriesPending: false,
-    loadCitiesPending: false,
-    country: null,
-    city: null,
-    address: null,
-    createRes: null,
 
     //Modal update orderDetail
     updateOrderDetailPending: false,
 
     //Modal Delete OrderDetail
     deleteOrderDetailPending: false,
+     
+    //Create OrderDetail
+    orderDetailId:null
 
 }
 
@@ -88,6 +67,8 @@ export default function orderDetailReducers(state = initialState, action) {
             break;
         case UPDATE_ORDER_DETAIL_SUCCESS:
             state.updateOrderDetailPending = false
+            state.orderDetailId=action.data._id
+            console.log(action.data._id)
             break;
         case UPDATE_ORDER_DETAIL_ERROR:
             break;
@@ -100,40 +81,6 @@ export default function orderDetailReducers(state = initialState, action) {
             state.deleteOrderDetailPending = false
             break;
         case DELETE_ORDER_DETAIL_ERROR:
-            break;
-
-        //Modal Create New OrderDetail
-        case FETCH_COUNTRY_PENDING:
-            state.loadCountriesPending = true
-            break;
-        case FETCH_COUNTRY_SUCCESS:
-            state.loadCountriesPending = false
-            state.countryOptions = action.countryOptions
-            console.log(action.countryOptions)
-            break;
-        case FETCH_COUNTRY_ERROR:
-            break;
-
-        //Load Cities List
-        case FETCH_CITY_PENDING:
-            state.loadCitiesPending = true
-            break;
-        case FETCH_CITY_SUCCESS:
-            state.loadCitiesPending = false
-            state.cityOptions = action.cityOptions
-            break;
-        case FETCH_CITY_ERROR:
-            break;
-
-        //Get address select
-        case GET_COUNTRY:
-            state.country = action.country
-            break;
-        case GET_CITY:
-            state.city = action.city
-            break;
-        case GET_ADDRESS:
-            state.address = action.address
             break;
 
         default:

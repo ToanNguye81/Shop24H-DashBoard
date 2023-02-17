@@ -27,6 +27,7 @@ export const FillCustomer = () => {
         }
     }, []);
 
+
     const handleCountryChange = (event) => {
         dispatch(getCountry(event.target.value));
         dispatch(fetchCity(event.target.value));
@@ -124,7 +125,7 @@ export const FillCustomer = () => {
                             value={country}
                         >
                             {countryOptions ?
-                                countryOptions.map((countryOption, index) => <MenuItem key={index} id={countryOption.id} value={countryOption.iso2}>{countryOption.name}</MenuItem>) :
+                                countryOptions.map((countryOption, index) => <MenuItem key={index} id={countryOption.iso2}  value={countryOption.iso2}>{countryOption.name}</MenuItem>) :
                                 null
                             }
                         </Select>
@@ -145,7 +146,7 @@ export const FillCustomer = () => {
                             value={cityOptions.length || cityOptions ? city : "none"}
                         >
                             {cityOptions.length && cityOptions ?
-                                cityOptions.map((cityOptions, index) => <MenuItem key={index} id={cityOptions.id} value={cityOptions.id}>{cityOptions.name}</MenuItem>) :
+                                cityOptions.map((cityOptions, index) => <MenuItem key={index} id={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) :
                                 <MenuItem key="0" value="none">Không có thành phố</MenuItem>
                             }
                         </Select>

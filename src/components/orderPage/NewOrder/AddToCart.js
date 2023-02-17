@@ -25,7 +25,7 @@ export const AddToCart = () => {
   const { products, pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
   const { cart} = useSelector((reduxData) => reduxData.orderReducers);
 
-  console.log(cart)
+ 
   const condition = name.trim()? { name: name.trim() } : undefined;
   const handleClickFind = () => {
     dispatch(fetchProduct(5, 0, condition))

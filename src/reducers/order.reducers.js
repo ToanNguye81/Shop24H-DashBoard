@@ -19,10 +19,6 @@ import {
     DELETE_ORDER_SUCCESS,
     DELETE_ORDER_ERROR,
 
-    GET_COUNTRY,
-    GET_CITY,
-    GET_ADDRESS,
-
     ADD_FIRST_PRODUCT,
     ADD_NEW_PRODUCT,
     DECREASE_QUANTITY,
@@ -37,15 +33,6 @@ const initialState = {
     error: null,
     currentPage: 1,
 
-    // //Modal create new order
-    // createOrderPending: false,
-    // loadCountriesPending: false,
-    // loadCitiesPending: false,
-    // country: null,
-    // city: null,
-    // address: null,
-    // createRes: null,
-
     //Modal update order
     updateOrderPending: false,
 
@@ -54,9 +41,8 @@ const initialState = {
 
     //Add To Cart
     cart: [],//{product:...,quantity:...}
-    // productDetail:[],
-    // customer:null,
-    order:null,
+    //Create Order
+    orderId:null,
 }
 
 export default function orderReducers(state = initialState, action) {
@@ -71,6 +57,7 @@ export default function orderReducers(state = initialState, action) {
             state.orders = action.orders;
             break;
         case FETCH_ORDERS_ERROR:
+            state.error = action.error
             break;
 
         //Create Order
@@ -79,8 +66,11 @@ export default function orderReducers(state = initialState, action) {
             break;
         case CREATE_ORDER_SUCCESS:
             state.createOrderPending = false
+            state.orderId=action.data._id
+            console.log(action.data._id)
             break;
         case CREATE_ORDER_ERROR:
+            state.error = action.error
             break;
 
         //Update Order
@@ -91,6 +81,7 @@ export default function orderReducers(state = initialState, action) {
             state.updateOrderPending = false
             break;
         case UPDATE_ORDER_ERROR:
+            state.error = action.error
             break;
 
         //Delete Order
@@ -101,6 +92,7 @@ export default function orderReducers(state = initialState, action) {
             state.deleteOrderPending = false
             break;
         case DELETE_ORDER_ERROR:
+            state.error = action.error
             break;
 
         //Load Cities List
@@ -112,17 +104,6 @@ export default function orderReducers(state = initialState, action) {
             state.cityOptions = action.cityOptions
             break;
         case FETCH_CITY_ERROR:
-            break;
-
-        //Get address select
-        case GET_COUNTRY:
-            state.country = action.country
-            break;
-        case GET_CITY:
-            state.city = action.city
-            break;
-        case GET_ADDRESS:
-            state.address = action.address
             break;
 
         //Add To Cart

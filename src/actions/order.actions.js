@@ -1,16 +1,4 @@
 import {
-    FETCH_COUNTRY_ERROR,
-    FETCH_COUNTRY_PENDING,
-    FETCH_COUNTRY_SUCCESS,
-
-    GET_CITY,
-    GET_ADDRESS,
-    GET_COUNTRY,
-
-    FETCH_CITY_ERROR,
-    FETCH_CITY_PENDING,
-    FETCH_CITY_SUCCESS,
-
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_PENDING,
     FETCH_ORDERS_SUCCESS,
@@ -34,10 +22,7 @@ import {
 } from "../constants/order.constants";
 
 const gORDERS_API_URL = '//localhost:8000/orders';
-const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
-// const gCOUNTRY_API_URL="https://restcountries.com/v3.1/all" 
-// const gCOUNTRY_API_URL="https://countriesnow.space/api/v0.1/countries/states" 
-const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
+const gCUSTOMER_API_URL = '//localhost:8000/customers';
 
 export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
     // build the request string
@@ -84,110 +69,15 @@ export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
     }
 }
 
-//Load cities list with REST_API
-export const fetchCity = (paramIsoCountry) => {
-    return async (dispatch) => {
-        var headers = new Headers();
-        headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            headers: headers,
-            redirect: 'follow'
-        };
-
-        await dispatch({
-            type: FETCH_CITY_PENDING
-        });
-
-        try {
-            const allCitiesRes = await fetch(gCOUNTRY_API_URL + paramIsoCountry + "/cities", requestOptions);
-            const allCitiesObj = await allCitiesRes.json();
-            console.log(allCitiesObj)
-            return dispatch({
-                type: FETCH_CITY_SUCCESS,
-                cityOptions: allCitiesObj
-            })
-        } catch (err) {
-            return dispatch({
-                type: FETCH_CITY_ERROR,
-                error: err
-            })
-        }
-    }
-}
-
-//Load country list
-export const fetchCountry = () => {
-    return async (dispatch) => {
-        var headers = new Headers();
-        headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
-
-        var requestOptions = {
-            method: 'GET',
-            headers: headers,
-            redirect: 'follow'
-        };
-
-        await dispatch({
-            type: FETCH_COUNTRY_PENDING
-        });
-
-        try {
-            const allCountriesRes = await fetch(gCOUNTRY_API_URL, requestOptions);
-            const allCountriesObj = await allCountriesRes.json();
-            return dispatch({
-                type: FETCH_COUNTRY_SUCCESS,
-                countryOptions: allCountriesObj
-            })
-        } catch (err) {
-            return dispatch({
-                type: FETCH_COUNTRY_ERROR,
-                error: err
-            })
-        }
-    }
-}
-
-//get country name
-export const getCountry = (paramCountry) => {
-    return {
-        type: GET_COUNTRY,
-        country: paramCountry,
-    }
-}
-
-//get city name
-export const getCity = (paramCity) => {
-    return {
-        type: GET_CITY,
-        city: paramCity
-    }
-}
-
-//get address 
-export const getAddress = (paramAddress) => {
-    return {
-        type: GET_ADDRESS,
-        address: paramAddress,
-    }
-}
-
 //Create new order
-export const createNewOrder = (paramOrder) => {
-
-    const orderInfo = getOrderInfo(paramOrder)
-
-    const isValid = validateOrder(orderInfo)
-
-    if (isValid) {
+export const createNewOrder = (customerId) => {
+    // if (isValid) {
         return async (dispatch) => {
             const requestOptions = {
                 method: 'POST',
                 headers: {
                     "Content-Type": 'application/json'
                 },
-                body: JSON.stringify(orderInfo)
             };
 
             await dispatch({
@@ -195,7 +85,7 @@ export const createNewOrder = (paramOrder) => {
             });
 
             try {
-                const res = await fetch(gORDERS_API_URL, requestOptions);
+                const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}/orders`, requestOptions);
                 const resObj = await res.json();
                 console.log(res.ok)
                 if (!res.ok) {
@@ -206,7 +96,7 @@ export const createNewOrder = (paramOrder) => {
                 console.log(resObj)
                 return dispatch({
                     type: CREATE_ORDER_SUCCESS,
-                    data: resObj
+                    data: resObj.data
                 })
             } catch (err) {
                 return dispatch({
@@ -215,7 +105,6 @@ export const createNewOrder = (paramOrder) => {
                 })
             }
         }
-    }
 }
 
 // Update order
@@ -294,70 +183,6 @@ export const deleteOrder = (paramOrderId) => {
     }
 }
 
-//Get Order Information 
-export const getOrderInfo = (paramOrder) => {
-    return {
-        email: paramOrder.get('email'),
-        phone: paramOrder.get('phone'),
-        firstName: paramOrder.get('firstName'),
-        lastName: paramOrder.get('lastName'),
-        country: paramOrder.get('country'),
-        city: paramOrder.get('city'),
-        address: paramOrder.get('address'),
-    }
-}
-
-//Valid date Order Input
-export const validateOrder = (paramOrder) => {
-    if (paramOrder.firstName.trim() === "") {
-        alert("You have entered an invalid First Name")
-        return false
-    }
-    if (paramOrder.lastName.trim() === "") {
-        alert("You have entered an invalid Fast Name")
-        return false
-    }
-    if (!validatePhone(paramOrder.phone)) {
-        alert("You have entered an invalid Phone!")
-        return false
-    }
-    if (!validateEmail(paramOrder.email)) {
-        alert("You have entered an invalid Email!")
-        return false
-    }
-    if (paramOrder.country.trim() === "") {
-        alert("You have entered an invalid Country")
-        return false
-    }
-    if (paramOrder.city.trim() === "") {
-        alert("You have entered an invalid City")
-        return false
-    }
-    if (paramOrder.address.trim() === "") {
-        alert("You have entered an invalid Address")
-        return false
-    }
-    return true
-}
-
-//Valid Email
-export const validateEmail = (paramEmail) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(paramEmail)) {
-        return (true)
-    }
-    return (false)
-}
-
-// Validate Phone Number
-export const validatePhone = (paramPhone) => {
-    var phone = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-    if ((paramPhone.match(phone))) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 
 //Xử lý nút giảm quantity
 export const decreaseQuantity = (paramIndex) => {

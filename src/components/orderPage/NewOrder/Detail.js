@@ -25,7 +25,7 @@ export const Detail = () => {
   const { pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
   const { cart } = useSelector((reduxData) => reduxData.orderReducers);
 
-  console.log(cart)
+  
   useEffect(() => {
     dispatch(fetchProduct(rowsPerPage, page));
   }, [rowsPerPage, page]);

@@ -7,7 +7,6 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField, FormLabel, ButtonGroup, IconButton, Menu } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCity, fetchCountry,  getAddress, getCity, getCountry } from '../../actions/orderDetail.actions';
 
 const style = {
     position: 'absolute',
@@ -27,16 +26,11 @@ export const EditOrderDetail = ({ paramOrderDetail }) => {
     const [firstName, setFirstName] = React.useState(paramOrderDetail.firstName)
     const [lastName, setLastName] = React.useState(paramOrderDetail.lastName)
     const [phone, setPhone] = React.useState(paramOrderDetail.phone)
-    const [country, setCountry] = React.useState(paramOrderDetail.country)
-    const [city, setCity] = React.useState(paramOrderDetail.city)
-    const [address, setAddress] = React.useState(paramOrderDetail.address)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const {
-        countryOptions,
-        cityOptions,
         createNewOrderDetail,
     } = useSelector((reduxData) => reduxData.orderDetailReducers);
 
@@ -45,11 +39,6 @@ export const EditOrderDetail = ({ paramOrderDetail }) => {
         const data = new FormData(event.currentTarget);
         dispatch(createNewOrderDetail(data));
     };
-    
-    useEffect(() => {
-        dispatch(fetchCountry());
-    }, []);
-    
     const handleChangeEmail = (event) => {
         setEmail(event.target.value)
     }
@@ -61,16 +50,6 @@ export const EditOrderDetail = ({ paramOrderDetail }) => {
     }
     const handleChangePhone = (event) => {
         setPhone(event.target.value)
-    }
-    const handleCountryChange = (event) => {
-        setCountry(event.target.value);
-        dispatch(fetchCity(event.target.value));
-    }
-    const handleCityChange = (event) => {
-        setCity(event.target.value)
-    }
-    const handleAddressChange = (event) => {
-        setAddress(event.target.value)
     }
 
     return (
@@ -103,31 +82,6 @@ export const EditOrderDetail = ({ paramOrderDetail }) => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField size="small" required fullWidth id="email" label="Email" value={email} name="email" onChange={handleChangeEmail} />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControl size="small" required fullWidth>
-                                        <InputLabel id="select-country">Country</InputLabel>
-                                        <Select onChange={handleCountryChange} labelId="select-country" autoWidth id="country" label="Country" name="country" value={country}>
-                                            {countryOptions ?
-                                                countryOptions.map((countryOption, index) => <MenuItem key={countryOption.id} value={countryOption.iso2}>{countryOption.name}</MenuItem>) :
-                                                null
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <FormControl size="small" required fullWidth>
-                                        <InputLabel id="select-city">City</InputLabel>
-                                        <Select onChange={handleCityChange} labelId="select-city" autoWidth id="city" label="City" name="city" value={city}>
-                                            {cityOptions ?
-                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) : null
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField onChange={handleAddressChange} size="small" required fullWidth id="address" label="Address" name="address" value={address} />
                                 </Grid>
                             </Grid>
                             <Grid container justifyContent="flex-end" spacing={2}>

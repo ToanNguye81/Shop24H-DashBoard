@@ -54,6 +54,7 @@ const initialState = {
     phone: "",
     email: "",
     resObj: null,
+    customerId:null,
 
     //Modal update customer
     updateCustomerPending: false,
@@ -79,6 +80,7 @@ export default function customerReducers(state = initialState, action) {
             state.customers = action.customers;
             break;
         case FETCH_CUSTOMER_ERROR:
+            state.error=state.error
             break;
 
         //Create Customer
@@ -87,9 +89,11 @@ export default function customerReducers(state = initialState, action) {
             break;
         case CREATE_CUSTOMER_SUCCESS:
             state.createCustomerPending = false
+            state.customerId=action.data._id
+            console.log(action.data)
             break;
         case CREATE_CUSTOMER_ERROR:
-            state.resObj = resObj
+            state.error = action.error
             break;
 
         //Update Customer
@@ -100,6 +104,7 @@ export default function customerReducers(state = initialState, action) {
             state.updateCustomerPending = false
             break;
         case UPDATE_CUSTOMER_ERROR:
+            state.error = action.error
             break;
 
         //Delete Customer
@@ -110,6 +115,7 @@ export default function customerReducers(state = initialState, action) {
             state.deleteCustomerPending = false
             break;
         case DELETE_CUSTOMER_ERROR:
+            state.error = action.error
             break;
 
         //Modal component select  
@@ -121,6 +127,7 @@ export default function customerReducers(state = initialState, action) {
             state.countryOptions = action.countryOptions
             break;
         case FETCH_COUNTRY_ERROR:
+            state.error = action.error
             break;
 
         //Load Cities List
@@ -132,6 +139,7 @@ export default function customerReducers(state = initialState, action) {
             state.cityOptions = action.cityOptions
             break;
         case FETCH_CITY_ERROR:
+            state.error = action.error
             break;
 
         //Get customer data
