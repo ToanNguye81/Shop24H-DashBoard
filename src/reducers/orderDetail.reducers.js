@@ -43,7 +43,6 @@ export default function orderDetailReducers(state = initialState, action) {
             state.pending = true;
             break;
         case FETCH_ORDER_DETAILS_SUCCESS:
-            console.log(action.orderDetails)
             state.pending = false;
             state.totalOrderDetail = action.totalOrderDetail;
             state.orderDetails = action.orderDetails;
@@ -68,7 +67,6 @@ export default function orderDetailReducers(state = initialState, action) {
         case UPDATE_ORDER_DETAIL_SUCCESS:
             state.updateOrderDetailPending = false
             state.orderDetailId=action.data._id
-            console.log(action.data._id)
             break;
         case UPDATE_ORDER_DETAIL_ERROR:
             break;

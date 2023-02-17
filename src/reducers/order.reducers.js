@@ -67,7 +67,6 @@ export default function orderReducers(state = initialState, action) {
         case CREATE_ORDER_SUCCESS:
             state.createOrderPending = false
             state.orderId=action.data._id
-            console.log(action.data._id)
             break;
         case CREATE_ORDER_ERROR:
             state.error = action.error

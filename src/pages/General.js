@@ -29,7 +29,6 @@ export const General = () => {
                         dispatch(createNewOrderDetail(orderId, orderDetail)).then((detailResult) => {
                             // Handle result of createNewOrderDetail dispatch
                             console.log("Tạo đơn hàng thành công")
-                            console.log(detailResult)
                         })
                     })
                 }

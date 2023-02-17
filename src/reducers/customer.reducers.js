@@ -74,7 +74,6 @@ export default function customerReducers(state = initialState, action) {
             state.pending = true;
             break;
         case FETCH_CUSTOMER_SUCCESS:
-            console.log(action.customers)
             state.pending = false;
             state.totalCustomer = action.totalCustomer;
             state.customers = action.customers;
@@ -90,7 +89,6 @@ export default function customerReducers(state = initialState, action) {
         case CREATE_CUSTOMER_SUCCESS:
             state.createCustomerPending = false
             state.customerId=action.data._id
-            console.log(action.data)
             break;
         case CREATE_CUSTOMER_ERROR:
             state.error = action.error

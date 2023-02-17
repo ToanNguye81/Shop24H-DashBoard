@@ -45,7 +45,6 @@ export const AddToCart = () => {
   }
 
   const handleClickAdd=(product)=>{
-    console.log(product)
       dispatch(addToCart(cart,product))
   }
 

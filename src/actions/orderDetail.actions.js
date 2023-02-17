@@ -55,7 +55,7 @@ export const fetchOrderDetail = (paramLimit, paramPage, paramCondition) => {
             }
             // parse the response as JSON
             const resObj = await res.json();
-            console.log(resObj)
+            
 
             //Dispatch state
             return dispatch({
@@ -80,7 +80,6 @@ export const createNewOrderDetail = (orderId,orderDetail) => {
         product: orderDetail.product._id,
         quantity: orderDetail.quantity
     }
-    console.log(dataReq)
     
     return async (dispatch) => {
         const requestOptions = {
@@ -98,13 +97,13 @@ export const createNewOrderDetail = (orderId,orderDetail) => {
         try {
             const res = await fetch(`${gORDERS_API_URL}/${orderId}/orderDetails`, requestOptions);
             const resObj = await res.json();
-            console.log(res.ok)
+            
             if (!res.ok) {
                 return dispatch({
                     type: CREATE_ORDER_DETAIL_ERROR,
                 })
             }
-            console.log(resObj)
+            
             return dispatch({
                 type: CREATE_ORDER_DETAIL_SUCCESS,
                 data: resObj.data
@@ -178,13 +177,13 @@ export const deleteOrderDetail = (paramOrderDetailId) => {
         try {
             const res = await fetch(gORDER_DETAILS_API_URL + `/${paramOrderDetailId}`, requestOptions);
             const resObj = await res.json();
-            console.log(res.ok)
+            
             if (!res.ok) {
                 return dispatch({
                     type: DELETE_ORDER_DETAIL_ERROR,
                 })
             }
-            console.log(resObj)
+            
             return dispatch({
                 type: DELETE_ORDER_DETAIL_SUCCESS,
             })

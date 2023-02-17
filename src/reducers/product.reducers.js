@@ -18,7 +18,6 @@ export default function productReducers(state = initialState, action) {
             state.pending = true;
             break;
         case FETCH_PRODUCTS_SUCCESS:
-            console.log(action.products)
             state.pending = false;
             state.totalProduct = action.totalProduct;
             state.products = action.products;

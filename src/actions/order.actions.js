@@ -28,7 +28,7 @@ export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
-    console.log(paramLimit, paramPage, paramCondition)
+    // console.log(paramLimit, paramPage, paramCondition)
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -87,13 +87,13 @@ export const createNewOrder = (customerId) => {
             try {
                 const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}/orders`, requestOptions);
                 const resObj = await res.json();
-                console.log(res.ok)
+                
                 if (!res.ok) {
                     return dispatch({
                         type: CREATE_ORDER_ERROR,
                     })
                 }
-                console.log(resObj)
+                
                 return dispatch({
                     type: CREATE_ORDER_SUCCESS,
                     data: resObj.data
@@ -167,13 +167,13 @@ export const deleteOrder = (paramOrderId) => {
         try {
             const res = await fetch(gORDERS_API_URL + `/${paramOrderId}`, requestOptions);
             const resObj = await res.json();
-            console.log(res.ok)
+            
             if (!res.ok) {
                 return dispatch({
                     type: DELETE_ORDER_ERROR,
                 })
             }
-            console.log(resObj)
+            
             return dispatch({
                 type: DELETE_ORDER_SUCCESS,
             })
@@ -203,10 +203,8 @@ export const increaseQuantity = (paramIndex) => {
 
 //Xử lý sự kiện nút AddToCart
 export const addToCart = (cart, product) => {
-    console.log(product)
     //Hàm xử lý thêm sản phẩm lần đầu
     if (cart.length === 0) {
-        console.log(product)
         return {
             type: ADD_FIRST_PRODUCT,
             product: product,

@@ -102,7 +102,6 @@ export const fetchCity = (paramIsoCountry) => {
         try {
             const allCitiesRes = await fetch(gCOUNTRY_API_URL + paramIsoCountry + "/cities", requestOptions);
             const allCitiesObj = await allCitiesRes.json();
-            console.log(allCitiesObj)
             return dispatch({
                 type: FETCH_CITY_SUCCESS,
                 cityOptions: allCitiesObj
@@ -205,50 +204,6 @@ export const getPhone = (paramPhone) => {
 }
 
 
-// //Create new customer
-// export const createNewCustomer = (paramCustomer) => {
-
-//     const customerInfo = getCustomerInfo(paramCustomer)
-
-//     const isValid = validateCustomer(customerInfo)
-
-//     if (isValid) {
-//         return async (dispatch) => {
-//             const requestOptions = {
-//                 method: 'POST',
-//                 headers: {
-//                     "Content-Type": 'application/json'
-//                 },
-//                 body: JSON.stringify(customerInfo)
-//             };
-
-//             await dispatch({
-//                 type: CREATE_CUSTOMER_PENDING
-//             });
-
-//             try {
-//                 const res = await fetch(gCUSTOMER_API_URL, requestOptions);
-//                 const resObj = await res.json();
-//                 console.log(res.ok)
-//                 if (!res.ok) {
-//                     return dispatch({
-//                         type: CREATE_CUSTOMER_ERROR,
-//                     })
-//                 }
-//                 return dispatch({
-//                     type: CREATE_CUSTOMER_SUCCESS,
-//                     resObj: resObj
-//                 })
-//             } catch (err) {
-//                 return dispatch({
-//                     type: CREATE_CUSTOMER_ERROR,
-//                     error: err
-//                 })
-//             }
-//         }
-//     }
-// }
-
 //Create new customer
 export const createNewCustomer = (customerData) => {
 
@@ -271,7 +226,6 @@ export const createNewCustomer = (customerData) => {
             try {
                 const res = await fetch(gCUSTOMER_API_URL, requestOptions);
                 const resObj = await res.json();
-                console.log(res.ok)
                 if (!res.ok) {
                     return dispatch({
                         type: CREATE_CUSTOMER_ERROR,
@@ -351,13 +305,11 @@ export const deleteCustomer = (paramCustomerId) => {
         try {
             const res = await fetch(gCUSTOMER_API_URL+`/${paramCustomerId}`, requestOptions);
             const resObj = await res.json();
-            console.log(res.ok)
             if (!res.ok) {
                 return dispatch({
                     type: DELETE_CUSTOMER_ERROR,
                 })
             }
-            console.log(resObj)
             return dispatch({
                 type: DELETE_CUSTOMER_SUCCESS,
             })
