@@ -53,7 +53,8 @@ export const Detail = () => {
           direction="column"
           justifyContent="flex-start"
           alignItems="stretch"
-          maxHeight={200} mt={2}>
+          maxHeight={200}
+          mt={2}>
           {pending ?
             <Grid item fullWidth textAlign="center">
               <CircularProgress />
