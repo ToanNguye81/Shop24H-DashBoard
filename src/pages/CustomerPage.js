@@ -20,7 +20,7 @@ const TABLE_HEAD = [
   "Phone",
   "Email",
   "Address",
-  "Orders",
+  "OrderCodes",
 ]
 
 export const CustomerPage = () => {
@@ -88,7 +88,7 @@ export const CustomerPage = () => {
                               <TableCell>{element.phone}</TableCell>
                               <TableCell>{element.email}</TableCell>
                               <TableCell>{element.address}</TableCell>
-                              <TableCell>{element.orders.map((order, index) => <div>{order}</div>)}</TableCell>
+                              <TableCell>{element.orders.map((order, index) => <div>{order.orderCode}</div>)}</TableCell>
                             </TableRow>
                           </>)
                       })}
