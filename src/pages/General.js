@@ -11,7 +11,7 @@ import { createNewOrderDetail } from "../actions/orderDetail.actions"
 import { createNewOrder } from "../actions/order.actions"
 import { SnackbarProvider, useSnackbar } from "notistack"
 
-const Content = () => {
+const GeneralContent = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
     const { cart } = useSelector((reduxData) => reduxData.orderReducers);
@@ -24,7 +24,7 @@ const Content = () => {
 
             const customerId = customerResult.data._id
 
-            if(!cart.length){
+            if (!cart.length) {
                 // Warning if cart is empty
                 enqueueSnackbar("Your cart is empty", { variant: "warning" })
             }
@@ -41,14 +41,14 @@ const Content = () => {
                     await Promise.all(orderDetailPromises)
 
                     // Show success Snackbar
-                    enqueueSnackbar("Order created successfully", { variant: "success" })
+                    enqueueSnackbar(`Create successfully Order: ${orderResult.data.orderCode}`, { variant: "success" })
                 }
             }
 
         } catch (error) {
             // Handle any errors here
             console.log(error)
-              // Show success Snackbar
+            // Show success Snackbar
             enqueueSnackbar('Something went wrong.', { variant: "error" })
         }
     }
@@ -67,7 +67,7 @@ const Content = () => {
 }
 
 export const General = () => (
-  <SnackbarProvider maxSnack={3}>
-    <Content />
-  </SnackbarProvider>
+    <SnackbarProvider maxSnack={3}>
+        <GeneralContent />
+    </SnackbarProvider>
 );

@@ -16,6 +16,7 @@ import { OrderDetailPage } from './pages/OrderDetailPage';
 import { NewCustomer } from './components/customerPage/NewCustomer';
 import { GoogleMaps } from './components/orderPage/NewOrder/GoogleMaps';
 import { General } from './pages/General';
+import { Nhap } from './pages/Nhap';
 
 // ----------------------------------------------------------------------
 
@@ -28,6 +29,7 @@ export default function Router() {
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DemoPage /> },
         { path: 'general', element: <General /> },
+        // { path: 'general', element: <Nhap /> },
         { path: 'orders', element: <OrderPage /> },
         { path: 'orderDetails', element: <OrderDetailPage  /> },
         { path: 'customers', element: <CustomerPage /> },
