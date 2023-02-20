@@ -11,7 +11,7 @@ import { createNewOrderDetail } from "../actions/orderDetail.actions"
 import { createNewOrder } from "../actions/order.actions"
 import { SnackbarProvider, useSnackbar } from "notistack"
 
-const GeneralContent = () => {
+const CreateOrderContent = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
     const { cart } = useSelector((reduxData) => reduxData.orderReducers);
@@ -66,8 +66,8 @@ const GeneralContent = () => {
     )
 }
 
-export const General = () => (
+export const CreateOrder = () => (
     <SnackbarProvider maxSnack={3}>
-        <GeneralContent />
+        <CreateOrderContent />
     </SnackbarProvider>
 );

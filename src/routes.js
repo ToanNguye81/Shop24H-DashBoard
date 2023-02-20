@@ -15,7 +15,7 @@ import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { NewCustomer } from './components/customerPage/NewCustomer';
 import { GoogleMaps } from './components/orderPage/NewOrder/GoogleMaps';
-import { General } from './pages/General';
+import { CreateOrder } from './pages/CreateOrder';
 import { Nhap } from './pages/Nhap';
 
 // ----------------------------------------------------------------------
@@ -28,7 +28,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/dashboard/app" />, index: true },
         { path: 'app', element: <DemoPage /> },
-        { path: 'general', element: <General /> },
+        { path: 'createOrder', element: <CreateOrder /> },
         // { path: 'general', element: <Nhap /> },
         { path: 'orders', element: <OrderPage /> },
         { path: 'orderDetails', element: <OrderDetailPage  /> },

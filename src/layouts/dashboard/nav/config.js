@@ -12,8 +12,8 @@ const navConfig = [
     icon: icon('ic_analytics'),
   },
   {
-    title: 'General',
-    path: '/dashboard/general',
+    title: 'Create Order',
+    path: '/dashboard/createOrder',
     icon: icon('ic_general'),
   },
   {
