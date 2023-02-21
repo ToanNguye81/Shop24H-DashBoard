@@ -1,3 +1,4 @@
+import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 import { AUTHENTICATED, LOGOUT } from '../constants/login.constants';
 
@@ -6,7 +7,7 @@ export const authenticate = (email, password) => {
         try {
             // Make an API call to your server to get the token
             //   const response = await fetch('//api/auth/login', {
-                const response = await fetch('//localhost:8000/login', {
+            const response = await fetch('//localhost:8000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -15,10 +16,11 @@ export const authenticate = (email, password) => {
             });
             const data = await response.json();
             const token = data.token;
-            
+
             // Decode the token to get the user data
             const user = jwtDecode(token);
-
+            // set Cookie
+            Cookies.set("token", token)
             // Set the token and user data in the store
             dispatch({
                 type: AUTHENTICATED,
@@ -33,7 +35,30 @@ export const authenticate = (email, password) => {
 };
 
 export const logout = () => {
-    return dispatch => {
-        dispatch({ type: LOGOUT });
+    // Cookies.remove("token")
+    // return dispatch => {
+    //     dispatch({ type: LOGOUT });
+    // };
+
+    return async dispatch => {
+        try {   
+            // Make an API call to your server to get the token
+            //   const response = await fetch('//api/auth/login', {
+            const res = await fetch('//localhost:8000/users', {
+                method: 'GET',
+                credentials: 'include'
+            });
+            const resObj = await res.json();
+            // const token = data.token;
+            console.log(resObj)
+            if (!res.ok) {
+              return dispatch({
+                //Crasdaf
+              });
+            }
+        } catch (error) {
+            console.error(error.message);
+            alert(error.message)
+        }
     };
 };
