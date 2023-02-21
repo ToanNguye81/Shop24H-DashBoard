@@ -46,7 +46,8 @@ export const fetchCustomer = (paramLimit, paramPage, paramCondition) => {
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
-        redirect: 'follow'
+        redirect: 'follow',
+        credentials: 'include'
     };
 
     return async (dispatch) => {
@@ -124,7 +125,7 @@ export const fetchCountry = () => {
         var requestOptions = {
             method: 'GET',
             headers: headers,
-            redirect: 'follow'
+            redirect: 'follow',
         };
 
         await dispatch({
