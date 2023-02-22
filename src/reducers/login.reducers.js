@@ -3,7 +3,7 @@ import { AUTHENTICATED, LOGOUT } from "../constants/login.constants";
 
 const initialState = {
   isAuthenticated:Cookies.get("isAuth"),
-  token: Cookie.get(),
+  token: null,
   user:null,
 };
 
