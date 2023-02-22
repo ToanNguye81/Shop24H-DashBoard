@@ -28,7 +28,6 @@ export const CustomerPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { customers, pending, totalCustomer, error } = useSelector((reduxData) => reduxData.customerReducers);
-
   useEffect(() => {
     dispatch(fetchCustomer(rowsPerPage, page));
   }, [rowsPerPage, page]);
@@ -55,7 +54,7 @@ export const CustomerPage = () => {
 
         {error ?
           <Stack sx={{ width: '100%' }} spacing={2}>
-            <Alert severity="error">
+            <Alert severity="error" variant="outlined" >
               <AlertTitle>Warning</AlertTitle>
               <strong>You do not have permission to access this data</strong>
             </Alert>
