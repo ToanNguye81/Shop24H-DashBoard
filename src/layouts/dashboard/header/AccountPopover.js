@@ -2,6 +2,9 @@ import { useState } from 'react';
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
+import { useDispatch} from 'react-redux';
+import Cookies from 'js-cookie';
+import { logout } from '../../../actions/login.actions';
 // mocks_
 /* import account from '../../../_mock/account'; */
 
@@ -23,16 +26,18 @@ const MENU_OPTIONS = [
   },
 ];
 
-const account = {
-  displayName: 'Toan Nguyen',
-  email: 'n.t.quoctoan@gmail.com',
-  photoURL: '/assets/images/avatars/avatar_default.jpg',
-};
 
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
+  const dispatch=useDispatch()
+
+  const account = {
+    displayName: Cookies.get("userName")||"user name",
+    email:Cookies.get("email")||"email@gmail.com",
+    photoURL: '/assets/images/avatars/avatar_default.jpg',
+  };
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -40,6 +45,7 @@ export default function AccountPopover() {
 
   const handleClose = () => {
     setOpen(null);
+    dispatch(logout())
   };
 
   return (

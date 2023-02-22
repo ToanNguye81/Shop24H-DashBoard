@@ -21,13 +21,10 @@ export default function LoginForm() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
 
   const handleClick = () => {
-    // navigate('/dashboard', { replace: true });
     dispatch(authenticate(email, password))
-    console.log({ email, password })
   };
 
   const handleClickLockOut = () => {
-    console.log("Log Out")
     dispatch(logout())
   };
 

@@ -4,7 +4,7 @@ import { AUTHENTICATED, LOGOUT } from "../constants/login.constants";
 const initialState = {
   isAuthenticated:Cookies.get("isAuth"),
   token: null,
-  user:null,
+  user:Cookies.get("user"),
 };
 
 export default function loginReducers(state = initialState, action) {
