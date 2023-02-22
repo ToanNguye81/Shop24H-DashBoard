@@ -1,9 +1,10 @@
+import Cookies from "js-cookie";
 import { AUTHENTICATED, LOGOUT } from "../constants/login.constants";
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated:Cookies.get("isAuth"),
   token: null,
-  user: null,
+  user:null,
 };
 
 export default function loginReducers(state = initialState, action) {

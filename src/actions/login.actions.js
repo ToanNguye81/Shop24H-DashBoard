@@ -6,7 +6,6 @@ export const authenticate = (email, password) => {
     return async dispatch => {
         try {
             // Make an API call to your server to get the token
-            //   const response = await fetch('//api/auth/login', {
             const response = await fetch('//localhost:8000/login', {
                 method: 'POST',
                 headers: {
@@ -21,6 +20,7 @@ export const authenticate = (email, password) => {
             const user = jwtDecode(token);
             // set Cookie
             Cookies.set("token", token)
+            Cookies.set("isAuth", true)
             // Set the token and user data in the store
             dispatch({
                 type: AUTHENTICATED,
@@ -35,30 +35,31 @@ export const authenticate = (email, password) => {
 };
 
 export const logout = () => {
-    // Cookies.remove("token")
-    // return dispatch => {
-    //     dispatch({ type: LOGOUT });
-    // };
-
-    return async dispatch => {
-        try {   
-            // Make an API call to your server to get the token
-            //   const response = await fetch('//api/auth/login', {
-            const res = await fetch('//localhost:8000/users', {
-                method: 'GET',
-                credentials: 'include'
-            });
-            const resObj = await res.json();
-            // const token = data.token;
-            console.log(resObj)
-            if (!res.ok) {
-              return dispatch({
-                //Crasdaf
-              });
-            }
-        } catch (error) {
-            console.error(error.message);
-            alert(error.message)
-        }
+    Cookies.remove("token")
+    Cookies.remove("isAuth")
+    return dispatch => {
+        dispatch({ type: LOGOUT });
     };
+
+    // return async dispatch => {
+    //     try {   
+    //         // Make an API call to your server to get the token
+    //         //   const response = await fetch('//api/auth/login', {
+    //         const res = await fetch('//localhost:8000/users', {
+    //             method: 'GET',
+    //             credentials: 'include'
+    //         });
+    //         const resObj = await res.json();
+    //         // const token = data.token;
+    //         console.log(resObj)
+    //         if (!res.ok) {
+    //           return dispatch({
+    //             //Crasdaf
+    //           });
+    //         }
+    //     } catch (error) {
+    //         console.error(error.message);
+    //         alert(error.message)
+    //     }
+    // };
 };

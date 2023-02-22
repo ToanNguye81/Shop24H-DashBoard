@@ -62,7 +62,7 @@ export const fetchCustomer = (paramLimit, paramPage, paramCondition) => {
 
             // throw an error if the response is not successful
             if (!res.ok) {
-                throw new Error(`Could not fetch customers, status: ${res.status}`);
+                throw new Error(`Could not load customers, status: ${res.status}`);
             }
             // parse the response as JSON
             const resObj = await res.json();
@@ -76,6 +76,7 @@ export const fetchCustomer = (paramLimit, paramPage, paramCondition) => {
 
         } catch (err) {
             //if error
+            console.log(err)
             return dispatch({
                 type: FETCH_CUSTOMER_ERROR,
                 error: err
@@ -140,6 +141,7 @@ export const fetchCountry = () => {
                 countryOptions: allCountriesObj
             })
         } catch (err) {
+            
             return dispatch({
                 type: FETCH_COUNTRY_ERROR,
                 error: err

@@ -7,6 +7,7 @@ import { LoadingButton } from '@mui/lab';
 import Iconify from '../../../components/iconify';
 import { useDispatch, useSelector } from 'react-redux';
 import { authenticate, logout } from '../../../actions/login.actions';
+import Cookies from 'js-cookie';
 
 // ----------------------------------------------------------------------
 

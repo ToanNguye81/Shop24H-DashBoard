@@ -78,7 +78,8 @@ export default function customerReducers(state = initialState, action) {
             state.customers = action.customers;
             break;
         case FETCH_CUSTOMER_ERROR:
-            state.error=state.error
+            state.pending = false;
+            state.error=action.error
             break;
 
         //Create Customer

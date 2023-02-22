@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 // @mui
-import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, CircularProgress, TablePagination } from '@mui/material';
+import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, CircularProgress, TablePagination, Alert, AlertTitle } from '@mui/material';
 // components
 import Scrollbar from '../components/scrollbar';
 import React, { useEffect } from "react";
@@ -27,7 +27,7 @@ export const CustomerPage = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { customers, pending, totalCustomer } = useSelector((reduxData) => reduxData.customerReducers);
+  const { customers, pending, totalCustomer, error } = useSelector((reduxData) => reduxData.customerReducers);
 
   useEffect(() => {
     dispatch(fetchCustomer(rowsPerPage, page));
@@ -53,61 +53,70 @@ export const CustomerPage = () => {
           <NewCustomer />
         </Stack>
 
-        <Card>
-          {pending ?
-            <Grid item md={12} sm={12} lg={12} xs={12} textAlign="center">
-              <CircularProgress />
-            </Grid>
-            :
-            <>
-              <Scrollbar>
-                <TableContainer sx={{ minWidth: 800 }} >
-                  <Table >
-                    <TableHead>
-                      <TableRow >
-                        {TABLE_HEAD.map((title, index) => {
+        {error ?
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error">
+              <AlertTitle>Warning</AlertTitle>
+              <strong>You do not have permission to access this data</strong>
+            </Alert>
+          </Stack>
+          :
+          <Card>
+            {pending ?
+              <Grid item md={12} sm={12} lg={12} xs={12} textAlign="center">
+                <CircularProgress />
+              </Grid>
+              :
+              <>
+                <Scrollbar>
+                  <TableContainer sx={{ minWidth: 800 }} >
+                    <Table >
+                      <TableHead>
+                        <TableRow >
+                          {TABLE_HEAD.map((title, index) => {
+                            return (
+                              <TableCell align="left" key={index}>{title}</TableCell>
+                            )
+                          })}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {customers.map((element, index) => {
                           return (
-                            <TableCell align="left" key={index}>{title}</TableCell>
-                          )
+                            <>
+                              <TableRow key={element._id}>
+                                <TableCell align="left">
+                                  <EditCustomer paramCustomer={element} />
+                                  <DeleteCustomer idValue={element._id} />
+                                </TableCell>
+                                <TableCell>{element.lastName}</TableCell>
+                                <TableCell>{element.firstName}</TableCell>
+                                <TableCell>{element.country}</TableCell>
+                                <TableCell>{element.city}</TableCell>
+                                <TableCell>{element.phone}</TableCell>
+                                <TableCell>{element.email}</TableCell>
+                                <TableCell>{element.address}</TableCell>
+                                <TableCell>{element.orders.map((order, index) => <div>{order.orderCode}</div>)}</TableCell>
+                              </TableRow>
+                            </>)
                         })}
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {customers.map((element, index) => {
-                        return (
-                          <>
-                            <TableRow key={element._id}>
-                              <TableCell align="left">
-                                    <EditCustomer paramCustomer={element}/>
-                                    <DeleteCustomer idValue={element._id}/>
-                              </TableCell>
-                              <TableCell>{element.lastName}</TableCell>
-                              <TableCell>{element.firstName}</TableCell>
-                              <TableCell>{element.country}</TableCell>
-                              <TableCell>{element.city}</TableCell>
-                              <TableCell>{element.phone}</TableCell>
-                              <TableCell>{element.email}</TableCell>
-                              <TableCell>{element.address}</TableCell>
-                              <TableCell>{element.orders.map((order, index) => <div>{order.orderCode}</div>)}</TableCell>
-                            </TableRow>
-                          </>)
-                      })}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Scrollbar>
-            </>
-          }
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25, 50, 100]}
-            component="div"
-            count={totalCustomer}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Card>
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                </Scrollbar>
+              </>
+            }
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50, 100]}
+              component="div"
+              count={totalCustomer}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
+        }
       </Container>
     </React.Fragment>
   )
