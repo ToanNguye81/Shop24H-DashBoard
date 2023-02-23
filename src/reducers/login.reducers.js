@@ -3,8 +3,10 @@ import { AUTHENTICATED, LOGOUT } from "../constants/login.constants";
 
 const initialState = {
   isAuthenticated:Cookies.get("isAuth"),
-  token: null,
-  user:null,
+  token: Cookies.get("token"),
+  userName:Cookies.get("userName"),
+  email:Cookies.get("email"),
+  role:Cookies.get("role")
 };
 
 export default function loginReducers(state = initialState, action) {
@@ -12,12 +14,16 @@ export default function loginReducers(state = initialState, action) {
     case AUTHENTICATED:
       state.isAuthenticated = true
       state.token = action.token
-      state.user = action.user
+      state.userName = action.user.userName
+      state.email = action.user.email
+      state.role = action.user.role
       break;
     case LOGOUT:
       state.isAuthenticated = false
-      state.token = null
-      state.user=null
+      state.token =null
+      state.userName = null
+      state.email = null
+      state.role = null
       break;
     default:
       break;

@@ -2,6 +2,10 @@ import {
     FETCH_ORDERS_PENDING,
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_SUCCESS,
+    
+   GET_ORDER_BY_ID_PENDING,
+   GET_ORDER_BY_ID_ERROR,
+   GET_ORDER_BY_ID_SUCCESS,
 
     FETCH_CITY_PENDING,
     FETCH_CITY_SUCCESS,
@@ -32,6 +36,7 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
+    orderCondition:"",
 
     //Modal update order
     updateOrderPending: false,
@@ -43,6 +48,8 @@ const initialState = {
     cart: [],//{product:...,quantity:...}
     //Create Order
     orderId:null,
+    //
+    orderById:null,
 }
 
 export default function orderReducers(state = initialState, action) {
@@ -59,6 +66,20 @@ export default function orderReducers(state = initialState, action) {
         case FETCH_ORDERS_ERROR:
             state.error = action.error
             break;
+
+        //Get order by Id
+        //Load Order
+        case GET_ORDER_BY_ID_PENDING:
+            state.pending = true;
+            break;
+        case GET_ORDER_BY_ID_SUCCESS:
+            state.pending = false;
+            state.orderById = action.orderById;
+            break;
+        case GET_ORDER_BY_ID_ERROR:
+            state.error = action.error
+            break;
+
 
         //Create Order
         case CREATE_ORDER_PENDING:

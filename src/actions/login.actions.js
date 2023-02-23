@@ -23,6 +23,7 @@ export const authenticate = (email, password) => {
             Cookies.set("isAuth", true)
             Cookies.set("userName", user.userName)
             Cookies.set("email", user.email)
+            Cookies.set("role", user.role)
             // Set the token and user data in the store
             dispatch({
                 type: AUTHENTICATED,
@@ -41,6 +42,7 @@ export const logout = () => {
     Cookies.remove("isAuth")
     Cookies.remove("userName")
     Cookies.remove("email")
+    Cookies.remove("role")
     return dispatch => {
         dispatch({ type: LOGOUT });
     };

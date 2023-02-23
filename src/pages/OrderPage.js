@@ -11,8 +11,6 @@ import { NewOrder } from '../components/orderPage/NewOrder';
 import { EditOrder } from '../components/orderPage/EditOrder';
 import { DeleteOrder } from '../components/orderPage/DeleteOrder';
 import { formatTime } from '../utils/formatTime';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 
 const TABLE_HEAD = [
@@ -23,7 +21,6 @@ const TABLE_HEAD = [
   "Note",
   "Cost",
   "Status",
-  "Order Details",
 ]
 
 export const OrderPage = () => {
@@ -31,9 +28,6 @@ export const OrderPage = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { orders, pending, totalOrder } = useSelector((reduxData) => reduxData.orderReducers);
-  const [open, setOpen] = React.useState(false);
-
-  // console.log(orders)
 
   useEffect(() => {
     dispatch(fetchOrder(rowsPerPage, page));
@@ -93,20 +87,7 @@ export const OrderPage = () => {
                               <TableCell>{element.note}</TableCell>
                               <TableCell>{element.cost}</TableCell>
                               <TableCell>{element.status}</TableCell>
-                              {/* <TableCell>{element.orderDetails.map((orderDetail, index) =>
-                                <div key={index}>{orderDetail}</div>)}
-                              </TableCell> */}
-                              <TableCell>
-                                <IconButton
-                                  aria-label="expand row"
-                                  size="small"
-                                  onClick={() => setOpen(!open)}
-                                >
-                                  {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                                </IconButton>
-                              </TableCell>
                             </TableRow>
-
                           </>)
                       })}
                     </TableBody>

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, Paper, IconButton, Typography, Box } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../../actions/product.actions";
+import { fetchProduct } from "../../actions/product.actions";
 import { Add, Remove } from "@mui/icons-material";
-import { decreaseQuantity, increaseQuantity } from "../../../actions/order.actions";
+import { decreaseQuantity, increaseQuantity } from "../../actions/order.actions";
 
 
 const TABLE_HEAD = [
@@ -20,7 +20,6 @@ export const Detail = () => {
 
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
-  // const [count, setCount] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
   const { cart } = useSelector((reduxData) => reduxData.orderReducers);

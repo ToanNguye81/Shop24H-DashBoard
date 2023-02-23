@@ -2,9 +2,9 @@
 
 import React from "react"
 import { Button } from "@mui/material"
-import { Detail } from "../components/orderPage/NewOrder/Detail"
-import { AddToCart } from "../components/orderPage/NewOrder/AddToCart"
-import { FillCustomer } from "../components/orderPage/NewOrder/FillCustomer"
+import { Detail } from "../components/createOrder/Detail"
+import { AddToCart } from "../components/createOrder/AddToCart"
+import { CustomerInfo } from "../components/createOrder/CustomerInfo"
 import { useDispatch, useSelector } from "react-redux"
 import { createNewCustomer } from "../actions/customer.actions"
 import { createNewOrderDetail } from "../actions/orderDetail.actions"
@@ -60,7 +60,7 @@ const CreateOrderContent = () => {
             <h2>Cart Detail</h2>
             <Detail />
             <h2>Customer information</h2>
-            <FillCustomer />
+            <CustomerInfo />
             <Button sx={{ mt: 3 }} variant="contained" onClick={handleCreateOrder}>Create Order</Button>
         </React.Fragment>
     )

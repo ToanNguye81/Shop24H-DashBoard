@@ -119,10 +119,8 @@ export const createNewOrderDetail = (orderId,orderDetail) => {
 
 // Update orderDetail
 export const updateOrderDetail = async (paramOrderDetail) => {
-    // get orderDetail info
-    const orderDetailInfo = await getOrderDetailInfo(paramOrderDetail);
     // validate data
-    const isValid = await validateOrderDetail(orderDetailInfo);
+    const isValid = await validateOrderDetail(paramOrderDetail);
     //call PUT API 
     if (isValid) {
         return async (dispatch) => {
@@ -131,7 +129,7 @@ export const updateOrderDetail = async (paramOrderDetail) => {
                 headers: {
                     "Content-Type": 'application/json',
                 },
-                body: JSON.stringify(orderDetailInfo),
+                body: JSON.stringify(paramOrderDetail),
             };
 
             await dispatch({

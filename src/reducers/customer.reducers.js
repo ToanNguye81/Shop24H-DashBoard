@@ -39,6 +39,7 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
+    orders:[],
 
     //generation
     countryOptions: [],

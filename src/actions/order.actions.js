@@ -2,6 +2,10 @@ import {
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_PENDING,
     FETCH_ORDERS_SUCCESS,
+    
+    GET_ORDER_BY_ID_ERROR,
+    GET_ORDER_BY_ID_PENDING,
+    GET_ORDER_BY_ID_SUCCESS,
 
     CREATE_ORDER_PENDING,
     CREATE_ORDER_SUCCESS,
@@ -21,14 +25,14 @@ import {
     ADD_FIRST_PRODUCT
 } from "../constants/order.constants";
 
-const gORDERS_API_URL = '//localhost:8000/orders';
+const gORDER_API_URL = '//localhost:8000/orders';
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
 
 export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
-    // console.log(paramLimit, paramPage, paramCondition)
+    console.log({paramLimit, paramPage, paramCondition})
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -43,7 +47,7 @@ export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
             });
 
             //fetch Order
-            const res = await fetch(`${gORDERS_API_URL}?${request}`, requestOptions);
+            const res = await fetch(`${gORDER_API_URL}?${request}`, requestOptions);
 
             // throw an error if the response is not successful
             if (!res.ok) {
@@ -51,7 +55,7 @@ export const fetchOrder = (paramLimit, paramPage, paramCondition) => {
             }
             // parse the response as JSON
             const resObj = await res.json();
-
+            console.log(resObj)
             //Dispatch state
             return dispatch({
                 type: FETCH_ORDERS_SUCCESS,
@@ -107,12 +111,93 @@ export const createNewOrder = (customerId) => {
         }
 }
 
+//Get Order By Id
+export const getOrderById = (orderId) => {
+   
+    console.log(orderId)
+    const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    return async (dispatch) => {
+        try {
+            // dispatch pending state to update the UI
+            await dispatch({
+                type: GET_ORDER_BY_ID_PENDING
+            });
+
+            //fetch Order
+            const res = await fetch(`${gORDER_API_URL}/${orderId}`, requestOptions);
+
+            // throw an error if the response is not successful
+            if (!res.ok) {
+                throw new Error(`Could get order By Id, status: ${res.status}`);
+            }
+            // parse the response as JSON
+            const resObj = await res.json();
+            console.log(resObj)
+            //Dispatch state
+            return dispatch({
+                type: GET_ORDER_BY_ID_SUCCESS,
+                orderById: resObj.data
+            })
+
+        } catch (err) {
+            //if error
+            return dispatch({
+                type: GET_ORDER_BY_ID_ERROR,
+                error: err
+            })
+        }
+    }
+}
+
+// export const getOrderById = (orderId) => {
+    
+//     const requestOptions = {
+//         method: 'GET',
+//         redirect: 'follow',
+//         credentials: 'include'
+//     };
+
+//     return async (dispatch) => {
+//         try {
+//             // dispatch pending state to update the UI
+//             await dispatch({
+//                 type: GET_ORDER_BY_ID_PENDING
+//             });
+
+//             //fetch Order
+//             const res = await fetch(`${gORDER_API_URL}/${orderId}`, requestOptions);
+
+//             // throw an error if the response is not successful
+//             if (!res.ok) {
+//                 throw new Error(`Couldn't get order by ID, status: ${res.status}`);
+//             }
+//             // parse the response as JSON
+//             const resObj = await res.json();
+//             console.log(resObj)
+//             //Dispatch state
+//             return dispatch({
+//                 type: GET_ORDER_BY_ID_SUCCESS,
+//                 orders: resObj.data
+//             })
+
+//         } catch (err) {
+//             //if error
+//             return dispatch({
+//                 type: GET_ORDER_BY_ID_ERROR,
+//                 error: err
+//             })
+//         }
+//     }
+// }
+
+
 // Update order
 export const updateOrder = async (paramOrder) => {
-    // get order info
-    const orderInfo = await getOrderInfo(paramOrder);
-    // validate data
-    const isValid = await validateOrder(orderInfo);
+    const isValid=validateOrder(paramOrder)
     //call PUT API 
     if (isValid) {
         return async (dispatch) => {
@@ -121,7 +206,7 @@ export const updateOrder = async (paramOrder) => {
                 headers: {
                     "Content-Type": 'application/json',
                 },
-                body: JSON.stringify(orderInfo),
+                body: JSON.stringify(paramOrder),
             };
 
             await dispatch({
@@ -129,7 +214,7 @@ export const updateOrder = async (paramOrder) => {
             });
 
             try {
-                const res = await fetch(gORDERS_API_URL, requestOptions);
+                const res = await fetch(gORDER_API_URL, requestOptions);
                 const resObj = await res.json();
 
                 if (!res.ok) {
@@ -165,7 +250,7 @@ export const deleteOrder = (paramOrderId) => {
         });
 
         try {
-            const res = await fetch(gORDERS_API_URL + `/${paramOrderId}`, requestOptions);
+            const res = await fetch(gORDER_API_URL + `/${paramOrderId}`, requestOptions);
             const resObj = await res.json();
             
             if (!res.ok) {
@@ -230,4 +315,38 @@ export const addToCart = (cart, product) => {
         product: product,
         quantity: 1,
     }
+}
+
+//Valid Order parram
+export const validateOrder=(paramOrder)=>{
+    const {}=paramOrder
+    if (paramOrderDetail.firstName.trim() === "") {
+        alert("You have entered an invalid First Name")
+        return false
+    }
+    if (paramOrderDetail.lastName.trim() === "") {
+        alert("You have entered an invalid Fast Name")
+        return false
+    }
+    if (!validatePhone(paramOrderDetail.phone)) {
+        alert("You have entered an invalid Phone!")
+        return false
+    }
+    if (!validateEmail(paramOrderDetail.email)) {
+        alert("You have entered an invalid Email!")
+        return false
+    }
+    if (paramOrderDetail.country.trim() === "") {
+        alert("You have entered an invalid Country")
+        return false
+    }
+    if (paramOrderDetail.city.trim() === "") {
+        alert("You have entered an invalid City")
+        return false
+    }
+    if (paramOrderDetail.address.trim() === "") {
+        alert("You have entered an invalid Address")
+        return false
+    }
+    return true
 }

@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../../actions/product.actions";
+import { fetchProduct } from "../../actions/product.actions";
 import { AddShoppingCartSharp } from "@mui/icons-material";
-import { addToCart } from "../../../actions/order.actions";
+import { addToCart } from "../../actions/order.actions";
 
 
 const TABLE_HEAD = [

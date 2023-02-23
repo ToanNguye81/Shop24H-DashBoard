@@ -14,10 +14,10 @@ import {
     getPhone,
     getEmail,
     getAddress
-} from '../../../actions/customer.actions';
+} from '../../actions/customer.actions';
 // import { GoogleMaps } from './GoogleMaps';
 
-export const FillCustomer = () => {
+export const CustomerInfo = () => {
     const dispatch = useDispatch();
     const {countryOptions,cityOptions,country,city,firstName,lastName,phone,email,address } = useSelector((reduxData) => reduxData.customerReducers);
 
