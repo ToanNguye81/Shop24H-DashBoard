@@ -1,5 +1,5 @@
 
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useParams, useRoutes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 // layouts
@@ -20,7 +20,7 @@ import { CreateOrder } from './pages/CreateOrder';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
-
+  const {customerId}=useParams()
   const authRoutes = {
     path: '/dashboard/',
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
@@ -30,7 +30,8 @@ export default function Router() {
       { path: 'createOrder', element: <CreateOrder /> },
       { path: "orders", element: <OrderPage /> },
       { path: 'orderDetails', element: <OrderDetailPage /> },
-      { path: 'customers', element: <CustomerPage /> },
+      { path: 'customers', element: <CustomerPage/> },
+      { path: 'customers/:customerId/orders', element: <OrderPage /> },
       { path: 'products', element: <ProductPage /> },
       { path: 'demo', element: <DemoPage /> },
       { path: 'demo2', element: <ProductsPage /> },

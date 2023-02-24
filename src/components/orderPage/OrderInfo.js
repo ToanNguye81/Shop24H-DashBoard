@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { } from '../../actions/customer.actions';
+import { } from '../../actions/order.actions';
 export const OrderInfo = () => {
     const { orderById } = useSelector(reduxData => reduxData.orderReducers)
     const { orderCode,orderDate,shippedDate,note,cost,status } = orderById

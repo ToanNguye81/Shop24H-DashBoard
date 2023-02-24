@@ -7,16 +7,9 @@ import {
   TableCell,
   TableHead,
   Button,
-  TablePagination,
-  Pagination
 } from "@mui/material";
-import React,
-{
-  useEffect,
-  useState
-} from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getAllCustomer } from "../../actions/customer.actions";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import Scrollbar from "../scrollbar/Scrollbar";
 import { DeleteCustomer } from "./DeleteCustomer";
 import { EditCustomer } from "./EditCustomer";
@@ -34,53 +27,14 @@ const TABLE_HEAD =
     "OrderCodes",
   ];
 
-export const CustomerTable = ({ customers, pending, totalCustomer }) => {
-  //   const dispatch = useDispatch();
-  // const dispatch = useDispatch();
-
-  // const [page, setPage] = useState(0);
-  //   const [open, setOpen] = React.useState(false);
-  // const [rowsPerPage, setRowsPerPage] = useState(5);
-  //   const { customers, pending, totalCustomer, error } = useSelector(
-  //     (reduxData) => reduxData.customerReducers
-  //   );
-  //   const { role } = useSelector((reduxData) => reduxData.loginReducers);
-
-  //   useEffect(() => {
-  //     dispatch(getAllCustomer(rowsPerPage, page));
-  //   }, [rowsPerPage, page, role]);
-
-  //   const handleChangeRowsPerPage = (event) => {
-  //     setPage(0);
-  //     setRowsPerPage(parseInt(event.target.value, 10));
-  //   };
-
-  //   const handleChangePage = (event, newPage) => {
-  //     setPage(newPage);
-  //   };
-  // const [page, setPage] = useState(0);
-  // const [rowsPerPage, setRowsPerPage] = useState(5);
-  // const handleChangeRowsPerPage = (event) => {
-  //   setPage(0);
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  // };
-
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-  // const { role } = useSelector((reduxData) => reduxData.loginReducers);
-
-  // useEffect(() => {
-  //   dispatch(getAllCustomer(rowsPerPage, page));
-  // }, [rowsPerPage, page, role]);
-
+export const CustomerTable = ({ customers, pending }) => {
+  const navigate=useNavigate()
 
   const handleClickOrderCode = async (event) => {
-    console.log(event.target.value);
-    await dispatch(getOrderById(event.target.value))
-    await setOpen(true)
+    const customerId=event.target.value
+    navigate(`/dashboard/customers/${customerId}/orders`)
   };
-  
+
   return (
     <React.Fragment>
       {pending ?

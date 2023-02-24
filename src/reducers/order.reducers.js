@@ -62,6 +62,7 @@ export default function orderReducers(state = initialState, action) {
             state.pending = false;
             state.totalOrder = action.totalOrder;
             state.orders = action.orders;
+            state.error=null;
             break;
         case FETCH_ORDERS_ERROR:
             state.error = action.error

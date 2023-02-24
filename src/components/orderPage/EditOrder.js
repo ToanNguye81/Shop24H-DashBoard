@@ -22,39 +22,37 @@ const style = {
 
 export const EditOrder = ({ paramOrder }) => {
     const dispatch = useDispatch();
-    const [email, setEmail] = React.useState(paramOrder.email);
-    const [firstName, setFirstName] = React.useState(paramOrder.firstName)
-    const [lastName, setLastName] = React.useState(paramOrder.lastName)
-    const [phone, setPhone] = React.useState(paramOrder.phone)
+    const [orderDate, setOrderDate] = React.useState(paramOrder.orderDate)
+    const [orderCode] = React.useState(paramOrder.orderCode)
+    const [cost, setCost] = React.useState(paramOrder.cost);
+    const [shippedDate, setShippedDate] = React.useState(paramOrder.shippedDate)
+    const [status, setStatus] = React.useState(paramOrder.status)
+    const [note, setNote] = React.useState(paramOrder.note)
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const {
-        countryOptions,
-        cityOptions,
-        createNewOrder,
-    } = useSelector((reduxData) => reduxData.orderReducers);
-
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        dispatch(createNewOrder(data));
+        // dispatch(updateOrder(data));
     };
     
-    const handleChangeEmail = (event) => {
-        setEmail(event.target.value)
+    const handleChangeCost = (event) => {
+        setCost(event.target.value)
     }
-    const handleChangeFirstName = (event) => {
-        setFirstName(event.target.value)
+    const handleChangeOrderDate = (event) => {
+        setOrderDate(event.target.value)
     }
-    const handleChangeLastName = (event) => {
-        setLastName(event.target.value)
+    const handleChangeShippedDate = (event) => {
+        setShippedDate(event.target.value)
     }
-    const handleChangePhone = (event) => {
-        setPhone(event.target.value)
+    const handleChangeStatus = (event) => {
+        setStatus(event.target.value)
     }
-
+    const handleChangeNote = (event) => {
+        setNote(event.target.value)
+    }
 
     return (
         <React.Fragment>
@@ -76,18 +74,23 @@ export const EditOrder = ({ paramOrder }) => {
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField size="small" required fullWidth id="firstName" label="First Name" name="firstName" value={firstName} onChange={handleChangeFirstName} />
+                                    <TextField size="small" required fullWidth id="orderCode" label="Order Code" name="orderCode" value={orderCode} disabled/>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField size="small" required fullWidth id="lastName" label="Last Name" name="lastName" value={lastName} onChange={handleChangeLastName} />
+                                    <TextField size="small" required fullWidth id="orderDate" label="Order Date" name="orderDate" value={orderDate} onChange={handleChangeOrderDate} />
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <TextField size="small" required fullWidth id="phone" label="Phone" value={phone} name="phone" onChange={handleChangePhone} />
+                                <Grid item xs={12} sm={6}>
+                                    <TextField size="small" required fullWidth id="shippedDate" label="Shipped Date" value={shippedDate} name="shippedDate" onChange={handleChangeShippedDate} />
                                 </Grid>
-                                <Grid item xs={12}>
-                                    <TextField size="small" required fullWidth id="email" label="Email" value={email} name="email" onChange={handleChangeEmail} />
+                                <Grid item xs={12} sm={6}>
+                                    <TextField size="small" required fullWidth id="cost" label="Cost" value={cost} name="cost" onChange={handleChangeCost} />
                                 </Grid>
-
+                                <Grid item xs={12} sm={6}>
+                                    <TextField size="small" required fullWidth id="status" label="Status" value={status} name="status" onChange={handleChangeStatus} />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField size="small" required fullWidth id="note" label="Note" value={note} name="note" onChange={handleChangeNote} />
+                                </Grid>
                             </Grid>
                             <Grid container justifyContent="flex-end" spacing={2}>
                                 <Grid item>
