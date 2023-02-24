@@ -14,6 +14,7 @@ import React,
   useState
 } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { getAllOrder } from "../../actions/order.actions";
 import { formatTime } from "../../utils/formatTime";
 import Scrollbar from "../scrollbar/Scrollbar";
@@ -33,10 +34,11 @@ const TABLE_HEAD =
   ];
 
 export const OrderTable = ({ orders, pending }) => {
+  const navigate=useNavigate()
   const handleClickOrderDetail = async (event) => {
-    console.log(event.target.value);
-    await dispatch(getOrderById(event.target.value))
-    await setOpen(true)
+    const orderDetailId=event.target.value
+    navigate(`/dashboard/orders/${orderDetailId}/orderDetails`)
+    
   };
 
   return (
@@ -76,7 +78,7 @@ export const OrderTable = ({ orders, pending }) => {
                         <TableCell>{order.status}</TableCell>
                         <TableCell>{order.note}</TableCell>
                         <TableCell>
-                          <Button variant="text" size="small" onClick={handleClickOrderDetail} value={order._id}>
+                          <Button variant="outlined" size="small" onClick={handleClickOrderDetail} value={order._id}>
                             ORDER DETAIL
                           </Button>
                         </TableCell>

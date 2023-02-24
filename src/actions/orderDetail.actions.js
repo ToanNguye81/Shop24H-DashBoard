@@ -28,7 +28,7 @@ const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
 // const gCOUNTRY_API_URL="https://countriesnow.space/api/v0.1/countries/states" 
 const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
 
-export const fetchOrderDetail = (paramLimit, paramPage, paramCondition) => {
+export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
@@ -55,7 +55,7 @@ export const fetchOrderDetail = (paramLimit, paramPage, paramCondition) => {
             }
             // parse the response as JSON
             const resObj = await res.json();
-            
+
 
             //Dispatch state
             return dispatch({
@@ -75,12 +75,12 @@ export const fetchOrderDetail = (paramLimit, paramPage, paramCondition) => {
 }
 
 //Create new orderDetail
-export const createNewOrderDetail = (orderId,orderDetail) => {
-    const dataReq ={
+export const createNewOrderDetail = (orderId, orderDetail) => {
+    const dataReq = {
         product: orderDetail.product._id,
         quantity: orderDetail.quantity
     }
-    
+
     return async (dispatch) => {
         const requestOptions = {
             method: 'POST',
@@ -97,13 +97,13 @@ export const createNewOrderDetail = (orderId,orderDetail) => {
         try {
             const res = await fetch(`${gORDERS_API_URL}/${orderId}/orderDetails`, requestOptions);
             const resObj = await res.json();
-            
+
             if (!res.ok) {
                 return dispatch({
                     type: CREATE_ORDER_DETAIL_ERROR,
                 })
             }
-            
+
             return dispatch({
                 type: CREATE_ORDER_DETAIL_SUCCESS,
                 data: resObj.data
@@ -175,13 +175,13 @@ export const deleteOrderDetail = (paramOrderDetailId) => {
         try {
             const res = await fetch(gORDER_DETAILS_API_URL + `/${paramOrderDetailId}`, requestOptions);
             const resObj = await res.json();
-            
+
             if (!res.ok) {
                 return dispatch({
                     type: DELETE_ORDER_DETAIL_ERROR,
                 })
             }
-            
+
             return dispatch({
                 type: DELETE_ORDER_DETAIL_SUCCESS,
             })
@@ -240,5 +240,54 @@ export const validatePhone = (paramPhone) => {
     }
     else {
         return false;
+    }
+}
+
+export const getAllOrderDetailOfOrder = (paramLimit, paramPage, paramCondition, orderId) => {
+    // build the request string
+    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
+    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
+
+  
+    // options for the fetch request
+    const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    return async (dispatch) => {
+        try {
+            // dispatch pending state to update the UI
+            await dispatch({
+                type: FETCH_ORDER_DETAILS_PENDING
+            });
+
+            //fetch OrderDetail
+            const res = await fetch(`${gORDERS_API_URL}/${orderId}/orderDetails?${request}`, requestOptions);
+            console.log(res.ok)
+            // throw an error if the response is not successful
+            if (!res.ok) {
+                throw new Error(`Could not fetch orderDetails, status: ${res.status}`);
+            }
+            
+            // parse the response as JSON
+            const resObj = await res.json();
+            
+            console.log(resObj)
+
+            //Dispatch state
+            return dispatch({
+                type: FETCH_ORDER_DETAILS_SUCCESS,
+                totalOrderDetail: resObj.totalCount,
+                orderDetails: resObj.data
+            })
+
+        } catch (err) {
+            //if error
+            return dispatch({
+                type: FETCH_ORDER_DETAILS_ERROR,
+                error: err
+            })
+        }
     }
 }

@@ -20,18 +20,18 @@ import { CreateOrder } from './pages/CreateOrder';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
-  const {customerId}=useParams()
   const authRoutes = {
     path: '/dashboard/',
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
     children: [
       { element: <Navigate to="/dashboard/app" />, index: true },
-      { path: 'app', element: <CustomerPage/> },
+      { path: 'app', element: <OrderDetailPage/> },
       { path: 'createOrder', element: <CreateOrder /> },
       { path: "orders", element: <OrderPage /> },
       { path: 'orderDetails', element: <OrderDetailPage /> },
       { path: 'customers', element: <CustomerPage/> },
-      { path: 'customers/:customerId/orders', element: <OrderPage /> },
+      { path: 'orders/:orderId/orderDetails', element: <OrderDetailPage /> },
+      { path: 'customers/:customerId/orders', element: <OrderPage/> },
       { path: 'products', element: <ProductPage /> },
       { path: 'demo', element: <DemoPage /> },
       { path: 'demo2', element: <ProductsPage /> },

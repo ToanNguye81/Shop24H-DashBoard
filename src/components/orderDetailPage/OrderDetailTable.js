@@ -8,31 +8,29 @@ import {
   TableHead,
   Button,
 } from "@mui/material";
-import React from "react";
+import React,
+{
+  useEffect,
+  useState
+} from "react";
 import { useNavigate } from "react-router-dom";
 import Scrollbar from "../scrollbar/Scrollbar";
-import { DeleteCustomer } from "./DeleteCustomer";
-import { EditCustomer } from "./EditCustomer";
+import { DeleteOrderDetail } from "./DeleteOrderDetail";
+import { EditOrderDetail } from "./EditOrderDetail";
 
 const TABLE_HEAD =
-  [
-    "Action",
-    "Last Name",
-    "First Name",
-    "Country",
-    "City",
-    "Phone",
-    "Email",
-    "Address",
-    "OrderCodes",
+  ["Action",
+    "Product",
+    "Quantity",
+    "Product Detail"
   ];
 
-export const CustomerTable = ({ customers, pending }) => {
-  const navigate=useNavigate()
+export const OrderDetailTable = ({ orderDetails, pending }) => {
+  const navigate = useNavigate()
 
-  const handleClickOrderCode = async (event) => {
-    const customerId=event.target.value
-    navigate(`/dashboard/customers/${customerId}/orders`)
+  const handleClickOrderDetail = async (event) => {
+    const orderId = event.target.value
+    // navigate(`/dashboard/orderDetail/${orderId}/product`)
   };
 
   return (
@@ -46,7 +44,7 @@ export const CustomerTable = ({ customers, pending }) => {
           <Scrollbar>
             <Table sx={{ minWidth: 200 }}>
               <TableHead>
-                <TableRow>
+                <TableRow key={"title"}>
                   {TABLE_HEAD.map((title, index) => {
                     return (
                       <TableCell align="left" key={index}>
@@ -57,24 +55,19 @@ export const CustomerTable = ({ customers, pending }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {customers.map((customer, index) => {
+                {orderDetails.map((orderDetail, index) => {
                   return (
                     <>
                       <TableRow key={index}>
                         <TableCell align="left">
-                          <EditCustomer paramCustomer={customer} />
-                          <DeleteCustomer idValue={customer._id} />
+                          <EditOrderDetail paramOrderDetail={orderDetail} />
+                          <DeleteOrderDetail idValue={orderDetail._id} />
                         </TableCell>
-                        <TableCell>{customer.lastName}</TableCell>
-                        <TableCell>{customer.firstName}</TableCell>
-                        <TableCell>{customer.country}</TableCell>
-                        <TableCell>{customer.city}</TableCell>
-                        <TableCell>{customer.phone}</TableCell>
-                        <TableCell>{customer.email}</TableCell>
-                        <TableCell>{customer.address}</TableCell>
+                        <TableCell>{orderDetail.product.name}</TableCell>
+                        <TableCell>{orderDetail.quantity}</TableCell>
                         <TableCell>
-                          <Button variant="outlined" size="small" onClick={handleClickOrderCode} value={customer._id}>
-                            ORDERS
+                          <Button variant="outlined" size="small" onClick={handleClickOrderDetail} value={orderDetail._id}>
+                            PRODUCT DETAIL
                           </Button>
                         </TableCell>
                       </TableRow>
