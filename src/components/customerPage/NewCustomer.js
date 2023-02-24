@@ -7,7 +7,7 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewCustomer, fetchCity, fetchCountry, fetchCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
+import { createNewCustomer, fetchCity, fetchCountry, getAllCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
 
 const style = {
     position: 'absolute',

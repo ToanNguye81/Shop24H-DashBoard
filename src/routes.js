@@ -17,7 +17,6 @@ import { ProductPage } from './pages/ProductPage';
 import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { CreateOrder } from './pages/CreateOrder';
-import { Nhap } from './pages/Nhap';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
@@ -27,7 +26,7 @@ export default function Router() {
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
     children: [
       { element: <Navigate to="/dashboard/app" />, index: true },
-      { path: 'app', element: <DashboardAppPage/> },
+      { path: 'app', element: <CustomerPage/> },
       { path: 'createOrder', element: <CreateOrder /> },
       { path: "orders", element: <OrderPage /> },
       { path: 'orderDetails', element: <OrderDetailPage /> },
