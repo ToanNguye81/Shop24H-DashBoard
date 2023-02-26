@@ -7,20 +7,20 @@ import { getAllProduct } from "../actions/product.actions"
 import { ProductTable } from "../components/productPage/ProductTable"
 import { ErrorStack } from "../components/productPage/ErrorStack"
 import { NewProduct } from "../components/productPage/NewProduct"
-import { useNavigate, useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
+import { ProductInfo } from "../components/productPage/ProductInfo"
 
 export const ProductPage = () => {
   const { products, pending, totalProduct, error } = useSelector((reduxData) => reduxData.productReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
   const { productId } = useParams()
-  const navigate = useNavigate()
 
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    if (!productId) { dispatch(getAllProduct(rowsPerPage, page)); }
+       dispatch(getAllProduct(rowsPerPage, page))
   }, [rowsPerPage, page, role, productId]);
 
 
@@ -41,25 +41,30 @@ export const ProductPage = () => {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            {productId ? `Product : ${productId}`  : 'All Products'}
+            {productId ? `Product Detail : ${productId}` : 'All Products'}
           </Typography>
           <NewProduct />
         </Stack>
-        {error ?
-          <ErrorStack />
+        {productId ?
+          <ProductInfo productId={productId}/>
           :
-          <Card>
-            <ProductTable products={products} pending={pending} totalProduct={totalProduct} />
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
-              component="div"
-              count={totalProduct}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </Card>
+          <React.Fragment>
+            {error ?
+              <ErrorStack />
+              :
+              <Card>
+                <ProductTable products={products} pending={pending} totalProduct={totalProduct} />
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25]}
+                  component="div"
+                  count={totalProduct}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                />
+              </Card>
+            } </React.Fragment>
         }
       </Container>
     </React.Fragment>

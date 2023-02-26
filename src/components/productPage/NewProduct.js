@@ -7,7 +7,7 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewOrderDetail, getAllOrderDetail } from '../../actions/orderDetail.actions';
+// import { createNewProduct } from '../../actions/product.actions';
 
 const style = {
     position: 'absolute',
@@ -28,18 +28,18 @@ export const NewProduct = () => {
     const handleClose = () => setOpen(false);
 
     const {
-    } = useSelector((reduxData) => reduxData.orderDetailReducers);
+    } = useSelector((reduxData) => reduxData.productReducers);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        dispatch(createNewOrderDetail(data));
+        // dispatch(createNewProduct(data));
     };
 
 
     return (
         <React.Fragment>
-            <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Order Detail</Button>
+            <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Product</Button>
             <Modal
                 keepMounted
                 open={open}
@@ -49,7 +49,7 @@ export const NewProduct = () => {
             >
                 <Box sx={style}>
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                        New Order Detail
+                        New Product
                     </Typography>
                     <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                         <Box component="form" noValidate onSubmit={handleSubmit}>

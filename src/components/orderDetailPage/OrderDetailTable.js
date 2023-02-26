@@ -30,7 +30,7 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
 
   const handleClickOrderDetail = async (event) => {
     const orderId = event.target.value
-    // navigate(`/dashboard/orderDetail/${orderId}/product`)
+    navigate(`/dashboard/products/${orderId}`)
   };
 
   return (

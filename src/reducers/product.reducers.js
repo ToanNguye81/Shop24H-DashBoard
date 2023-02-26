@@ -21,8 +21,10 @@ export default function productReducers(state = initialState, action) {
             state.pending = false;
             state.totalProduct = action.totalProduct;
             state.products = action.products;
+            state.error=null;
             break;
         case FETCH_PRODUCTS_ERROR:
+            state.error=action.error
             break;
         default:
             break;

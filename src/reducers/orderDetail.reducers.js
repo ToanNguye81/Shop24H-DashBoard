@@ -59,6 +59,7 @@ export default function orderDetailReducers(state = initialState, action) {
             state.createOrderDetailPending = false
             break;
         case CREATE_ORDER_DETAIL_ERROR:
+            state.error = action.error
             break;
 
         //Update OrderDetail
@@ -80,6 +81,7 @@ export default function orderDetailReducers(state = initialState, action) {
             state.deleteOrderDetailPending = false
             break;
         case DELETE_ORDER_DETAIL_ERROR:
+            state.error = action.error
             break;
 
         default:

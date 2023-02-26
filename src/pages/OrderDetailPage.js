@@ -17,14 +17,11 @@ export const OrderDetailPage = () => {
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  console.log(orderId)
+  
   useEffect(() => {
     orderId ? dispatch(getAllOrderDetailOfOrder(rowsPerPage, page,"", orderId)) : dispatch(getAllOrderDetail(rowsPerPage, page));
   }, [rowsPerPage, page, role, orderId]);
  
-  console.log(orderDetails)
-
-
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
