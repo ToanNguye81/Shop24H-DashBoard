@@ -41,7 +41,7 @@ export const ProductPage = () => {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            {productId ? null : 'All Products'}
+            {productId ? `Product : ${productId}`  : 'All Products'}
           </Typography>
           <NewProduct />
         </Stack>
