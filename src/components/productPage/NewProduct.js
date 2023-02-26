@@ -7,7 +7,7 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewProduct, fetchCity, fetchCountry, fetchProduct, getAddress, getCity, getCountry } from '../../actions/product.actions';
+import { createNewOrderDetail, getAllOrderDetail } from '../../actions/orderDetail.actions';
 
 const style = {
     position: 'absolute',
@@ -28,43 +28,18 @@ export const NewProduct = () => {
     const handleClose = () => setOpen(false);
 
     const {
-        loadCountriesPending,
-        countryOptions,
-        cityOptions,
-        country,
-        address,
-        city,
-        createProduct,
-    } = useSelector((reduxData) => reduxData.productReducers);
-
-
-    useEffect(() => {
-        dispatch(fetchCountry());
-    }, []);
-
+    } = useSelector((reduxData) => reduxData.orderDetailReducers);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        dispatch(createNewProduct(data));
+        dispatch(createNewOrderDetail(data));
     };
 
-    const handleCountryChange = (event) => {
-        dispatch(getCountry(event.target.value));
-        dispatch(fetchCity(event.target.value));
-    }
-
-    const handleCityChange = (event) => {
-        dispatch(getCity(event.target.value));
-    }
-
-    const handleAddressChange = (event) => {
-        dispatch(getAddress(event.target.value));
-    }
 
     return (
         <React.Fragment>
-            <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Product</Button>
+            <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Order Detail</Button>
             <Modal
                 keepMounted
                 open={open}
@@ -74,7 +49,7 @@ export const NewProduct = () => {
             >
                 <Box sx={style}>
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                        New Product
+                        New Order Detail
                     </Typography>
                     <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                         <Box component="form" noValidate onSubmit={handleSubmit}>
@@ -90,31 +65,6 @@ export const NewProduct = () => {
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField size="small" required fullWidth id="email" label="Email" name="email" />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <FormControl size="small" required fullWidth>
-                                        <InputLabel id="select-country">Country</InputLabel>
-                                        <Select onChange={handleCountryChange} labelId="select-country" autoWidth id="country" label="Country" name="country" value={country}>
-                                            {countryOptions ?
-                                                countryOptions.map((countryOption, index) => <MenuItem key={countryOption.id} value={countryOption.iso2}>{countryOption.name}</MenuItem>) :
-                                                null
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-
-                                <Grid item xs={12}>
-                                    <FormControl size="small" required fullWidth>
-                                        <InputLabel id="select-city">City</InputLabel>
-                                        <Select onChange={handleCityChange} size="small" required autoWidth id="city" labelId="select-city" label="City" name="city" value={city}>
-                                            {cityOptions ?
-                                                cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) : null
-                                            }
-                                        </Select>
-                                    </FormControl>
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <TextField onChange={handleAddressChange} size="small" required fullWidth id="address" label="Address" name="address" value={address} />
                                 </Grid>
                             </Grid>
                             <Grid container justifyContent="flex-end" spacing={2}>

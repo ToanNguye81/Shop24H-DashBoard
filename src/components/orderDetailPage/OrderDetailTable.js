@@ -47,7 +47,7 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                 <TableRow key={"title"}>
                   {TABLE_HEAD.map((title, index) => {
                     return (
-                      <TableCell align="left" key={index}>
+                      <TableCell align="left"key={index}>
                         {title}
                       </TableCell>
                     );

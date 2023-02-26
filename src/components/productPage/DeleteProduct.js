@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Iconify from '../iconify/Iconify';
 import { IconButton,Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteOrder } from '../../actions/order.actions';
+import { deleteProduct } from '../../actions/product.actions';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 
@@ -21,24 +21,24 @@ const style = {
     p: 4,
 };
 
-export const DeleteOrder = ({ idValue }) => {
+export const DeleteProduct = ({ idValue }) => {
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const {
-        createNewOrder,
-    } = useSelector((reduxData) => reduxData.orderReducers);
+        createNewProduct,
+    } = useSelector((reduxData) => reduxData.productReducers);
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        dispatch(createNewOrder(data));
+        dispatch(createNewProduct(data));
     };
 
-    const handleDeleteOrder = () => {
-        dispatch(deleteOrder(idValue))
+    const handleDeleteProduct = () => {
+        dispatch(deleteProduct(idValue))
     }
 
     return (
@@ -64,8 +64,8 @@ export const DeleteOrder = ({ idValue }) => {
                             <HighlightOffIcon sx={{ fontSize: 80, color: "#FF4842" }} />
                         </Grid>
                         <Grid item sx={{ color: "#FF4842" }} align="center">
-                            <h3>Are you sure want to delete this order?</h3>
-                            <h3>Order's Id = {idValue}</h3>
+                            <h3>Are you sure want to delete this product?</h3>
+                            <h3>Product's Id = {idValue}</h3>
                         </Grid>
                     </Grid>
 
@@ -73,7 +73,7 @@ export const DeleteOrder = ({ idValue }) => {
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container justifyContent="flex-end" spacing={2}>
                                 <Grid item>
-                                    <Button variant="contained" onClick={handleDeleteOrder}>
+                                    <Button variant="contained" onClick={handleDeleteProduct}>
                                         Delete
                                     </Button>
                                 </Grid>

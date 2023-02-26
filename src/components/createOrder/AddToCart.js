@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../actions/product.actions";
+import { getAllProduct } from "../../actions/product.actions";
 import { AddShoppingCartSharp } from "@mui/icons-material";
 import { addToCart } from "../../actions/order.actions";
 
@@ -28,7 +28,7 @@ export const AddToCart = () => {
  
   const condition = name.trim()? { name: name.trim() } : undefined;
   const handleClickFind = () => {
-    dispatch(fetchProduct(5, 0, condition))
+    dispatch(getAllProduct(5, 0, condition))
   }
 
   const handleChangeRowsPerPage = (event) => {
@@ -49,7 +49,7 @@ export const AddToCart = () => {
   }
 
   useEffect(() => {
-    dispatch(fetchProduct(rowsPerPage, page));
+    dispatch(getAllProduct(rowsPerPage, page));
   }, [rowsPerPage, page]);
 
   return (

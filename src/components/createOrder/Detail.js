@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, Paper, IconButton, Typography, Box } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProduct } from "../../actions/product.actions";
+import { getAllProduct } from "../../actions/product.actions";
 import { Add, Remove } from "@mui/icons-material";
 import { decreaseQuantity, increaseQuantity } from "../../actions/order.actions";
 
@@ -26,7 +26,7 @@ export const Detail = () => {
 
   
   useEffect(() => {
-    dispatch(fetchProduct(rowsPerPage, page));
+    dispatch(getAllProduct(rowsPerPage, page));
   }, [rowsPerPage, page]);
 
 

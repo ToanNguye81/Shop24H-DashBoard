@@ -2,11 +2,15 @@ import {
     FETCH_PRODUCTS_ERROR,
     FETCH_PRODUCTS_PENDING,
     FETCH_PRODUCTS_SUCCESS,
+
+    DELETE_PRODUCT_ERROR,
+    DELETE_PRODUCT_PENDING,
+    DELETE_PRODUCT_SUCCESS,
 } from "../constants/product.constants";
 
 const gPRODUCT_API_URL = "//localhost:8000/products"
 
-export const fetchProduct = (paramLimit, paramPage, paramCondition,paramSortBy,paramSortOrder) => {
+export const getAllProduct = (paramLimit, paramPage, paramCondition,paramSortBy,paramSortOrder) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}&sortBy=${paramSortBy}&sortOrder=${paramSortOrder}`
@@ -24,7 +28,7 @@ export const fetchProduct = (paramLimit, paramPage, paramCondition,paramSortBy,p
                 type: FETCH_PRODUCTS_PENDING
             });
 
-            //fetch PfetchProduct
+            //fetch PgetAllProduct
             const res = await fetch(`${gPRODUCT_API_URL}?${request}`, requestOptions);
 
             // throw an error if the response is not successful
@@ -48,6 +52,36 @@ export const fetchProduct = (paramLimit, paramPage, paramCondition,paramSortBy,p
                 type: FETCH_PRODUCTS_ERROR,
                 error: err
             })
+        }
+    }
+}
+
+//Delete order
+export const deleteProduct = (paramProductId) => {
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'DELETE',
+        };
+
+        await dispatch({
+            type: DELETE_PRODUCT_PENDING
+        });
+
+        try {
+            const res = await fetch(`${gPRODUCT_API_URL}/${paramProductId}`, requestOptions);
+            const resObj = await res.json();
+            
+            if (!res.ok) {
+                return dispatch({
+                    type: DELETE_PRODUCT_ERROR,
+                })
+            }
+            
+            return dispatch({
+                type: DELETE_PRODUCT_SUCCESS,
+            })
+        } catch (err) {
+            console.log(err)
         }
     }
 }
