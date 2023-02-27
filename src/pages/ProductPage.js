@@ -46,7 +46,7 @@ export const ProductPage = () => {
           <NewProduct />
         </Stack>
         {productId ?
-          <ProductInfo productId={productId}/>
+          <ProductInfo/>
           :
           <React.Fragment>
             {error ?

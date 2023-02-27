@@ -3,6 +3,10 @@ import {
     FETCH_PRODUCTS_PENDING,
     FETCH_PRODUCTS_SUCCESS,
 
+    GET_PRODUCT_BY_ID_ERROR,
+    GET_PRODUCT_BY_ID_PENDING,
+    GET_PRODUCT_BY_ID_SUCCESS,
+
     DELETE_PRODUCT_ERROR,
     DELETE_PRODUCT_PENDING,
     DELETE_PRODUCT_SUCCESS,
@@ -56,7 +60,48 @@ export const getAllProduct = (paramLimit, paramPage, paramCondition,paramSortBy,
     }
 }
 
-//Delete order
+//Get Product By Id
+export const getProductById = (productId) => {
+   
+    const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    return async (dispatch) => {
+        try {
+            // dispatch pending state to update the UI
+            await dispatch({
+                type: GET_PRODUCT_BY_ID_PENDING
+            });
+
+            //fetch Order
+            const res = await fetch(`${gPRODUCT_API_URL}/${productId}`, requestOptions);
+
+            // throw an error if the response is not successful
+            if (!res.ok) {
+                throw new Error(`Could get product By Id, status: ${res.status}`);
+            }
+            // parse the response as JSON
+            const resObj = await res.json();
+            console.log(resObj)
+            //Dispatch state
+            return dispatch({
+                type: GET_PRODUCT_BY_ID_SUCCESS,
+                productById: resObj.data
+            })
+
+        } catch (err) {
+            //if error
+            return dispatch({
+                type: GET_PRODUCT_BY_ID_ERROR,
+                error: err
+            })
+        }
+    }
+}
+
+//Delete product
 export const deleteProduct = (paramProductId) => {
     return async (dispatch) => {
         const requestOptions = {
