@@ -73,6 +73,7 @@ export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
         }
     }
 }
+
 export const getAllOrderOfCustomer = (paramLimit, paramPage,  paramCondition, customerId) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
@@ -196,48 +197,6 @@ export const getOrderById = (orderId) => {
         }
     }
 }
-
-// export const getOrderById = (orderId) => {
-    
-//     const requestOptions = {
-//         method: 'GET',
-//         redirect: 'follow',
-//         credentials: 'include'
-//     };
-
-//     return async (dispatch) => {
-//         try {
-//             // dispatch pending state to update the UI
-//             await dispatch({
-//                 type: GET_ORDER_BY_ID_PENDING
-//             });
-
-//             //fetch Order
-//             const res = await fetch(`${gORDER_API_URL}/${orderId}`, requestOptions);
-
-//             // throw an error if the response is not successful
-//             if (!res.ok) {
-//                 throw new Error(`Couldn't get order by ID, status: ${res.status}`);
-//             }
-//             // parse the response as JSON
-//             const resObj = await res.json();
-//             console.log(resObj)
-//             //Dispatch state
-//             return dispatch({
-//                 type: GET_ORDER_BY_ID_SUCCESS,
-//                 orders: resObj.data
-//             })
-
-//         } catch (err) {
-//             //if error
-//             return dispatch({
-//                 type: GET_ORDER_BY_ID_ERROR,
-//                 error: err
-//             })
-//         }
-//     }
-// }
-
 
 // Update order
 export const updateOrder = async (paramOrder) => {

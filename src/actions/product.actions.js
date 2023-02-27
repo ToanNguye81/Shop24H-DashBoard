@@ -14,11 +14,13 @@ import {
 
 const gPRODUCT_API_URL = "//localhost:8000/products"
 
-export const getAllProduct = (paramLimit, paramPage, paramCondition,paramSortBy,paramSortOrder) => {
+//Get all product
+export const getAllProduct = (paramLimit, paramPage, paramCondition) => {
+    
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
-    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}&sortBy=${paramSortBy}&sortOrder=${paramSortOrder}`
-
+    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
+    
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -32,17 +34,16 @@ export const getAllProduct = (paramLimit, paramPage, paramCondition,paramSortBy,
                 type: FETCH_PRODUCTS_PENDING
             });
 
-            //fetch PgetAllProduct
+            //fetch Product
             const res = await fetch(`${gPRODUCT_API_URL}?${request}`, requestOptions);
 
             // throw an error if the response is not successful
             if (!res.ok) {
-                throw new Error(`Could not find products, status: ${res.status}`);
+                throw new Error(`Could not fetch products, status: ${res.status}`);
             }
             // parse the response as JSON
             const resObj = await res.json();
-            
-
+            console.log(resObj)
             //Dispatch state
             return dispatch({
                 type: FETCH_PRODUCTS_SUCCESS,
@@ -62,12 +63,12 @@ export const getAllProduct = (paramLimit, paramPage, paramCondition,paramSortBy,
 
 //Get Product By Id
 export const getProductById = (productId) => {
-   
+    
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-
+    
     return async (dispatch) => {
         try {
             // dispatch pending state to update the UI
@@ -75,7 +76,7 @@ export const getProductById = (productId) => {
                 type: GET_PRODUCT_BY_ID_PENDING
             });
 
-            //fetch Order
+            //fetch Product
             const res = await fetch(`${gPRODUCT_API_URL}/${productId}`, requestOptions);
 
             // throw an error if the response is not successful
@@ -107,7 +108,6 @@ export const deleteProduct = (paramProductId) => {
         const requestOptions = {
             method: 'DELETE',
         };
-
         await dispatch({
             type: DELETE_PRODUCT_PENDING
         });

@@ -1,11 +1,9 @@
 
-import { Navigate, useParams, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 // layouts
 import SimpleLayout from './layouts/simple';
 import { DashboardLayout } from './layouts/dashboard/DashboardLayout';
-
 // pages
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
@@ -17,7 +15,6 @@ import { ProductPage } from './pages/ProductPage';
 import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { CreateOrder } from './pages/CreateOrder';
-import { ProductInfo } from './components/productPage/ProductInfo';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
@@ -26,9 +23,9 @@ export default function Router() {
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
     children: [
       { element: <Navigate to="/dashboard/app" />, index: true },
-      { path: 'app', element: <ProductInfo/> },
+      { path: 'app', element: <DashboardAppPage/> },
       { path: 'createOrder', element: <CreateOrder/> },
-      { path: "orders", element: <OrderPage/> },
+      { path: 'orders', element: <OrderPage/> },
       { path: 'orderDetails', element: <OrderDetailPage /> },
       { path: 'customers', element: <CustomerPage/> },
       { path: 'orders/:orderId/orderDetails', element: <OrderDetailPage/> },

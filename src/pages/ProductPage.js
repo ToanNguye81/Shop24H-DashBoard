@@ -13,15 +13,14 @@ import { ProductInfo } from "../components/productPage/ProductInfo"
 export const ProductPage = () => {
   const { products, pending, totalProduct, error } = useSelector((reduxData) => reduxData.productReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
-  const { productId } = useParams()
 
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-       dispatch(getAllProduct(rowsPerPage, page))
-  }, [rowsPerPage, page, role, productId]);
+    dispatch(getAllProduct(rowsPerPage, page))
+  }, [rowsPerPage, page, role]);
 
 
   const handleChangeRowsPerPage = (event) => {
@@ -41,30 +40,25 @@ export const ProductPage = () => {
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
-            {productId ? `Product Detail : ${productId}` : 'All Products'}
+            All Products
           </Typography>
           <NewProduct />
         </Stack>
-        {productId ?
-          <ProductInfo/>
+        {error ?
+          <ErrorStack />
           :
-          <React.Fragment>
-            {error ?
-              <ErrorStack />
-              :
-              <Card>
-                <ProductTable products={products} pending={pending} totalProduct={totalProduct} />
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25]}
-                  component="div"
-                  count={totalProduct}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-              </Card>
-            } </React.Fragment>
+          <Card>
+            <ProductTable products={products} pending={pending} totalProduct={totalProduct} />
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={totalProduct}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Card>
         }
       </Container>
     </React.Fragment>

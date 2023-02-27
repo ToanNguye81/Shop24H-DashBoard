@@ -30,33 +30,6 @@ export const ProductInfo = ({ productData }) => {
     const [promotionPrice, setPromotionPrice] = React.useState(productData.promotionPrice)
     const [amount, setAmount] = React.useState(productData.amount)
 
-    // const handleSubmit = (event) => {
-    //     event.preventDefault();
-    //     const data = new FormData(event.currentTarget);
-    //     dispatch(createNewCustomer(data));
-    // };
-    // const handleChangeEmail = (event) => {
-    //     setEmail(event.target.value)
-    // }
-    // const handleChangeFirstName = (event) => {
-    //     setFirstName(event.target.value)
-    // }
-    // const handleChangeLastName = (event) => {
-    //     setLastName(event.target.value)
-    // }
-    // const handleChangePhone = (event) => {
-    //     setPhone(event.target.value)
-    // }
-    // const handleCountryChange = (event) => {
-    //     setCountry(event.target.value);
-    //     dispatch(fetchCity(event.target.value));
-    // }
-    // const handleCityChange = (event) => {
-    //     setCity(event.target.value)
-    // }
-    // const handleAddressChange = (event) => {
-    //     setAddress(event.target.value)
-    // }
     return (
         <React.Fragment>
             {/* <Box sx={style}> */}
@@ -71,7 +44,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="name"
                                 value={name}
                                 name="name"
-                                onChange={(event) => setName(event.target)}
+                                onChange={(event) => setName(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -82,7 +55,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="brand"
                                 value={brand}
                                 name="brand"
-                                onChange={(event) => setBrand(event.target)}
+                                onChange={(event) => setBrand(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -93,7 +66,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="description"
                                 value={description}
                                 name="description"
-                                onChange={(event) => setDescription(event.target)}
+                                onChange={(event) => setDescription(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -104,7 +77,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="type"
                                 value={type}
                                 name="type"
-                                onChange={(event) => setType(event.target)}
+                                onChange={(event) => setType(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -115,7 +88,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="imageUrl"
                                 value={imageUrl}
                                 name="imageUrl"
-                                onChange={(event) => setImageUrl(event.target)}
+                                onChange={(event) => setImageUrl(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -126,7 +99,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="buyPrice"
                                 value={buyPrice}
                                 name="buyPrice"
-                                onChange={(event) => setBuyPrice(event.target)}
+                                onChange={(event) => setBuyPrice(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -137,7 +110,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="promotionPrice"
                                 value={promotionPrice}
                                 name="promotionPrice"
-                                onChange={(event) => setPromotionPrice(event.target)}
+                                onChange={(event) => setPromotionPrice(event.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
@@ -148,7 +121,7 @@ export const ProductInfo = ({ productData }) => {
                                 label="amount"
                                 value={amount}
                                 name="amount"
-                                onChange={(event) => setAmount(event.target)}
+                                onChange={(event) => setAmount(event.target.value)}
                             />
                         </Grid>
                     </Grid>
