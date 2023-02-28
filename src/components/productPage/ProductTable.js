@@ -56,8 +56,8 @@ export const ProductTable = ({ products, pending }) => {
                     <>
                       <TableRow key={index}>
                         <TableCell align="left">
-                          <EditProduct paramProduct={product} />
-                          <DeleteProduct idValue={product._id} />
+                          <EditProduct productId={product._id} />
+                          <DeleteProduct productId={product._id} />
                         </TableCell>
                         <TableCell>
                           <Grid container direction="column" justifyContent="flex-start" alignItems="center">

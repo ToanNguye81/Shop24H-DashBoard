@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import Box from '@mui/material/Box';
 import { Grid, TextField } from '@mui/material';
 
-export const ProductInfo = ({ productData }) => {
+export const ProductInfo = ({ productData, onUpdateData }) => {
     const [name, setName] = React.useState(productData.name)
     const [brand, setBrand] = React.useState(productData.brand)
     const [description, setDescription] = React.useState(productData.description)
@@ -13,11 +13,31 @@ export const ProductInfo = ({ productData }) => {
     const [promotionPrice, setPromotionPrice] = React.useState(productData.promotionPrice)
     const [amount, setAmount] = React.useState(productData.amount)
 
+    const handleDataChange = () => {
+        const updatedData = { name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount };
+        onUpdateData(updatedData);
+    };
+
+    useEffect(() => {
+        handleDataChange();
+    }, [name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount]);
+
     return (
         <React.Fragment>
             <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                 <Box component="form" noValidate >
                     <Grid container spacing={2}>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                size="small"
+                                require fullWidth
+                                id="imageUrl"
+                                label="imageUrl"
+                                value={imageUrl}
+                                name="imageUrl"
+                                onChange={(event) => setImageUrl(event.target.value)}
+                            />
+                        </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 size="small"
@@ -44,17 +64,6 @@ export const ProductInfo = ({ productData }) => {
                             <TextField
                                 size="small"
                                 require fullWidth
-                                id="description"
-                                label="description"
-                                value={description}
-                                name="description"
-                                onChange={(event) => setDescription(event.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                size="small"
-                                require fullWidth
                                 id="type"
                                 label="type"
                                 value={type}
@@ -62,17 +71,7 @@ export const ProductInfo = ({ productData }) => {
                                 onChange={(event) => setType(event.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                size="small"
-                                require fullWidth
-                                id="imageUrl"
-                                label="imageUrl"
-                                value={imageUrl}
-                                name="imageUrl"
-                                onChange={(event) => setImageUrl(event.target.value)}
-                            />
-                        </Grid>
+
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 size="small"
@@ -106,6 +105,20 @@ export const ProductInfo = ({ productData }) => {
                                 onChange={(event) => setAmount(event.target.value)}
                             />
                         </Grid>
+                        <Grid item xs={12} sm={12}>
+                            <TextField
+                                size="small"
+                                require fullWidth
+                                multiline
+                                rows={4}
+                                id="description"
+                                label="description"
+                                value={description}
+                                name="description"
+                                onChange={(event) => setDescription(event.target.value)}
+                            />
+                        </Grid>
+
                     </Grid>
                 </Box>
             </Box>

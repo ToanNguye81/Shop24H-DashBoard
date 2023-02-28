@@ -16,11 +16,11 @@ const gPRODUCT_API_URL = "//localhost:8000/products"
 
 //Get all product
 export const getAllProduct = (paramLimit, paramPage, paramCondition) => {
-    
+
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
-    
+
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -63,12 +63,12 @@ export const getAllProduct = (paramLimit, paramPage, paramCondition) => {
 
 //Get Product By Id
 export const getProductById = (productId) => {
-    
+
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
     };
-    
+
     return async (dispatch) => {
         try {
             // dispatch pending state to update the UI
@@ -81,9 +81,9 @@ export const getProductById = (productId) => {
 
             // parse the response as JSON
             const resObj = await res.json();
-            
-             // throw an error if the response is not successful
-             if (!res.ok) {
+
+            // throw an error if the response is not successful
+            if (!res.ok) {
                 throw new Error(`${resObj.message}, status: ${res.status}`);
             }
             //Dispatch state
@@ -115,13 +115,13 @@ export const deleteProduct = (paramProductId) => {
         try {
             const res = await fetch(`${gPRODUCT_API_URL}/${paramProductId}`, requestOptions);
             const resObj = await res.json();
-            
+
             if (!res.ok) {
                 return dispatch({
                     type: DELETE_PRODUCT_ERROR,
                 })
             }
-            
+
             return dispatch({
                 type: DELETE_PRODUCT_SUCCESS,
             })
@@ -129,4 +129,8 @@ export const deleteProduct = (paramProductId) => {
             console.log(err)
         }
     }
+}
+
+export const updateProductById =(productId)=> {
+
 }

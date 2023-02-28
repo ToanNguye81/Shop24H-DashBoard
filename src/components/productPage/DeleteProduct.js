@@ -21,7 +21,7 @@ const style = {
     p: 4,
 };
 
-export const DeleteProduct = ({ idValue }) => {
+export const DeleteProduct = ({ productId }) => {
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
@@ -38,7 +38,7 @@ export const DeleteProduct = ({ idValue }) => {
     };
 
     const handleDeleteProduct = () => {
-        dispatch(deleteProduct(idValue))
+        dispatch(deleteProduct(productId))
     }
 
     return (
@@ -65,7 +65,7 @@ export const DeleteProduct = ({ idValue }) => {
                         </Grid>
                         <Grid item sx={{ color: "#FF4842" }} align="center">
                             <h3>Are you sure want to delete this product?</h3>
-                            <h3>Product's Id = {idValue}</h3>
+                            <h3>Product's Id = {productId}</h3>
                         </Grid>
                     </Grid>
 

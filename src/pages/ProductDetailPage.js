@@ -1,22 +1,34 @@
-import { Button, Card, Grid, Typography } from "@mui/material"
+import { Button, LinearProgress, Typography } from "@mui/material"
 import { Container, Stack } from "@mui/system"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getProductById } from "../actions/product.actions"
 import { ErrorStack } from "../components/productDetailPage/ErrorStack"
+import { NewProduct } from "../components/productPage/NewProduct"
 import { ProductInfo } from "../components/productPage/ProductInfo"
 
 export const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const { productById, error } = useSelector((reduxData) => reduxData.productReducers);
+  const navigate = useNavigate();
+  const [updatedData, setUpdatedData] = useState({});
+  const { productById,error, getProductByIdPending } = useSelector((reduxData) => reduxData.productReducers);
   const { productId } = useParams();
-
+  
   useEffect(() => {
     dispatch(getProductById(productId))
   }, [productId]);
+
+  const handleUpdateData = (data) => {
+    setUpdatedData(data);
+  };
+
+  const handleOnClickUpdate = () => {
+    // dispatch(updateProductById(productId, updatedData));
+    console.log(updatedData);
+  };
 
   return (
     <React.Fragment>
@@ -28,35 +40,19 @@ export const ProductDetailPage = () => {
           <Typography variant="h4" gutterBottom>
             Product Detail
           </Typography>
+          <NewProduct />
         </Stack>
-        {error ?
-          <ErrorStack description={error.stack} />
-          :
-          productById ? <ProductInfo productData={productById} /> : <ErrorStack description="Not found any products" />
+        {error ? <ErrorStack description={error.stack} /> :
+          getProductByIdPending ?
+            <LinearProgress /> :
+            <ProductInfo productData={productById} onUpdateData={handleUpdateData} />
         }
-        <Grid container justifyContent="flex-end" spacing={2}>
-          <Grid item>
-            <Button color="success" variant="contained" sx={{ mt: 3, mb: 2, }}>
-              Create
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button color="warning" variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Update
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Delete
-            </Button>
-          </Grid>
-          <Grid item>
-            <Button variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Cancel
-            </Button>
-          </Grid>
-        </Grid>
+        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1} mt={2}>
+          <Button variant="contained" color="warning" onClick={handleOnClickUpdate} >Update</Button>
+          <Button variant="contained" color="info" onClick={() => navigate(-1)}>Cancel</Button>
+        </Stack>
       </Container>
+
     </React.Fragment>
   )
 }

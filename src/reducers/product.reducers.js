@@ -20,7 +20,9 @@ const initialState = {
     currentPage: 1,
 
     //Product detail
-    productById: null
+    productById: {},
+    getProductByIdPending:false
+    
 }
 
 export default function productReducers(state = initialState, action) {
@@ -40,9 +42,10 @@ export default function productReducers(state = initialState, action) {
 
         //Get product By Id
         case GET_PRODUCT_BY_ID_PENDING:
-            state.pending = true
+            state.getProductByIdPending = true
             break;
         case GET_PRODUCT_BY_ID_SUCCESS:
+            state.getProductByIdPending=false;
             state.productById = action.productById
             state.error=null
             break;
