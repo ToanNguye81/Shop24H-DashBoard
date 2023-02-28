@@ -14,9 +14,8 @@ export const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [updatedData, setUpdatedData] = useState({});
-  const { productById,error, getProductByIdPending } = useSelector((reduxData) => reduxData.productReducers);
+  const { productById, error, getProductByIdPending } = useSelector((reduxData) => reduxData.productReducers);
   const { productId } = useParams();
-  
   useEffect(() => {
     dispatch(getProductById(productId))
   }, [productId]);
@@ -45,12 +44,14 @@ export const ProductDetailPage = () => {
         {error ? <ErrorStack description={error.stack} /> :
           getProductByIdPending ?
             <LinearProgress /> :
-            <ProductInfo productData={productById} onUpdateData={handleUpdateData} />
+            <React.Fragment>
+              <ProductInfo productData={productById} onUpdateData={handleUpdateData} />
+              <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1} mt={2}>
+                <Button variant="contained" color="warning" onClick={handleOnClickUpdate} >Update</Button>
+                <Button variant="contained" color="info" onClick={() => navigate(-1)}>Cancel</Button>
+              </Stack>
+            </React.Fragment>
         }
-        <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1} mt={2}>
-          <Button variant="contained" color="warning" onClick={handleOnClickUpdate} >Update</Button>
-          <Button variant="contained" color="info" onClick={() => navigate(-1)}>Cancel</Button>
-        </Stack>
       </Container>
 
     </React.Fragment>
