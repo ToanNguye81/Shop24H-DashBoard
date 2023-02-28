@@ -86,8 +86,6 @@ export const getProductById = (productId) => {
              if (!res.ok) {
                 throw new Error(`${resObj.message}, status: ${res.status}`);
             }
-
-            console.log(resObj)
             //Dispatch state
             return dispatch({
                 type: GET_PRODUCT_BY_ID_SUCCESS,
