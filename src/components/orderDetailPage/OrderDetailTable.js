@@ -66,7 +66,7 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                         <TableCell>{orderDetail.product.name}</TableCell>
                         <TableCell>{orderDetail.quantity}</TableCell>
                         <TableCell>
-                          <Button variant="outlined" size="small" onClick={handleClickOrderDetail} value={orderDetail._id}>
+                          <Button variant="outlined" size="small" onClick={handleClickOrderDetail} value={orderDetail.product._id}>
                             PRODUCT DETAIL
                           </Button>
                         </TableCell>

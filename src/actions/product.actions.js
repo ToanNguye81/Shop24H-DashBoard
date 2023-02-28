@@ -79,12 +79,14 @@ export const getProductById = (productId) => {
             //fetch Product
             const res = await fetch(`${gPRODUCT_API_URL}/${productId}`, requestOptions);
 
-            // throw an error if the response is not successful
-            if (!res.ok) {
-                throw new Error(`Could get product By Id, status: ${res.status}`);
-            }
             // parse the response as JSON
             const resObj = await res.json();
+            
+             // throw an error if the response is not successful
+             if (!res.ok) {
+                throw new Error(`${resObj.message}, status: ${res.status}`);
+            }
+
             console.log(resObj)
             //Dispatch state
             return dispatch({

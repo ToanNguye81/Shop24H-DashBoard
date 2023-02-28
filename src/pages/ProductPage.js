@@ -7,8 +7,6 @@ import { getAllProduct } from "../actions/product.actions"
 import { ProductTable } from "../components/productPage/ProductTable"
 import { ErrorStack } from "../components/productPage/ErrorStack"
 import { NewProduct } from "../components/productPage/NewProduct"
-import { useParams } from "react-router-dom"
-import { ProductInfo } from "../components/productPage/ProductInfo"
 
 export const ProductPage = () => {
   const { products, pending, totalProduct, error } = useSelector((reduxData) => reduxData.productReducers);
@@ -21,7 +19,6 @@ export const ProductPage = () => {
   useEffect(() => {
     dispatch(getAllProduct(rowsPerPage, page))
   }, [rowsPerPage, page, role]);
-
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);

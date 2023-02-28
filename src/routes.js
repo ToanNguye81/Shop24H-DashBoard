@@ -15,6 +15,7 @@ import { ProductPage } from './pages/ProductPage';
 import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { CreateOrder } from './pages/CreateOrder';
+import { ProductDetailPage } from './pages/ProductDetailPage';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
@@ -23,15 +24,20 @@ export default function Router() {
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
     children: [
       { element: <Navigate to="/dashboard/app" />, index: true },
-      { path: 'app', element: <DashboardAppPage/> },
+      { path: 'app', element: <DemoPage/> },
       { path: 'createOrder', element: <CreateOrder/> },
-      { path: 'orders', element: <OrderPage/> },
-      { path: 'orderDetails', element: <OrderDetailPage /> },
+     
       { path: 'customers', element: <CustomerPage/> },
-      { path: 'orders/:orderId/orderDetails', element: <OrderDetailPage/> },
+      
+      { path: 'orders', element: <OrderPage/> },
       { path: 'customers/:customerId/orders', element: <OrderPage/> },
+
+      { path: 'orderDetails', element: <OrderDetailPage /> },
+      { path: 'orders/:orderId/orderDetails', element: <OrderDetailPage/> },
+
       { path: 'products', element: <ProductPage/> },
-      { path: 'products/:productId', element: <ProductPage/> },
+      { path: 'products/:productId', element: <ProductDetailPage/> },
+      
       { path: 'demo', element: <DemoPage/> },
       { path: 'demo2', element: <ProductsPage/> },
       { path: 'product-type', element: <ProductsPage/> },
