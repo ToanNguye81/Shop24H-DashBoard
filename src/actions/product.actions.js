@@ -166,7 +166,8 @@ export const updateProductById = (productId, productData) => {
 
             return dispatch({
                 type: UPDATE_PRODUCT_SUCCESS,
-                data: resObj,
+                data: resObj.data,
+                status:resObj.status,
             });
         } catch (err) {
             return dispatch({

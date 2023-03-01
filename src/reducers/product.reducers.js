@@ -28,8 +28,8 @@ const initialState = {
     getProductByIdPending: false,
 
     //Update Product
-    updateProductPending: false
-
+    updateProductPending: false,
+    updateStatus: null,
 
 }
 
@@ -71,16 +71,19 @@ export default function productReducers(state = initialState, action) {
         case DELETE_PRODUCT_ERROR:
             state.error = action.error
             break;
+
         case UPDATE_PRODUCT_PENDING:
             state.updateProductPending = true
+            state.updateStatus = null
             break;
         case UPDATE_PRODUCT_SUCCESS:
             state.updateProductPending = false
+            state.updateStatus = "success"
             break;
         case UPDATE_PRODUCT_ERROR:
             state.updateProductPending = false
+            state.updateStatus = "error"
             break;
-
         default:
             break;
     }

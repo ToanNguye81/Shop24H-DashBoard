@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { useNavigate, useParams } from "react-router-dom"
 import { getProductById, updateProductById } from "../actions/product.actions"
+import { SnackBarAlert } from "../components/orderDetailPage/SnackBarAlert"
 import { ErrorStack } from "../components/productDetailPage/ErrorStack"
 import { NewProduct } from "../components/productPage/NewProduct"
 import { ProductInfo } from "../components/productPage/ProductInfo"
@@ -14,7 +15,7 @@ export const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [updatedData, setUpdatedData] = useState({});
-  const { productById, error, getProductByIdPending } = useSelector((reduxData) => reduxData.productReducers);
+  const { productById, error, getProductByIdPending, updateStatus } = useSelector((reduxData) => reduxData.productReducers);
   const { productId } = useParams();
   useEffect(() => {
     dispatch(getProductById(productId))
@@ -24,7 +25,7 @@ export const ProductDetailPage = () => {
     setUpdatedData(data)
   };
 
-  const handleOnClickUpdate = () => {
+  const handleOnClickUpdate = async () => {
     dispatch(updateProductById(productId, updatedData));
   };
 
@@ -52,6 +53,7 @@ export const ProductDetailPage = () => {
               </Stack>
             </React.Fragment>
         }
+        <SnackBarAlert status={updateStatus} />
       </Container>
     </React.Fragment>
   )
