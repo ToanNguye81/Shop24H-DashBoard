@@ -136,27 +136,28 @@ export const deleteProduct = (paramProductId) => {
 
 // Update customer
 export const updateProductById = (productId, productData) => {
-    // validate data
-    const errors = validateProduct(productData);
-    if (errors) {
-        return {
-            type: UPDATE_PRODUCT_ERROR,
-            error: errors,
-        }
-    }
+    // // validate data
+    // const errors = validateProduct(productData);
+    // if (errors) {
+    //     return {
+    //         type: UPDATE_PRODUCT_ERROR,
+    //         error: errors,
+    //     }
+    // }
     return async (dispatch) => {
         //call PUT API 
+
+        await dispatch({
+            type: UPDATE_PRODUCT_PENDING,
+        });
+        
         try {
             const requestOptions = {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(productData),
             };
-
-            await dispatch({
-                type: UPDATE_PRODUCT_PENDING,
-            });
-
+            
             const res = await fetch(`${gPRODUCT_API_URL}/${productId}`, requestOptions);
             const resObj = await res.json();
 
@@ -167,7 +168,7 @@ export const updateProductById = (productId, productData) => {
             return dispatch({
                 type: UPDATE_PRODUCT_SUCCESS,
                 data: resObj.data,
-                status:resObj.status,
+                status: resObj.status,
             });
         } catch (err) {
             return dispatch({
@@ -180,31 +181,47 @@ export const updateProductById = (productId, productData) => {
 
 export const validateProduct = (product) => {
     const { name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount } = product;
-    const errors = [];
+    const result={error:null,isValid:true};
 
     if (name.trim() === '') {
-        errors.push({ field: 'name', message: 'Name must not be empty' });
+        result.errors='Name must not be empty';
+        result.isValid=false;
+        return result;
     }
     if (brand.trim() === '') {
-        errors.push({ field: 'brand', message: 'Brand must not be empty' });
+        result.errors='Brand must not be empty';
+        result.isValid=false;
+        return result
     }
     if (description.trim() === '') {
-        errors.push({ field: 'description', message: 'Description must not be empty' });
+        result.errors='Description must not be empty';
+        result.isValid=false;
+        return result
     }
     if (type.trim() === '') {
-        errors.push({ field: 'type', message: 'Type must not be empty' });
+        errors='Type must not be empty';
+        result.isValid=false;
+        return result
     }
     if (imageUrl.trim() === '') {
-        errors.push({ field: 'imageUrl', message: 'Image URL must not be empty' });
+        result.errors='Image URL must not be empty';
+        result.isValid=false;
+        return result
     }
     if (isNaN(parseFloat(buyPrice)) || parseFloat(buyPrice) <= 0) {
-        errors.push({ field: 'buyPrice', message: 'Buy price must be a number greater than 0' });
+        result.errors='Buy price must be a number greater than 0';
+        result.isValid=false;
+        return result
     }
     if (isNaN(parseFloat(promotionPrice)) || parseFloat(promotionPrice) <= 0) {
-        errors.push({ field: 'promotionPrice', message: 'Promotion price must be a number greater than 0' });
+        result.errors='Promotion price must be a number greater than 0';
+        result.isValid=false;
+        return result
     }
     if (isNaN(parseInt(amount)) || parseInt(amount) < 0) {
-        errors.push({ field: 'amount', message: 'Amount must be an integer greater than or equal to 0' });
+        result.errors='Amount must be an integer greater than or equal to 0';
+        result.isValid=false;
+        return result
     }
-    return errors.length ? errors : null;
+    return result
 }
