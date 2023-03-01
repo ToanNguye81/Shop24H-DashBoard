@@ -32,7 +32,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="imageUrl"
-                                label="imageUrl"
+                                label="Image Url"
                                 value={imageUrl}
                                 name="imageUrl"
                                 onChange={(event) => setImageUrl(event.target.value)}
@@ -43,7 +43,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="name"
-                                label="name"
+                                label="Name"
                                 value={name}
                                 name="name"
                                 onChange={(event) => setName(event.target.value)}
@@ -54,7 +54,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="brand"
-                                label="brand"
+                                label="Brand"
                                 value={brand}
                                 name="brand"
                                 onChange={(event) => setBrand(event.target.value)}
@@ -65,7 +65,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="type"
-                                label="type"
+                                label="Type"
                                 value={type}
                                 name="type"
                                 onChange={(event) => setType(event.target.value)}
@@ -77,7 +77,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="buyPrice"
-                                label="buyPrice"
+                                label="Buy Price"
                                 value={buyPrice}
                                 name="buyPrice"
                                 onChange={(event) => setBuyPrice(event.target.value)}
@@ -88,7 +88,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="promotionPrice"
-                                label="promotionPrice"
+                                label="Promotion Price"
                                 value={promotionPrice}
                                 name="promotionPrice"
                                 onChange={(event) => setPromotionPrice(event.target.value)}
@@ -99,7 +99,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 size="small"
                                 require fullWidth
                                 id="amount"
-                                label="amount"
+                                label="Amount"
                                 value={amount}
                                 name="amount"
                                 onChange={(event) => setAmount(event.target.value)}
@@ -112,7 +112,7 @@ export const ProductInfo = ({ productData, onUpdateData }) => {
                                 multiline
                                 rows={4}
                                 id="description"
-                                label="description"
+                                label="Description"
                                 value={description}
                                 name="description"
                                 onChange={(event) => setDescription(event.target.value)}

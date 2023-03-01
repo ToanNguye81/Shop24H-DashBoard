@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 
 import { useNavigate, useParams } from "react-router-dom"
-import { getProductById } from "../actions/product.actions"
+import { getProductById, updateProductById } from "../actions/product.actions"
 import { ErrorStack } from "../components/productDetailPage/ErrorStack"
 import { NewProduct } from "../components/productPage/NewProduct"
 import { ProductInfo } from "../components/productPage/ProductInfo"
@@ -21,12 +21,11 @@ export const ProductDetailPage = () => {
   }, [productId]);
 
   const handleUpdateData = (data) => {
-    setUpdatedData(data);
+    setUpdatedData(data)
   };
 
   const handleOnClickUpdate = () => {
-    // dispatch(updateProductById(productId, updatedData));
-    console.log(updatedData);
+    dispatch(updateProductById(productId, updatedData));
   };
 
   return (
@@ -34,6 +33,7 @@ export const ProductDetailPage = () => {
       <Helmet>
         <title> Dashboard: Product Detail</title>
       </Helmet>
+
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <Typography variant="h4" gutterBottom>
@@ -53,7 +53,6 @@ export const ProductDetailPage = () => {
             </React.Fragment>
         }
       </Container>
-
     </React.Fragment>
   )
 }

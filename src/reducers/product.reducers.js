@@ -7,6 +7,10 @@ import {
     GET_PRODUCT_BY_ID_PENDING,
     GET_PRODUCT_BY_ID_SUCCESS,
 
+    UPDATE_PRODUCT_PENDING,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_PRODUCT_ERROR,
+
     DELETE_PRODUCT_ERROR,
     DELETE_PRODUCT_PENDING,
     DELETE_PRODUCT_SUCCESS,
@@ -21,8 +25,12 @@ const initialState = {
 
     //Product detail
     productById: {},
-    getProductByIdPending:false
-    
+    getProductByIdPending: false,
+
+    //Update Product
+    updateProductPending: false
+
+
 }
 
 export default function productReducers(state = initialState, action) {
@@ -45,9 +53,9 @@ export default function productReducers(state = initialState, action) {
             state.getProductByIdPending = true
             break;
         case GET_PRODUCT_BY_ID_SUCCESS:
-            state.getProductByIdPending=false;
+            state.getProductByIdPending = false;
             state.productById = action.productById
-            state.error=null
+            state.error = null
             break;
         case GET_PRODUCT_BY_ID_ERROR:
             state.error = action.error
@@ -62,6 +70,15 @@ export default function productReducers(state = initialState, action) {
             break;
         case DELETE_PRODUCT_ERROR:
             state.error = action.error
+            break;
+        case UPDATE_PRODUCT_PENDING:
+            state.updateProductPending = true
+            break;
+        case UPDATE_PRODUCT_SUCCESS:
+            state.updateProductPending = false
+            break;
+        case UPDATE_PRODUCT_ERROR:
+            state.updateProductPending = false
             break;
 
         default:

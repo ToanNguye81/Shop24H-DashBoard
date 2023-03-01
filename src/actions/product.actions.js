@@ -10,6 +10,10 @@ import {
     DELETE_PRODUCT_ERROR,
     DELETE_PRODUCT_PENDING,
     DELETE_PRODUCT_SUCCESS,
+
+    UPDATE_PRODUCT_PENDING,
+    UPDATE_PRODUCT_SUCCESS,
+    UPDATE_PRODUCT_ERROR,
 } from "../constants/product.constants";
 
 const gPRODUCT_API_URL = "//localhost:8000/products"
@@ -63,7 +67,6 @@ export const getAllProduct = (paramLimit, paramPage, paramCondition) => {
 
 //Get Product By Id
 export const getProductById = (productId) => {
-
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -131,6 +134,76 @@ export const deleteProduct = (paramProductId) => {
     }
 }
 
-export const updateProductById =(productId)=> {
+// Update customer
+export const updateProductById = (productId, productData) => {
+    // validate data
+    const errors = validateProduct(productData);
+    if (errors) {
+        return {
+            type: UPDATE_PRODUCT_ERROR,
+            error: errors,
+        }
+    }
+    return async (dispatch) => {
+        //call PUT API 
+        try {
+            const requestOptions = {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(productData),
+            };
 
+            await dispatch({
+                type: UPDATE_PRODUCT_PENDING,
+            });
+
+            const res = await fetch(`${gPRODUCT_API_URL}/${productId}`, requestOptions);
+            const resObj = await res.json();
+
+            if (!res.ok) {
+                throw new Error(`${resObj.message}, status: ${res.status}`);
+            }
+
+            return dispatch({
+                type: UPDATE_PRODUCT_SUCCESS,
+                data: resObj,
+            });
+        } catch (err) {
+            return dispatch({
+                type: UPDATE_PRODUCT_ERROR,
+                error: err,
+            });
+        }
+    };
+}
+
+export const validateProduct = (product) => {
+    const { name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount } = product;
+    const errors = [];
+
+    if (name.trim() === '') {
+        errors.push({ field: 'name', message: 'Name must not be empty' });
+    }
+    if (brand.trim() === '') {
+        errors.push({ field: 'brand', message: 'Brand must not be empty' });
+    }
+    if (description.trim() === '') {
+        errors.push({ field: 'description', message: 'Description must not be empty' });
+    }
+    if (type.trim() === '') {
+        errors.push({ field: 'type', message: 'Type must not be empty' });
+    }
+    if (imageUrl.trim() === '') {
+        errors.push({ field: 'imageUrl', message: 'Image URL must not be empty' });
+    }
+    if (isNaN(parseFloat(buyPrice)) || parseFloat(buyPrice) <= 0) {
+        errors.push({ field: 'buyPrice', message: 'Buy price must be a number greater than 0' });
+    }
+    if (isNaN(parseFloat(promotionPrice)) || parseFloat(promotionPrice) <= 0) {
+        errors.push({ field: 'promotionPrice', message: 'Promotion price must be a number greater than 0' });
+    }
+    if (isNaN(parseInt(amount)) || parseInt(amount) < 0) {
+        errors.push({ field: 'amount', message: 'Amount must be an integer greater than or equal to 0' });
+    }
+    return errors.length ? errors : null;
 }

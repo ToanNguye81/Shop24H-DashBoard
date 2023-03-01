@@ -28,7 +28,7 @@ const TABLE_HEAD =
 export const OrderDetailTable = ({ orderDetails, pending }) => {
   const navigate = useNavigate()
 
-  const handleClickOrderDetail = async (event) => {
+  const handleClickProductDetail = async (event) => {
     const orderId = event.target.value
     navigate(`/dashboard/products/${orderId}`)
   };
@@ -66,7 +66,7 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                         <TableCell>{orderDetail.product.name}</TableCell>
                         <TableCell>{orderDetail.quantity}</TableCell>
                         <TableCell>
-                          <Button variant="outlined" size="small" onClick={handleClickOrderDetail} value={orderDetail.product._id}>
+                          <Button variant="outlined" size="small" onClick={handleClickProductDetail} value={orderDetail.product._id}>
                             PRODUCT DETAIL
                           </Button>
                         </TableCell>
