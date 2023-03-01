@@ -14,6 +14,7 @@ import { ProductInfo } from "../components/productPage/ProductInfo"
 export const ProductDetailPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [openSnackBar, setOpenSnackBar] = useState(false);
   const [updatedData, setUpdatedData] = useState({});
   const { productById, error, getProductByIdPending, updateStatus } = useSelector((reduxData) => reduxData.productReducers);
   const { productId } = useParams();
@@ -26,7 +27,8 @@ export const ProductDetailPage = () => {
   };
 
   const handleOnClickUpdate = async () => {
-    dispatch(updateProductById(productId, updatedData));
+    await dispatch(updateProductById(productId, updatedData));
+    await setOpenSnackBar(true)
   };
 
   return (
@@ -53,7 +55,7 @@ export const ProductDetailPage = () => {
               </Stack>
             </React.Fragment>
         }
-        <SnackBarAlert status={updateStatus} />
+        <SnackBarAlert status={updateStatus} openSnackBar={openSnackBar}/>
       </Container>
     </React.Fragment>
   )

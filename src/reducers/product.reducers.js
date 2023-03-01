@@ -14,6 +14,7 @@ import {
     DELETE_PRODUCT_ERROR,
     DELETE_PRODUCT_PENDING,
     DELETE_PRODUCT_SUCCESS,
+
 } from "../constants/product.constants";
 
 const initialState = {
@@ -30,6 +31,7 @@ const initialState = {
     //Update Product
     updateProductPending: false,
     updateStatus: null,
+    updateError:null
 
 }
 
