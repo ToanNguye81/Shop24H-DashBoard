@@ -1,35 +1,23 @@
-import { Button, LinearProgress, Typography } from "@mui/material"
+import { LinearProgress, Typography } from "@mui/material"
 import { Container, Stack } from "@mui/system"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 
-import { useNavigate, useParams } from "react-router-dom"
-import { getProductById, updateProductById } from "../actions/product.actions"
-import { SnackBarAlert } from "../components/orderDetailPage/SnackBarAlert"
+import { useParams } from "react-router-dom"
+import { getProductById } from "../actions/product.actions"
 import { ErrorStack } from "../components/productDetailPage/ErrorStack"
+import { EditProduct } from "../components/productPage/EditProduct"
 import { NewProduct } from "../components/productPage/NewProduct"
-import { ProductInfo } from "../components/productPage/ProductInfo"
 
 export const ProductDetailPage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const [openSnackBar, setOpenSnackBar] = useState(false);
-  const [updatedData, setUpdatedData] = useState({});
-  const { productById, error, getProductByIdPending, updateStatus } = useSelector((reduxData) => reduxData.productReducers);
+  const { productById, error, getProductByIdPending } = useSelector((reduxData) => reduxData.productReducers);
   const { productId } = useParams();
   useEffect(() => {
+    if(productId)
     dispatch(getProductById(productId))
   }, [productId]);
-
-  const handleUpdateData = (data) => {
-    setUpdatedData(data)
-  };
-
-  const handleOnClickUpdate = async () => {
-    await dispatch(updateProductById(productId, updatedData));
-    await setOpenSnackBar(true)
-  };
 
   return (
     <React.Fragment>
@@ -46,16 +34,10 @@ export const ProductDetailPage = () => {
         </Stack>
         {error ? <ErrorStack description={error.stack} /> :
           getProductByIdPending ?
-            <LinearProgress /> :
-            <React.Fragment>
-              <ProductInfo productData={productById} onUpdateData={handleUpdateData} />
-              <Stack direction="row" justifyContent="flex-end" alignItems="center" spacing={1} mt={2}>
-                <Button variant="contained" color="warning" onClick={handleOnClickUpdate} >Update</Button>
-                <Button variant="contained" color="info" onClick={() => navigate(-1)}>Cancel</Button>
-              </Stack>
-            </React.Fragment>
+            <LinearProgress /> 
+            :
+            <EditProduct initProduct={productById}/>
         }
-        <SnackBarAlert status={updateStatus} openSnackBar={openSnackBar}/>
       </Container>
     </React.Fragment>
   )

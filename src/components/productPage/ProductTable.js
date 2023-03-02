@@ -7,12 +7,14 @@ import {
   TableCell,
   TableHead,
   Button,
+  IconButton,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Scrollbar from "../scrollbar/Scrollbar";
 import { DeleteProduct } from "./DeleteProduct";
-import { EditProduct } from "./EditProduct";
+import Iconify from '../iconify/Iconify';
+
 
 const TABLE_HEAD = [
   "Action",
@@ -28,7 +30,7 @@ const TABLE_HEAD = [
 ]
 
 export const ProductTable = ({ products, pending }) => {
-  
+  const navigate = useNavigate();
   return (
     <React.Fragment>
       {pending ?
@@ -56,7 +58,9 @@ export const ProductTable = ({ products, pending }) => {
                     <>
                       <TableRow key={index}>
                         <TableCell align="left">
-                          <EditProduct productId={product._id} />
+                          <IconButton sx={{ color: '#3f51b5' }} onClick={() => navigate(`/dashboard/products/${product._id}`)} >
+                            <Iconify icon={'eva:edit-fill'} />
+                          </IconButton>
                           <DeleteProduct productId={product._id} />
                         </TableCell>
                         <TableCell>

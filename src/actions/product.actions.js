@@ -7,6 +7,10 @@ import {
     GET_PRODUCT_BY_ID_PENDING,
     GET_PRODUCT_BY_ID_SUCCESS,
 
+    CREATE_PRODUCT_PENDING,
+    CREATE_PRODUCT_ERROR,
+    CREATE_PRODUCT_SUCCESS,
+
     DELETE_PRODUCT_ERROR,
     DELETE_PRODUCT_PENDING,
     DELETE_PRODUCT_SUCCESS,
@@ -150,14 +154,14 @@ export const updateProductById = (productId, productData) => {
         await dispatch({
             type: UPDATE_PRODUCT_PENDING,
         });
-        
+
         try {
             const requestOptions = {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(productData),
             };
-            
+
             const res = await fetch(`${gPRODUCT_API_URL}/${productId}`, requestOptions);
             const resObj = await res.json();
 
@@ -181,47 +185,83 @@ export const updateProductById = (productId, productData) => {
 
 export const validateProduct = (product) => {
     const { name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount } = product;
-    const result={error:null,isValid:true};
+    const result = { error: null, isValid: true };
 
     if (name.trim() === '') {
-        result.errors='Name must not be empty';
-        result.isValid=false;
+        result.errors = 'Name must not be empty';
+        result.isValid = false;
         return result;
     }
     if (brand.trim() === '') {
-        result.errors='Brand must not be empty';
-        result.isValid=false;
+        result.errors = 'Brand must not be empty';
+        result.isValid = false;
         return result
     }
     if (description.trim() === '') {
-        result.errors='Description must not be empty';
-        result.isValid=false;
+        result.errors = 'Description must not be empty';
+        result.isValid = false;
         return result
     }
     if (type.trim() === '') {
-        errors='Type must not be empty';
-        result.isValid=false;
+        errors = 'Type must not be empty';
+        result.isValid = false;
         return result
     }
     if (imageUrl.trim() === '') {
-        result.errors='Image URL must not be empty';
-        result.isValid=false;
+        result.errors = 'Image URL must not be empty';
+        result.isValid = false;
         return result
     }
     if (isNaN(parseFloat(buyPrice)) || parseFloat(buyPrice) <= 0) {
-        result.errors='Buy price must be a number greater than 0';
-        result.isValid=false;
+        result.errors = 'Buy price must be a number greater than 0';
+        result.isValid = false;
         return result
     }
     if (isNaN(parseFloat(promotionPrice)) || parseFloat(promotionPrice) <= 0) {
-        result.errors='Promotion price must be a number greater than 0';
-        result.isValid=false;
+        result.errors = 'Promotion price must be a number greater than 0';
+        result.isValid = false;
         return result
     }
     if (isNaN(parseInt(amount)) || parseInt(amount) < 0) {
-        result.errors='Amount must be an integer greater than or equal to 0';
-        result.isValid=false;
+        result.errors = 'Amount must be an integer greater than or equal to 0';
+        result.isValid = false;
         return result
     }
     return result
+}
+
+//Create new product
+export const createNewProduct = (productData) => {
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(productData)
+        };
+
+        await dispatch({
+            type: CREATE_PRODUCT_PENDING
+        });
+
+        try {
+            const res = await fetch(gPRODUCT_API_URL, requestOptions);
+            const resObj = await res.json();
+            if (!res.ok) {
+                return dispatch({
+                    type: CREATE_PRODUCT_ERROR,
+                })
+            }
+            return dispatch({
+                type: CREATE_PRODUCT_SUCCESS,
+                data: resObj.data
+            })
+        } catch (err) {
+            return dispatch({
+                type: CREATE_PRODUCT_ERROR,
+                error: err
+            })
+        }
+    }
 }
