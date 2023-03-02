@@ -7,8 +7,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { getOrderById } from "../actions/order.actions"
 import { ErrorStack } from "../components/orderDetailPage/ErrorStack"
+import { NewOrderDetail } from "../components/orderDetailPage/NewOrderDetail"
 import { EditOrder } from "../components/orderPage/EditOrder"
 import { NewOrder } from "../components/orderPage/NewOrder"
+import { OrderData } from "../components/orderPage/OrderData"
 import { OrderDetailPage } from "./OrderDetailPage"
 
 export const EditOrderPage = () => {
@@ -16,8 +18,8 @@ export const EditOrderPage = () => {
   const { orderById, error, getOrderByIdPending } = useSelector((reduxData) => reduxData.orderReducers);
   const { orderId } = useParams();
   useEffect(() => {
-    if(orderId)
-    dispatch(getOrderById(orderId))
+    if (orderId)
+      dispatch(getOrderById(orderId))
   }, [orderId]);
 
   return (
@@ -25,23 +27,22 @@ export const EditOrderPage = () => {
       <Helmet>
         <title> Dashboard: Edit Order </title>
       </Helmet>
+      <OrderDetailPage />
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mt={5}>
           <Typography variant="h4" gutterBottom>
             Edit Order
           </Typography>
-          <NewOrder />
         </Stack>
-
-        {/* {error ? <ErrorStack description={error.stack} /> :
+        {/* <OrderData initOrder={orderById} /> */}
+        {error ? <ErrorStack description={error.stack} /> :
           getOrderByIdPending ?
-            <LinearProgress /> 
+            <LinearProgress />
             :
-            <EditOrder initOrder={orderById}/>
-        } */}
+            <OrderData initOrder={orderById} />
+        }
       </Container>
-      <OrderDetailPage/>
     </React.Fragment>
   )
 }

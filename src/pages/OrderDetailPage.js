@@ -5,7 +5,6 @@ import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 import { OrderDetailTable } from "../components/orderDetailPage/OrderDetailTable"
 import { ErrorStack } from "../components/orderDetailPage/ErrorStack"
-import { NewOrderDetail } from "../components/orderDetailPage/NewOrderDetail"
 import { useParams } from "react-router-dom"
 import { getAllOrderDetail, getAllOrderDetailOfOrder } from "../actions/orderDetail.actions"
 
@@ -41,7 +40,6 @@ export const OrderDetailPage = () => {
           <Typography variant="h4" gutterBottom>
             {orderId ? `All OrderDetails Of Order: ${orderId}` : 'All OrderDetails'}
           </Typography>
-          <NewOrderDetail />
         </Stack>
         {error ?
           <ErrorStack />

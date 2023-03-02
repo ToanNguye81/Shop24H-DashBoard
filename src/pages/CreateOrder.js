@@ -10,6 +10,7 @@ import { createNewCustomer } from "../actions/customer.actions"
 import { createNewOrderDetail } from "../actions/orderDetail.actions"
 import { createNewOrder } from "../actions/order.actions"
 import { SnackbarProvider, useSnackbar } from "notistack"
+import { Container } from "@mui/system"
 
 const CreateOrderContent = () => {
     const dispatch = useDispatch()
@@ -55,6 +56,7 @@ const CreateOrderContent = () => {
 
     return (
         <React.Fragment>
+            <Container>
             <h2>Add To Cart</h2>
             <AddToCart />
             <h2>Cart Detail</h2>
@@ -62,6 +64,7 @@ const CreateOrderContent = () => {
             <h2>Customer information</h2>
             <CustomerInfo />
             <Button sx={{ mt: 3 }} variant="contained" onClick={handleCreateOrder}>Create Order</Button>
+            </Container>
         </React.Fragment>
     )
 }

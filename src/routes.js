@@ -16,6 +16,7 @@ import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { CreateOrder } from './pages/CreateOrder';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { OrderData } from './components/orderPage/OrderData';
 import { EditOrderPage } from './pages/EditOrderPage';
 
 export default function Router() {
@@ -25,7 +26,7 @@ export default function Router() {
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
     children: [
       { element: <Navigate to="/dashboard/app" />, index: true },
-      { path: 'app', element: <DemoPage/> },
+      { path: 'app', element: <DashboardAppPage/> },
       { path: 'createOrder', element: <CreateOrder/> },
      
       { path: 'customers', element: <CustomerPage/> },

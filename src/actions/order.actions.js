@@ -158,8 +158,6 @@ export const createNewOrder = (customerId) => {
 
 //Get Order By Id
 export const getOrderById = (orderId) => {
-   
-    console.log(orderId)
     const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -197,6 +195,8 @@ export const getOrderById = (orderId) => {
         }
     }
 }
+
+
 
 // Update order
 export const updateOrder = async (paramOrder) => {

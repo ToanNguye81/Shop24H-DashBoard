@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from 'react';
 // @mui
-import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton } from '@mui/material';
+import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton, Card } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../../actions/product.actions";
@@ -70,12 +70,13 @@ export const AddToCart = () => {
           direction="column"
           justifyContent="flex-start"
           alignItems="stretch"
-          height={200} mt={2}>
+          mt={2}>
           {pending ?
             <Grid item fullWidth textAlign="center">
               <CircularProgress />
             </Grid>
             :
+            <Card>
             <TableContainer>
               <Table >
                 <TableHead>
@@ -120,6 +121,7 @@ export const AddToCart = () => {
                 onRowsPerPageChange={handleChangeRowsPerPage}
               />
             </TableContainer>
+            </Card>
           }
         </Grid>
       </Grid>
