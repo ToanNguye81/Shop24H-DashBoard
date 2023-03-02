@@ -16,6 +16,7 @@ import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { CreateOrder } from './pages/CreateOrder';
 import { ProductDetailPage } from './pages/ProductDetailPage';
+import { EditOrderPage } from './pages/EditOrderPage';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
@@ -30,6 +31,7 @@ export default function Router() {
       { path: 'customers', element: <CustomerPage/> },
       
       { path: 'orders', element: <OrderPage/> },
+      { path: 'orders/:orderId', element: <EditOrderPage/> },
       { path: 'customers/:customerId/orders', element: <OrderPage/> },
 
       { path: 'orderDetails', element: <OrderDetailPage /> },

@@ -20,7 +20,7 @@ const validationSchema = Yup.object().shape({
     amount: Yup.number().required('Amount is required').min(0),
 });
 
-export const EditProduct = ({initProduct}) => {
+export const OrderDataForm = ({initProduct}) => {
     const [openSnackBar, setOpenSnackBar] = useState(false);
     const dispatch=useDispatch();
     const navigate=useNavigate();

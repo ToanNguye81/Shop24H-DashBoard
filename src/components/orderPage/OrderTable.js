@@ -7,6 +7,7 @@ import {
   TableCell,
   TableHead,
   Button,
+  IconButton,
 } from "@mui/material";
 import React,
 {
@@ -17,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getAllOrder } from "../../actions/order.actions";
 import { formatTime } from "../../utils/formatTime";
+import Iconify from "../iconify/Iconify";
 import Scrollbar from "../scrollbar/Scrollbar";
 import { DeleteOrder } from "./DeleteOrder";
 import { EditOrder } from "./EditOrder";
@@ -34,13 +36,7 @@ const TABLE_HEAD =
   ];
 
 export const OrderTable = ({ orders, pending }) => {
-  const navigate=useNavigate()
-  const handleClickOrderDetail = async (event) => {
-    const orderDetailId=event.target.value
-    navigate(`/dashboard/orders/${orderDetailId}/orderDetails`)
-    
-  };
-
+  const navigate = useNavigate()
   return (
     <React.Fragment>
       {pending ?
@@ -68,7 +64,9 @@ export const OrderTable = ({ orders, pending }) => {
                     <>
                       <TableRow key={index}>
                         <TableCell align="left">
-                          <EditOrder paramOrder={order} />
+                          <IconButton sx={{ color: '#3f51b5' }} onClick={() => navigate(`/dashboard/orders/${order._id}`)}>
+                            <Iconify icon={'eva:edit-fill'} />
+                          </IconButton>
                           <DeleteOrder idValue={order._id} />
                         </TableCell>
                         <TableCell>{order.orderCode}</TableCell>
@@ -78,7 +76,7 @@ export const OrderTable = ({ orders, pending }) => {
                         <TableCell>{order.status}</TableCell>
                         <TableCell>{order.note}</TableCell>
                         <TableCell>
-                          <Button variant="outlined" size="small" onClick={handleClickOrderDetail} value={order._id}>
+                          <Button variant="outlined" size="small" onClick={()=>navigate(`/dashboard/orders/${order._id}/orderDetails`)} value={order._id}>
                             ORDER DETAIL
                           </Button>
                         </TableCell>

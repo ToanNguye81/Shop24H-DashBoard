@@ -34,7 +34,7 @@ export const OrderDetailPage = () => {
   return (
     <React.Fragment>
       <Helmet>
-        <title> Dashboard: OrderDetail </title>
+        <title> Dashboard: Order Detail </title>
       </Helmet>
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
