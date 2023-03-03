@@ -27,20 +27,18 @@ export const EditOrderPage = () => {
       <Helmet>
         <title> Dashboard: Edit Order </title>
       </Helmet>
-      <OrderDetailPage />
 
+      <OrderDetailPage />
       <Container>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mt={5}>
           <Typography variant="h4" gutterBottom>
             Edit Order
           </Typography>
         </Stack>
-        {/* <OrderData initOrder={orderById} /> */}
-        {error ? <ErrorStack description={error.stack} /> :
-          getOrderByIdPending ?
-            <LinearProgress />
-            :
-            <OrderData initOrder={orderById} />
+        {getOrderByIdPending?
+        <LinearProgress />
+        :
+        <OrderData initOrder={orderById} />
         }
       </Container>
     </React.Fragment>

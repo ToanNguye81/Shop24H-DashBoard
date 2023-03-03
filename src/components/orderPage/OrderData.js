@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { SnackBarAlert } from '../common/SnackBarAlert';
 import { useDispatch, useSelector } from 'react-redux';
 import { OrderDetailPage } from '../../pages/OrderDetailPage';
+import { formatTime } from '../../utils/formatTime';
 // import { updateOrderById } from '../../actions/order.actions';
 
 const validOrderSchema = Yup.object().shape({
@@ -23,7 +24,7 @@ const validOrderSchema = Yup.object().shape({
 export const OrderData = ({ initOrder }) => {
 // export const OrderData = () => {
     const [openSnackBar, setOpenSnackBar] = useState(false);
-    // const initOrder = {
+    // const initOrder1 = {
     //     orderCode: "",
     //     orderDate: "",
     //     shippedDate: "",
@@ -40,6 +41,7 @@ export const OrderData = ({ initOrder }) => {
         //     await dispatch(updateOrderById(initOrder._id, values));
             // await setOpenSnackBar(true)
     };
+    console.log(initOrder)
 
     return (
         <React.Fragment>
@@ -69,7 +71,7 @@ export const OrderData = ({ initOrder }) => {
                                             id="orderDate"
                                             label="Order Date *"
                                             name="orderDate"
-                                            value={values.orderDate}
+                                            value={formatTime(values.orderDate)}
                                             onChange={handleChange}
                                             rows={4}
                                             error={errors.orderDate && touched.orderDate}
@@ -82,7 +84,7 @@ export const OrderData = ({ initOrder }) => {
                                             id="shippedDate"
                                             label="Shipped Date *"
                                             name="shippedDate"
-                                            value={values.shippedDate}
+                                            value={formatTime(values.shippedDate)}
                                             onChange={handleChange}
                                             error={errors.shippedDate && touched.shippedDate}
                                         />

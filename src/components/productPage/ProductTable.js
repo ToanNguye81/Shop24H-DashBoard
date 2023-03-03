@@ -1,7 +1,7 @@
 import {
   TableRow,
   TableBody,
-  CircularProgress,
+  LinearProgress,
   Grid,
   Table,
   TableCell,
@@ -35,7 +35,7 @@ export const ProductTable = ({ products, pending }) => {
     <React.Fragment>
       {pending ?
         <Grid item md={12} sm={12} lg={12} xs={12} textAlign="center">
-          <CircularProgress />
+          <LinearProgress />
         </Grid>
         :
         <>

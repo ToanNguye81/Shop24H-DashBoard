@@ -2,10 +2,10 @@ import {
     FETCH_ORDERS_PENDING,
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_SUCCESS,
-    
-   GET_ORDER_BY_ID_PENDING,
-   GET_ORDER_BY_ID_ERROR,
-   GET_ORDER_BY_ID_SUCCESS,
+
+    GET_ORDER_BY_ID_PENDING,
+    GET_ORDER_BY_ID_ERROR,
+    GET_ORDER_BY_ID_SUCCESS,
 
     FETCH_CITY_PENDING,
     FETCH_CITY_SUCCESS,
@@ -36,7 +36,7 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-    orderCondition:"",
+    orderCondition: "",
 
     //Modal update order
     updateOrderPending: false,
@@ -47,9 +47,19 @@ const initialState = {
     //Add To Cart
     cart: [],//{product:...,quantity:...}
     //Create Order
-    orderId:null,
+    orderId: null,
     //
-    orderById:null,
+    // orderById: null,
+
+
+    //Order detail
+    orderById: {},
+    getOrderByIdPending: false,
+
+    //Update Order
+    updateOrderPending: false,
+    updateStatus: null,
+    updateError: null
 }
 
 export default function orderReducers(state = initialState, action) {
@@ -62,20 +72,33 @@ export default function orderReducers(state = initialState, action) {
             state.pending = false;
             state.totalOrder = action.totalOrder;
             state.orders = action.orders;
-            state.error=null;
+            state.error = null;
             break;
         case FETCH_ORDERS_ERROR:
             state.error = action.error
             break;
 
-        //Get order by Id
-        //Load Order
+        // //Get order by Id
+        // //Load Order
+        // case GET_ORDER_BY_ID_PENDING:
+        //     state.pending = true;
+        //     break;
+        // case GET_ORDER_BY_ID_SUCCESS:
+        //     state.pending = false;
+        //     state.orderById = action.orderById;
+        //     break;
+        // case GET_ORDER_BY_ID_ERROR:
+        //     state.error = action.error
+        //     break;
+
+        //Get product By Id
         case GET_ORDER_BY_ID_PENDING:
-            state.pending = true;
+            state.getOrderByIdPending = true
             break;
         case GET_ORDER_BY_ID_SUCCESS:
-            state.pending = false;
-            state.orderById = action.orderById;
+            state.getOrderByIdPending = false;
+            state.orderById = action.orderById
+            state.error = null
             break;
         case GET_ORDER_BY_ID_ERROR:
             state.error = action.error
@@ -88,7 +111,7 @@ export default function orderReducers(state = initialState, action) {
             break;
         case CREATE_ORDER_SUCCESS:
             state.createOrderPending = false
-            state.orderId=action.data._id
+            state.orderId = action.data._id
             break;
         case CREATE_ORDER_ERROR:
             state.error = action.error
@@ -138,10 +161,9 @@ export default function orderReducers(state = initialState, action) {
             state.cart[action.index].quantity++
             break;
         case DECREASE_QUANTITY:
-            if(state.cart[action.index].quantity<=1)
-            {
-                state.cart.splice(action.index,1)
-            }else{
+            if (state.cart[action.index].quantity <= 1) {
+                state.cart.splice(action.index, 1)
+            } else {
                 state.cart[action.index].quantity--
             }
             break;

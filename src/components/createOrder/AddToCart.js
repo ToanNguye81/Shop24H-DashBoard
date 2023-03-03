@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from 'react';
 // @mui
-import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton, Card } from '@mui/material';
+import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, LinearProgress, TablePagination, IconButton, Card } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../../actions/product.actions";
@@ -73,7 +73,7 @@ export const AddToCart = () => {
           mt={2}>
           {pending ?
             <Grid item fullWidth textAlign="center">
-              <CircularProgress />
+              <LinearProgress />
             </Grid>
             :
             <Card>

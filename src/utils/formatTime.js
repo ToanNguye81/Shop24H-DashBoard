@@ -27,5 +27,5 @@ export function fToNow(date) {
 }
 
 export const formatTime=(dateString)=> {
-  return moment(dateString).format("YYYY-MM-DD HH:mm:ss");
+  return moment(dateString).format("YYYY MMM DD ");
 }

@@ -1,7 +1,7 @@
 import {
   TableRow,
   TableBody,
-  CircularProgress,
+  LinearProgress,
   Grid,
   Table,
   TableCell,
@@ -9,19 +9,12 @@ import {
   Button,
   IconButton,
 } from "@mui/material";
-import React,
-{
-  useEffect,
-  useState
-} from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { getAllOrder } from "../../actions/order.actions";
 import { formatTime } from "../../utils/formatTime";
 import Iconify from "../iconify/Iconify";
 import Scrollbar from "../scrollbar/Scrollbar";
 import { DeleteOrder } from "./DeleteOrder";
-import { EditOrder } from "./EditOrder";
 
 const TABLE_HEAD =
   [
@@ -41,7 +34,7 @@ export const OrderTable = ({ orders, pending }) => {
     <React.Fragment>
       {pending ?
         <Grid item md={12} sm={12} lg={12} xs={12} textAlign="center">
-          <CircularProgress />
+          <LinearProgress />
         </Grid>
         :
         <>

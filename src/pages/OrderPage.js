@@ -1,7 +1,7 @@
 // import { Helmet } from 'react-helmet-async';
 // import { useState } from 'react';
 // // @mui
-// import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton } from '@mui/material';
+// import { Card, Table, Stack, TableRow, TableBody, TableCell, Container, Typography, TableContainer, Grid, TableHead, LinearProgress, TablePagination, IconButton } from '@mui/material';
 // // components
 // import Scrollbar from '../components/scrollbar';
 // import React, { useEffect } from "react";
@@ -56,7 +56,7 @@
 //         <Card>
 //           {pending ?
 //             <Grid item md={12} sm={12} lg={12} xs={12} textAlign="center">
-//               <CircularProgress />
+//               <LinearProgress />
 //             </Grid>
 //             :
 //             <>

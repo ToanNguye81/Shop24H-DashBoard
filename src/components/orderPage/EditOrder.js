@@ -56,9 +56,7 @@ export const EditOrder = ({ paramOrder }) => {
 
     return (
         <React.Fragment>
-            <IconButton sx={{ color: '#3f51b5' }} onClick={handleOpen}>
-                <Iconify icon={'eva:edit-fill'} />
-            </IconButton>
+           
             <Modal
                 keepMounted
                 open={open}
