@@ -15,10 +15,6 @@ import {
     DELETE_ORDER_DETAIL_SUCCESS,
     DELETE_ORDER_DETAIL_ERROR,
 
-    DECREASE_QUANTITY,
-    INCREASE_QUANTITY,
-    ADD_NEW_PRODUCT,
-    ADD_FIRST_PRODUCT
 } from "../constants/orderDetail.constants";
 
 const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
@@ -77,7 +73,7 @@ export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
 //Create new orderDetail
 export const createNewOrderDetail = (orderId, orderDetail) => {
     const dataReq = {
-        product: orderDetail.product._id,
+        productId: orderDetail.product._id,
         quantity: orderDetail.quantity
     }
 
