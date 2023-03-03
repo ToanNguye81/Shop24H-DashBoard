@@ -2,7 +2,7 @@ import {
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_PENDING,
     FETCH_ORDERS_SUCCESS,
-    
+
     GET_ORDER_BY_ID_ERROR,
     GET_ORDER_BY_ID_PENDING,
     GET_ORDER_BY_ID_SUCCESS,
@@ -11,9 +11,9 @@ import {
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_ERROR,
 
-    UPDATE_ORDER_PENDING,
-    UPDATE_ORDER_SUCCESS,
-    UPDATE_ORDER_ERROR,
+    UPDATE_ORDER_BY_ID_PENDING,
+    UPDATE_ORDER_BY_ID_SUCCESS,
+    UPDATE_ORDER_BY_ID_ERROR,
 
     DELETE_ORDER_PENDING,
     DELETE_ORDER_SUCCESS,
@@ -74,7 +74,7 @@ export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
     }
 }
 
-export const getAllOrderOfCustomer = (paramLimit, paramPage,  paramCondition, customerId) => {
+export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, customerId) => {
     // build the request string
     let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
     const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
@@ -121,39 +121,39 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage,  paramCondition, cu
 //Create new order
 export const createNewOrder = (customerId) => {
     // if (isValid) {
-        return async (dispatch) => {
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-            };
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+        };
 
-            await dispatch({
-                type: CREATE_ORDER_PENDING
-            });
+        await dispatch({
+            type: CREATE_ORDER_PENDING
+        });
 
-            try {
-                const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}/orders`, requestOptions);
-                const resObj = await res.json();
-                
-                if (!res.ok) {
-                    return dispatch({
-                        type: CREATE_ORDER_ERROR,
-                    })
-                }
-                
-                return dispatch({
-                    type: CREATE_ORDER_SUCCESS,
-                    data: resObj.data
-                })
-            } catch (err) {
+        try {
+            const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}/orders`, requestOptions);
+            const resObj = await res.json();
+
+            if (!res.ok) {
                 return dispatch({
                     type: CREATE_ORDER_ERROR,
-                    error: err
                 })
             }
+
+            return dispatch({
+                type: CREATE_ORDER_SUCCESS,
+                data: resObj.data
+            })
+        } catch (err) {
+            return dispatch({
+                type: CREATE_ORDER_ERROR,
+                error: err
+            })
         }
+    }
 }
 
 //Get Order By Id
@@ -198,48 +198,80 @@ export const getOrderById = (orderId) => {
 
 
 
-// Update order
-export const updateOrder = async (paramOrder) => {
-    const isValid=validateOrder(paramOrder)
-    //call PUT API 
-    if (isValid) {
-        return async (dispatch) => {
+// // Update order
+// export const updateOrderById = async (paramOrder) => {
+//     return async (dispatch) => {
+//         const requestOptions = {
+//             method: 'PUT',
+//             headers: {
+//                 "Content-Type": 'application/json',
+//             },
+//             body: JSON.stringify(paramOrder),
+//         };
+
+//         await dispatch({
+//             type: UPDATE_ORDER_PENDING,
+//         });
+
+//         try {
+//             const res = await fetch(gORDER_API_URL, requestOptions);
+//             const resObj = await res.json();
+
+//             if (!res.ok) {
+//                 return dispatch({
+//                     type: UPDATE_ORDER_ERROR,
+//                 });
+//             }
+
+//             return dispatch({
+//                 type: UPDATE_ORDER_SUCCESS,
+//                 data: resObj,
+//             });
+//         } catch (err) {
+//             return dispatch({
+//                 type: UPDATE_ORDER_ERROR,
+//                 error: err,
+//             });
+//         }
+//     };
+// };
+
+// Update customer
+export const updateOrderById = (orderId, orderData) => {
+    return async (dispatch) => {
+        //call PUT API 
+
+        await dispatch({
+            type: UPDATE_ORDER_BY_ID_PENDING,
+        });
+
+        try {
             const requestOptions = {
                 method: 'PUT',
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: JSON.stringify(paramOrder),
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(orderData),
             };
 
-            await dispatch({
-                type: UPDATE_ORDER_PENDING,
-            });
+            const res = await fetch(`${gORDER_API_URL}/${orderId}`, requestOptions);
+            const resObj = await res.json();
 
-            try {
-                const res = await fetch(gORDER_API_URL, requestOptions);
-                const resObj = await res.json();
-
-                if (!res.ok) {
-                    return dispatch({
-                        type: UPDATE_ORDER_ERROR,
-                    });
-                }
-
-                return dispatch({
-                    type: UPDATE_ORDER_SUCCESS,
-                    data: resObj,
-                });
-            } catch (err) {
-                return dispatch({
-                    type: UPDATE_ORDER_ERROR,
-                    error: err,
-                });
+            if (!res.ok) {
+                throw new Error(`${resObj.message}, status: ${res.status}`);
             }
-        };
-    }
-    return isValid;
-};
+
+            return dispatch({
+                type: UPDATE_ORDER_BY_ID_SUCCESS,
+                data: resObj.data,
+                status: resObj.status,
+            });
+        } catch (err) {
+            return dispatch({
+                type: UPDATE_ORDER_BY_ID_ERROR,
+                error: err,
+            });
+        }
+    };
+}
 
 //Delete order
 export const deleteOrder = (paramOrderId) => {
@@ -255,13 +287,13 @@ export const deleteOrder = (paramOrderId) => {
         try {
             const res = await fetch(gORDER_API_URL + `/${paramOrderId}`, requestOptions);
             const resObj = await res.json();
-            
+
             if (!res.ok) {
                 return dispatch({
                     type: DELETE_ORDER_ERROR,
                 })
             }
-            
+
             return dispatch({
                 type: DELETE_ORDER_SUCCESS,
             })
@@ -321,8 +353,8 @@ export const addToCart = (cart, product) => {
 }
 
 //Valid Order parram
-export const validateOrder=(paramOrder)=>{
-    const {}=paramOrder
+export const validateOrder = (paramOrder) => {
+    const { } = paramOrder
     if (paramOrderDetail.firstName.trim() === "") {
         alert("You have entered an invalid First Name")
         return false

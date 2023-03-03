@@ -7,9 +7,8 @@ import { Box, Button, Grid, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { SnackBarAlert } from '../common/SnackBarAlert';
 import { useDispatch, useSelector } from 'react-redux';
-import { OrderDetailPage } from '../../pages/OrderDetailPage';
 import { formatTime } from '../../utils/formatTime';
-// import { updateOrderById } from '../../actions/order.actions';
+import { updateOrderById } from '../../actions/order.actions';
 
 const validOrderSchema = Yup.object().shape({
     orderCode: Yup.string().required('Order Code is required').trim(),
@@ -17,31 +16,18 @@ const validOrderSchema = Yup.object().shape({
     shippedDate: Yup.string().required('Shipped Date is required').trim(),
     cost: Yup.number().required('Cost is required').min(0),
     status: Yup.string().required('Status is required').trim(),
-    note: Yup.string().required('Status is required').trim(),
-    // note: Yup.string(),
+    note: Yup.string().required('Note is required').trim(),
 });
 
 export const OrderData = ({ initOrder }) => {
-// export const OrderData = () => {
     const [openSnackBar, setOpenSnackBar] = useState(false);
-    // const initOrder1 = {
-    //     orderCode: "",
-    //     orderDate: "",
-    //     shippedDate: "",
-    //     cost: "",
-    //     status: "",
-    //     note: "",
-    //     amount: "",
-    // }
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const { updateStatus } = useSelector((reduxData) => reduxData.orderReducers);
-    const handleSubmit = (values) => {
-        console.log(values)
-        //     await dispatch(updateOrderById(initOrder._id, values));
-            // await setOpenSnackBar(true)
+    const { updateStatus } = useSelector((reduxData) => reduxData.orderReducers);
+    const handleSubmit = async (values) => {
+        await dispatch(updateOrderById(initOrder._id, values));
+        await setOpenSnackBar(true)
     };
-    console.log(initOrder)
 
     return (
         <React.Fragment>
@@ -61,7 +47,7 @@ export const OrderData = ({ initOrder }) => {
                                             disabled
                                             value={values.orderCode}
                                             onChange={handleChange}
-                                            error={errors.orderCode && touched.orderCode}
+                                            error={errors.orderCode}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -73,20 +59,22 @@ export const OrderData = ({ initOrder }) => {
                                             name="orderDate"
                                             value={formatTime(values.orderDate)}
                                             onChange={handleChange}
+                                            disabled
                                             rows={4}
-                                            error={errors.orderDate && touched.orderDate}
+                                            error={errors.orderDate}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             size="small"
                                             fullWidth
+                                            type="date"
                                             id="shippedDate"
                                             label="Shipped Date *"
                                             name="shippedDate"
-                                            value={formatTime(values.shippedDate)}
+                                            value={values.shippedDate}
                                             onChange={handleChange}
-                                            error={errors.shippedDate && touched.shippedDate}
+                                            error={errors.shippedDate}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -98,7 +86,7 @@ export const OrderData = ({ initOrder }) => {
                                             name="cost"
                                             value={values.cost}
                                             onChange={handleChange}
-                                            error={errors.cost && touched.cost}
+                                            error={errors.cost}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -109,9 +97,8 @@ export const OrderData = ({ initOrder }) => {
                                             label="Status *"
                                             name="status"
                                             value={values.status}
-                                            shippedDate="number"
-                                            error={errors.status && touched.status}
                                             onChange={handleChange}
+                                            error={errors.status}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -122,14 +109,13 @@ export const OrderData = ({ initOrder }) => {
                                             label="Note *"
                                             name="note"
                                             value={values.note}
-                                            shippedDate="number"
-                                            error={errors.note && touched.note}
                                             onChange={handleChange}
+                                            error={errors.note}
                                         />
                                     </Grid>
                                     <Grid container direction="row" justifyContent="flex-end" alignItems="flex-start" spacing={1} mt={1}>
                                         <Grid item >
-                                            <Button variant="contained" color="warning" shippedDate="submit">Update</Button>
+                                            <Button variant="contained" color="warning" type="submit">Update</Button>
                                         </Grid>
                                         <Grid item >
                                             <Button variant="contained" color="info" onClick={() => navigate(-1)}>Cancel</Button>
@@ -141,7 +127,7 @@ export const OrderData = ({ initOrder }) => {
                     </Form>
                 )}
             </Formik>
-            {/* <SnackBarAlert status={updateStatus} openSnackBar={openSnackBar} /> */}
+            <SnackBarAlert status={updateStatus} openSnackBar={openSnackBar} />
         </React.Fragment>
     );
 };

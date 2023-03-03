@@ -15,9 +15,9 @@ import {
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_ERROR,
 
-    UPDATE_ORDER_PENDING,
-    UPDATE_ORDER_SUCCESS,
-    UPDATE_ORDER_ERROR,
+    UPDATE_ORDER_BY_ID_PENDING,
+    UPDATE_ORDER_BY_ID_SUCCESS,
+    UPDATE_ORDER_BY_ID_ERROR,
 
     DELETE_ORDER_PENDING,
     DELETE_ORDER_SUCCESS,
@@ -55,7 +55,7 @@ const initialState = {
 
     //Update Order
     updateOrderPending: false,
-    updateStatus: null,
+    updateStatus: null,//Demo
     updateError: null
 }
 
@@ -101,15 +101,28 @@ export default function orderReducers(state = initialState, action) {
             state.error = action.error
             break;
 
-        //Update Order
-        case UPDATE_ORDER_PENDING:
+        // //Update Order
+        // case UPDATE_ORDER_PENDING:
+        //     state.updateOrderPending = true
+        //     break;
+        // case UPDATE_ORDER_SUCCESS:
+        //     state.updateOrderPending = false
+            
+        //     break;
+        // case UPDATE_ORDER_ERROR:
+        //     state.error = action.error
+        //     break;
+
+        case UPDATE_ORDER_BY_ID_PENDING:
             state.updateOrderPending = true
             break;
-        case UPDATE_ORDER_SUCCESS:
+        case UPDATE_ORDER_BY_ID_SUCCESS:
             state.updateOrderPending = false
+            state.updateStatus = "success"
             break;
-        case UPDATE_ORDER_ERROR:
-            state.error = action.error
+        case UPDATE_ORDER_BY_ID_ERROR:
+            state.updateOrderPending = false
+            state.updateStatus = "error"
             break;
 
         //Delete Order

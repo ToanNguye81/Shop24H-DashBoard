@@ -46,26 +46,4 @@ export const logout = () => {
     return dispatch => {
         dispatch({ type: LOGOUT });
     };
-
-    // return async dispatch => {
-    //     try {   
-    //         // Make an API call to your server to get the token
-    //         //   const response = await fetch('//api/auth/login', {
-    //         const res = await fetch('//localhost:8000/users', {
-    //             method: 'GET',
-    //             credentials: 'include'
-    //         });
-    //         const resObj = await res.json();
-    //         // const token = data.token;
-    //         console.log(resObj)
-    //         if (!res.ok) {
-    //           return dispatch({
-    //             //Crasdaf
-    //           });
-    //         }
-    //     } catch (error) {
-    //         console.error(error.message);
-    //         alert(error.message)
-    //     }
-    // };
 };
