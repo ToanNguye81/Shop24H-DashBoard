@@ -6,10 +6,6 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { useParams } from "react-router-dom"
 import { getOrderById } from "../actions/order.actions"
-import { ErrorStack } from "../components/orderDetailPage/ErrorStack"
-import { NewOrderDetail } from "../components/orderDetailPage/NewOrderDetail"
-import { EditOrder } from "../components/orderPage/EditOrder"
-import { NewOrder } from "../components/orderPage/NewOrder"
 import { OrderData } from "../components/orderPage/OrderData"
 import { OrderDetailPage } from "./OrderDetailPage"
 
@@ -17,6 +13,7 @@ export const EditOrderPage = () => {
   const dispatch = useDispatch();
   const { orderById, error, getOrderByIdPending } = useSelector((reduxData) => reduxData.orderReducers);
   const { orderId } = useParams();
+  console.log(orderById)
   useEffect(() => {
     if (orderId)
       dispatch(getOrderById(orderId))
