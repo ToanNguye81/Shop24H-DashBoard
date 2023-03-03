@@ -1,4 +1,4 @@
-import { LinearProgress, Typography } from "@mui/material"
+import { CircularProgress, Typography } from "@mui/material"
 import { Container, Stack } from "@mui/system"
 import React, { useEffect } from "react"
 import { Helmet } from "react-helmet-async"
@@ -34,7 +34,7 @@ export const ProductDetailPage = () => {
         </Stack>
         {error ? <ErrorStack description={error.stack} /> :
           getProductByIdPending ?
-            <LinearProgress /> 
+            <CircularProgress /> 
             :
             <EditProduct initProduct={productById}/>
         }

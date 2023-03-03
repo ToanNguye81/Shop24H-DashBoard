@@ -48,9 +48,6 @@ const initialState = {
     cart: [],//{product:...,quantity:...}
     //Create Order
     orderId: null,
-    //
-    // orderById: null,
-
 
     //Order detail
     orderById: {},
@@ -77,19 +74,6 @@ export default function orderReducers(state = initialState, action) {
         case FETCH_ORDERS_ERROR:
             state.error = action.error
             break;
-
-        // //Get order by Id
-        // //Load Order
-        // case GET_ORDER_BY_ID_PENDING:
-        //     state.pending = true;
-        //     break;
-        // case GET_ORDER_BY_ID_SUCCESS:
-        //     state.pending = false;
-        //     state.orderById = action.orderById;
-        //     break;
-        // case GET_ORDER_BY_ID_ERROR:
-        //     state.error = action.error
-        //     break;
 
         //Get product By Id
         case GET_ORDER_BY_ID_PENDING:

@@ -210,9 +210,7 @@ export const getPhone = (paramPhone) => {
 
 //Create new customer
 export const createNewCustomer = (customerData) => {
-
     const isValid = validateCustomer(customerData)
-
     if (isValid) {
         return async (dispatch) => {
             const requestOptions = {
