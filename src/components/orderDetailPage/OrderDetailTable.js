@@ -20,9 +20,16 @@ import { EditOrderDetail } from "./EditOrderDetail";
 
 const TABLE_HEAD =
   ["Action",
-    "Product",
+    "Image",
+    "Brand",
+    "Name",
+    "Type",
+    "Buy Price",
+    "Promotion Price",
+    "Amount in Stock",
+    "Category",
     "Quantity",
-    "Product Detail"
+    "CurrentProduct"
   ];
 
 export const OrderDetailTable = ({ orderDetails, pending }) => {
@@ -47,7 +54,7 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                 <TableRow key={"title"}>
                   {TABLE_HEAD.map((title, index) => {
                     return (
-                      <TableCell align="left"key={index}>
+                      <TableCell align="left" key={index}>
                         {title}
                       </TableCell>
                     );
@@ -63,11 +70,22 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                           <EditOrderDetail paramOrderDetail={orderDetail} />
                           <DeleteOrderDetail idValue={orderDetail._id} />
                         </TableCell>
+                        <TableCell>
+                          <Grid container direction="column" justifyContent="flex-start" alignItems="center">
+                            <img src={orderDetail.product.imageUrl} maxWidth="100px" />
+                          </Grid>
+                        </TableCell>
+                        <TableCell>{orderDetail.product.brand}</TableCell>
                         <TableCell>{orderDetail.product.name}</TableCell>
+                        <TableCell>{orderDetail.product.type}</TableCell>
+                        <TableCell>{orderDetail.product.buyPrice}</TableCell>
+                        <TableCell>{orderDetail.product.promotionPrice}</TableCell>
+                        <TableCell>{orderDetail.product.amount}</TableCell>
+                        <TableCell>{orderDetail.product.category}</TableCell>
                         <TableCell>{orderDetail.quantity}</TableCell>
                         <TableCell>
                           <Button variant="outlined" size="small" onClick={handleClickProductDetail} value={orderDetail.product._id}>
-                            PRODUCT DETAIL
+                            Current product
                           </Button>
                         </TableCell>
                       </TableRow>
