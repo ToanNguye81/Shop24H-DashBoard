@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from 'react';
 // @mui
-import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, Paper, IconButton, Typography, Box, Card } from '@mui/material';
+import { TextField, Table, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, Paper, IconButton, Typography, Box, Card, TableFooter } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../../actions/product.actions";
 import { Add, Remove } from "@mui/icons-material";
-import { decreaseQuantity, increaseQuantity } from "../../actions/order.actions";
+import { decreaseQuantity, getNote, getOrderNote, increaseQuantity } from "../../actions/order.actions";
 
 
 const TABLE_HEAD = [
@@ -22,7 +22,7 @@ export const Detail = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const { pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
-  const { cart } = useSelector((reduxData) => reduxData.orderReducers);
+  const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
 
 
   useEffect(() => {
@@ -30,18 +30,15 @@ export const Detail = () => {
   }, [rowsPerPage, page]);
 
 
-  const handleChangeRowsPerPage = (event) => {
-    setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
-  };
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-  };
   const handleClickIncrease = (index) => {
     dispatch(increaseQuantity(index))
   }
   const handleClickDecrease = (index) => {
     dispatch(decreaseQuantity(index))
+  }
+
+  const handleChangeNote = (value) => {
+    dispatch(getOrderNote(value))
   }
 
   return (
@@ -106,15 +103,36 @@ export const Detail = () => {
                         </>)
                     }) : null}
                   </TableBody>
+                  <TableFooter>
+                    <TableRow>
+                      <TableCell colSpan={5}>
+                        <Typography level="display2"><strong>Total:</strong></Typography>
+                      </TableCell>
+                    </TableRow>
+                    <TableRow>
+                      <TableCell colSpan={5}>
+                        <TextField
+                          size="small"
+                          required
+                          fullWidth
+                          id="note"
+                          label="Note"
+                          name="note"
+                          value={note}
+                          onChange={(e) => handleChangeNote(e.target.value)}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  </TableFooter>
                 </Table>
               </TableContainer>
+
+
             </Card>
           }
         </Grid>
       </Grid>
-      <Grid >
-        <Typography level="display2" sx={{ mt: 2 }}>Total:</Typography>
-      </Grid>
+
     </React.Fragment>
 
   );

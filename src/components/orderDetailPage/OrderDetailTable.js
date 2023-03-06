@@ -15,12 +15,9 @@ import React,
 } from "react";
 import { useNavigate } from "react-router-dom";
 import Scrollbar from "../scrollbar/Scrollbar";
-import { DeleteOrderDetail } from "./DeleteOrderDetail";
-import { EditOrderDetail } from "./EditOrderDetail";
 
 const TABLE_HEAD =
-  ["Action",
-    "Image",
+  ["Image",
     "Brand",
     "Name",
     "Type",
@@ -66,10 +63,6 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                   return (
                     <>
                       <TableRow key={index}>
-                        <TableCell align="left">
-                          <EditOrderDetail paramOrderDetail={orderDetail} />
-                          <DeleteOrderDetail idValue={orderDetail._id} />
-                        </TableCell>
                         <TableCell>
                           <Grid container direction="column" justifyContent="flex-start" alignItems="center">
                             <img src={orderDetail.product.imageUrl} maxWidth="100px" />

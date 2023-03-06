@@ -23,6 +23,8 @@ import {
     DELETE_ORDER_SUCCESS,
     DELETE_ORDER_ERROR,
 
+    GET_ORDER_NOTE,
+
     ADD_FIRST_PRODUCT,
     ADD_NEW_PRODUCT,
     DECREASE_QUANTITY,
@@ -46,8 +48,10 @@ const initialState = {
 
     //Add To Cart
     cart: [],//{product:...,quantity:...}
+    note: "",
     //Create Order
     orderId: null,
+
 
     //Order detail
     orderById: {},
@@ -87,8 +91,8 @@ export default function orderReducers(state = initialState, action) {
         case GET_ORDER_BY_ID_ERROR:
             state.error = action.error
             break;
-
-
+        case GET_ORDER_NOTE: 
+            state.note=action.note
         //Create Order
         case CREATE_ORDER_PENDING:
             state.createOrderPending = true

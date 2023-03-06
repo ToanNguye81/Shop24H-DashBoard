@@ -19,10 +19,7 @@ import {
 
 const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
 const gORDERS_API_URL = '//localhost:8000/orders';
-const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
-// const gCOUNTRY_API_URL="https://restcountries.com/v3.1/all" 
-// const gCOUNTRY_API_URL="https://countriesnow.space/api/v0.1/countries/states" 
-const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
+
 
 export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
     // build the request string

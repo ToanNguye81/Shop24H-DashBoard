@@ -23,8 +23,11 @@ const TABLE_HEAD =
     "Order Date",
     "Shipped Date",
     "Cost",
-    "Status",
+    "Customer",
+    "Phone",
+    "Address",
     "Note",
+    "Status",
     "Order Detail"
   ];
 
@@ -66,8 +69,11 @@ export const OrderTable = ({ orders, pending }) => {
                         <TableCell>{formatTime(order.orderDate)}</TableCell>
                         <TableCell>{formatTime(order.shippedDate)}</TableCell>
                         <TableCell>{order.cost}</TableCell>
-                        <TableCell>{order.status}</TableCell>
+                        <TableCell>{order.customer}</TableCell>
+                        <TableCell>{order.phone}</TableCell>
+                        <TableCell>{order.address}</TableCell>
                         <TableCell>{order.note}</TableCell>
+                        <TableCell>{order.status}</TableCell>
                         <TableCell>
                           <Button variant="outlined" size="small" onClick={()=>navigate(`/dashboard/orders/${order._id}/orderDetails`)} value={order._id}>
                             ORDER DETAIL

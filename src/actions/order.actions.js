@@ -22,7 +22,9 @@ import {
     DECREASE_QUANTITY,
     INCREASE_QUANTITY,
     ADD_NEW_PRODUCT,
-    ADD_FIRST_PRODUCT
+    ADD_FIRST_PRODUCT,
+
+    GET_ORDER_NOTE
 } from "../constants/order.constants";
 
 const gORDER_API_URL = '//localhost:8000/orders';
@@ -119,14 +121,15 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, cus
 }
 
 //Create new order
-export const createNewOrder = (customerId) => {
+export const createNewOrder = (customerId,note) => {
     // if (isValid) {
     return async (dispatch) => {
         const requestOptions = {
             method: 'POST',
             headers: {
-                "Content-Type": 'application/json'
+                "Content-Type": 'application/json',
             },
+            body: JSON.stringify({note:note}),
         };
 
         await dispatch({
@@ -154,6 +157,13 @@ export const createNewOrder = (customerId) => {
             })
         }
     }
+}
+
+export const getOrderNote=(note)=>{
+    return({
+        type: GET_ORDER_NOTE,
+        note: note
+    })
 }
 
 //Get Order By Id

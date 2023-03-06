@@ -15,7 +15,7 @@ import { Container } from "@mui/system"
 const CreateOrderContent = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
-    const { cart } = useSelector((reduxData) => reduxData.orderReducers);
+    const { cart,note } = useSelector((reduxData) => reduxData.orderReducers);
     const { enqueueSnackbar } = useSnackbar()
 
     const handleCreateOrder = async () => {
@@ -29,8 +29,9 @@ const CreateOrderContent = () => {
                 // Warning if cart is empty
                 enqueueSnackbar("Your cart is empty", { variant: "warning" })
             }
+                
             if (customerId && cart.length) {
-                const orderResult = await dispatch(createNewOrder(customerId))
+                const orderResult = await dispatch(createNewOrder(customerId,note))
 
                 const orderId = orderResult.data._id;
 

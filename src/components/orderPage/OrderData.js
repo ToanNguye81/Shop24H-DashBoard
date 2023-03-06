@@ -16,6 +16,7 @@ const validOrderSchema = Yup.object().shape({
     shippedDate: Yup.string().required('Shipped Date is required').trim(),
     cost: Yup.number().required('Cost is required').min(0),
     status: Yup.string().required('Status is required').trim(),
+    address: Yup.string().required('Address is required').trim(),
     note: Yup.string().required('Note is required').trim(),
 });
 
@@ -87,6 +88,42 @@ export const OrderData = ({ initOrder }) => {
                                             value={values.cost}
                                             onChange={handleChange}
                                             error={errors.cost}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            size="small"
+                                            fullWidth
+                                            id="customer"
+                                            label="Customer*"
+                                            name="customer"
+                                            value={values.customer}
+                                            onChange={handleChange}
+                                            error={errors.customer}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            size="small"
+                                            fullWidth
+                                            id="phone"
+                                            label="Phone *"
+                                            name="phone"
+                                            value={values.phone}
+                                            onChange={handleChange}
+                                            error={errors.phone}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={12}>
+                                        <TextField
+                                            size="small"
+                                            fullWidth
+                                            id="address"
+                                            label="Address *"
+                                            name="address"
+                                            value={values.address}
+                                            onChange={handleChange}
+                                            error={errors.address}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
