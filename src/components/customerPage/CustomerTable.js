@@ -59,10 +59,9 @@ export const CustomerTable = ({ customers, pending }) => {
               <TableBody>
                 {customers.map((customer, index) => {
                   return (
-                    <>
                       <TableRow key={index}>
                         <TableCell align="left">
-                          <EditCustomer paramCustomer={customer} />
+                          <EditCustomer paramCustomer={customer}/>
                           <DeleteCustomer idValue={customer._id} />
                         </TableCell>
                         <TableCell>{customer.lastName}</TableCell>
@@ -78,7 +77,6 @@ export const CustomerTable = ({ customers, pending }) => {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    </>
                   );
                 })}
               </TableBody>

@@ -40,7 +40,7 @@ export const ProductTable = ({ products, pending }) => {
         :
         <>
           <Scrollbar>
-            <Table sx={{ minWidth: 200 }}>
+            <Table  sx={{ minWidth: 200 }}>
               <TableHead>
                 <TableRow>
                   {TABLE_HEAD.map((title, index) => {
@@ -55,7 +55,6 @@ export const ProductTable = ({ products, pending }) => {
               <TableBody>
                 {products.map((product, index) => {
                   return (
-                    <>
                       <TableRow key={index}>
                         <TableCell align="left">
                           <IconButton sx={{ color: '#3f51b5' }} onClick={() => navigate(`/dashboard/products/${product._id}`)} >
@@ -65,7 +64,7 @@ export const ProductTable = ({ products, pending }) => {
                         </TableCell>
                         <TableCell>
                           <Grid container direction="column" justifyContent="flex-start" alignItems="center">
-                            <img src={product.imageUrl} maxWidth="100px" />
+                            <img src={product.imageUrl} maxwidth="200px" />
                           </Grid>
                         </TableCell>
                         <TableCell>{product.brand}</TableCell>
@@ -81,7 +80,6 @@ export const ProductTable = ({ products, pending }) => {
                             <Button color={('banned' && 'error')}>Not In Inventory</Button>}
                         </TableCell>
                       </TableRow>
-                    </>
                   );
                 })}
               </TableBody>

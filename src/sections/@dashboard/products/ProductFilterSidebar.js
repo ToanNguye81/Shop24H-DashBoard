@@ -36,17 +36,6 @@ export const FILTER_PRICE_OPTIONS = [
   { value: 'between', label: 'Between $25 - $75' },
   { value: 'above', label: 'Above $75' },
 ];
-export const FILTER_COLOR_OPTIONS = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
-];
-
 // ----------------------------------------------------------------------
 
 ShopFilterSidebar.propTypes = {
@@ -103,19 +92,6 @@ export default function ShopFilterSidebar({ openFilter, onOpenFilter, onCloseFil
                   <FormControlLabel key={item} value={item} control={<Radio />} label={item} />
                 ))}
               </RadioGroup>
-            </div>
-
-            <div>
-              <Typography variant="subtitle1" gutterBottom>
-                Colors
-              </Typography>
-              <ColorMultiPicker
-                name="colors"
-                selected={[]}
-                colors={FILTER_COLOR_OPTIONS}
-                onChangeColor={(color) => [].includes(color)}
-                sx={{ maxWidth: 38 * 4 }}
-              />
             </div>
 
             <div>

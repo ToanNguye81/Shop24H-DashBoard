@@ -44,7 +44,7 @@ export const AddToCart = () => {
     setName(event.target.value)
   }
 
-  const handleClickAdd=(product)=>{
+  const handleClickAddToCart=(product)=>{
       dispatch(addToCart(cart,product))
   }
 
@@ -56,7 +56,7 @@ export const AddToCart = () => {
     <React.Fragment>
       <Grid container rowSpacing={1} mt={1}>
         {/* Search */}
-        <Grid container fullWidth columnSpacing={1}>
+        <Grid container columnSpacing={1}>
           <Grid item xs={8} sm={8} md={8}>
             <TextField fullWidth size="small" label="Find Products by name" onChange={handelChangeName} value={name} />
           </Grid>
@@ -72,7 +72,7 @@ export const AddToCart = () => {
           alignItems="stretch"
           mt={2}>
           {pending ?
-            <Grid item fullWidth textAlign="center">
+            <Grid item textAlign="center">
               <CircularProgress />
             </Grid>
             :
@@ -80,7 +80,7 @@ export const AddToCart = () => {
             <TableContainer>
               <Table >
                 <TableHead>
-                  <TableRow key="head">
+                  <TableRow >
                     {TABLE_HEAD.map((title, index) => {
                       return (
                         <TableCell key={index}>{title}</TableCell>
@@ -91,8 +91,7 @@ export const AddToCart = () => {
                 <TableBody>
                   {products.map((element, index) => {
                     return (
-                      <>
-                        <TableRow key={element._id}>
+                        <TableRow key={index}>
                           <TableCell>
                             <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
                               <img src={element.imageUrl} />
@@ -101,13 +100,13 @@ export const AddToCart = () => {
                           <TableCell>{element.name}</TableCell>
                           <TableCell>{element.buyPrice}</TableCell>
                           <TableCell>{element.promotionPrice}</TableCell>
-                          <TableCell fixed align="center">
-                            <IconButton variant="outline" ml={0} onClick={()=>handleClickAdd(element)}>
+                          <TableCell align="center">
+                            <IconButton variant="outline" ml={0} onClick={()=>handleClickAddToCart(element)}>
                               <AddShoppingCartSharp variant="outline"/>
                             </IconButton>
                           </TableCell>
                         </TableRow>
-                      </>)
+                      )
                   })}
                 </TableBody>
               </Table>

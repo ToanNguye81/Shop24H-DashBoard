@@ -361,37 +361,3 @@ export const addToCart = (cart, product) => {
         quantity: 1,
     }
 }
-
-//Valid Order parram
-export const validateOrder = (paramOrder) => {
-    const { } = paramOrder
-    if (paramOrderDetail.firstName.trim() === "") {
-        alert("You have entered an invalid First Name")
-        return false
-    }
-    if (paramOrderDetail.lastName.trim() === "") {
-        alert("You have entered an invalid Fast Name")
-        return false
-    }
-    if (!validatePhone(paramOrderDetail.phone)) {
-        alert("You have entered an invalid Phone!")
-        return false
-    }
-    if (!validateEmail(paramOrderDetail.email)) {
-        alert("You have entered an invalid Email!")
-        return false
-    }
-    if (paramOrderDetail.country.trim() === "") {
-        alert("You have entered an invalid Country")
-        return false
-    }
-    if (paramOrderDetail.city.trim() === "") {
-        alert("You have entered an invalid City")
-        return false
-    }
-    if (paramOrderDetail.address.trim() === "") {
-        alert("You have entered an invalid Address")
-        return false
-    }
-    return true
-}

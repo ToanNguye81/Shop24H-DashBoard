@@ -16,8 +16,8 @@ import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
 import { CreateOrder } from './pages/CreateOrder';
 import { ProductDetailPage } from './pages/ProductDetailPage';
-import { OrderData } from './components/orderPage/OrderData';
 import { EditOrderPage } from './pages/EditOrderPage';
+import BlogPage from './pages/BlogPage';
 
 export default function Router() {
   const { isAuthenticated } = useSelector((reduxData) => reduxData.loginReducers);
@@ -44,6 +44,7 @@ export default function Router() {
       { path: 'demo', element: <DemoPage/> },
       { path: 'demo2', element: <ProductsPage/> },
       { path: 'product-type', element: <ProductsPage/> },
+      { path: 'blogs', element: <BlogPage/> },
     ],
   };
 
@@ -69,3 +70,4 @@ export default function Router() {
 
   return routes;
 }
+

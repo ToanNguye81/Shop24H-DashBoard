@@ -6,7 +6,6 @@ import { styled } from '@mui/material/styles';
 import { fCurrency } from '../../../utils/formatNumber';
 // components
 import Label from '../../../components/label';
-import { ColorPreview } from '../../../components/color-utils';
 
 // ----------------------------------------------------------------------
 
@@ -50,13 +49,12 @@ export default function ShopProductCard({ product }) {
 
       <Stack spacing={2} sx={{ p: 3 }}>
         <Link color="inherit" underline="hover">
-          <Typography variant="subtitle2" noWrap>
+          <Typography variant="subtitle2" noWrap >
             {name}
           </Typography>
         </Link>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <ColorPreview colors={colors} />
+        <Stack direction="row" alignItems="flex-end" justifyContent="space-between">
           <Typography variant="subtitle1">
             <Typography
               component="span"
@@ -68,6 +66,8 @@ export default function ShopProductCard({ product }) {
             >
               {priceSale && fCurrency(priceSale)}
             </Typography>
+          </Typography>
+          <Typography variant="subtitle1">
             &nbsp;
             {fCurrency(price)}
           </Typography>

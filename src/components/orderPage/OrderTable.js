@@ -57,7 +57,6 @@ export const OrderTable = ({ orders, pending }) => {
               <TableBody>
                 {orders.map((order, index) => {
                   return (
-                    <>
                       <TableRow key={index}>
                         <TableCell align="left">
                           <IconButton sx={{ color: '#3f51b5' }} onClick={() => navigate(`/dashboard/orders/${order._id}`)}>
@@ -80,7 +79,6 @@ export const OrderTable = ({ orders, pending }) => {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    </>
                   );
                 })}
               </TableBody>

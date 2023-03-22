@@ -61,11 +61,10 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
               <TableBody>
                 {orderDetails.map((orderDetail, index) => {
                   return (
-                    <>
                       <TableRow key={index}>
                         <TableCell>
                           <Grid container direction="column" justifyContent="flex-start" alignItems="center">
-                            <img src={orderDetail.product.imageUrl} maxWidth="100px" />
+                            <img src={orderDetail.product.imageUrl} maxwidth="200px" />
                           </Grid>
                         </TableCell>
                         <TableCell>{orderDetail.product.brand}</TableCell>
@@ -82,7 +81,6 @@ export const OrderDetailTable = ({ orderDetails, pending }) => {
                           </Button>
                         </TableCell>
                       </TableRow>
-                    </>
                   );
                 })}
               </TableBody>

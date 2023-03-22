@@ -10,12 +10,12 @@ import { createNewCustomer } from "../actions/customer.actions"
 import { createNewOrderDetail } from "../actions/orderDetail.actions"
 import { createNewOrder } from "../actions/order.actions"
 import { SnackbarProvider, useSnackbar } from "notistack"
-import { Container } from "@mui/system"
+import { Container } from "@mui/material"
 
 const CreateOrderContent = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
-    const { cart,note } = useSelector((reduxData) => reduxData.orderReducers);
+    const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
     const { enqueueSnackbar } = useSnackbar()
 
     const handleCreateOrder = async () => {
@@ -29,9 +29,9 @@ const CreateOrderContent = () => {
                 // Warning if cart is empty
                 enqueueSnackbar("Your cart is empty", { variant: "warning" })
             }
-                
+
             if (customerId && cart.length) {
-                const orderResult = await dispatch(createNewOrder(customerId,note))
+                const orderResult = await dispatch(createNewOrder(customerId, note))
 
                 const orderId = orderResult.data._id;
 
@@ -58,13 +58,13 @@ const CreateOrderContent = () => {
     return (
         <React.Fragment>
             <Container>
-            <h2>Add To Cart</h2>
-            <AddToCart />
-            <h2>Cart Detail</h2>
-            <Detail />
-            <h2>Customer information</h2>
-            <CustomerInfo />
-            <Button sx={{ mt: 3 }} variant="contained" onClick={handleCreateOrder}>Create Order</Button>
+                <h2>Add To Cart</h2>
+                <AddToCart />
+                <h2>Cart Detail</h2>
+                <Detail />
+                <h2>Customer information</h2>
+                <CustomerInfo />
+                <Button sx={{ mt: 3 }} variant="contained" onClick={handleCreateOrder}>Create Order</Button>
             </Container>
         </React.Fragment>
     )

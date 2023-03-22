@@ -51,13 +51,13 @@ export const Detail = () => {
           alignItems="stretch"
           mt={2}>
           {pending ?
-            <Grid item fullWidth textAlign="center">
+            <Grid item textAlign="center">
               <CircularProgress />
             </Grid>
             :
             <Card>
               <TableContainer>
-                <Table sx={{ '& tr > *:not(:first-child)': { textAlign: 'center' } }}>
+                <Table sx={{ textAlign: 'center' }}>
                   <TableHead>
                     <TableRow>
                       {TABLE_HEAD.map((title, index) => {
