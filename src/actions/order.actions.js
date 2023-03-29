@@ -101,8 +101,6 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, cus
             }
             // parse the response as JSON
             const resObj = await res.json();
-            console.log(resObj.data)
-            console.log(resObj)
             //Dispatch state
             return dispatch({
                 type: FETCH_ORDERS_SUCCESS,
