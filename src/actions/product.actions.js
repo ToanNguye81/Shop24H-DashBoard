@@ -140,14 +140,6 @@ export const deleteProduct = (paramProductId) => {
 
 // Update customer
 export const updateProductById = (productId, productData) => {
-    // // validate data
-    // const errors = validateProduct(productData);
-    // if (errors) {
-    //     return {
-    //         type: UPDATE_PRODUCT_ERROR,
-    //         error: errors,
-    //     }
-    // }
     return async (dispatch) => {
         //call PUT API 
 
@@ -183,6 +175,7 @@ export const updateProductById = (productId, productData) => {
     };
 }
 
+//Valid Product
 export const validateProduct = (product) => {
     const { name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount } = product;
     const result = { error: null, isValid: true };
