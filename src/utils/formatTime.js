@@ -29,3 +29,7 @@ export function fToNow(date) {
 export const formatTime=(dateString)=> {
   return moment(dateString).format("YYYY MMM DD ");
 }
+
+export const formatTimePicker=(dateString)=> {
+  return moment(dateString).format("mm/dd/yyyy");
+}

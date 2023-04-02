@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { SnackBarAlert } from '../common/SnackBarAlert';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatTime } from '../../utils/formatTime';
+import { formatTime, formatTimePicker } from '../../utils/formatTime';
 import { updateOrderById } from '../../actions/order.actions';
+import { DatePicker } from '@mui/lab';
+
 
 const validOrderSchema = Yup.object().shape({
     orderCode: Yup.string().required('Order Code is required').trim(),
@@ -66,15 +68,22 @@ export const OrderData = ({ initOrder }) => {
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
+                                        {/* <TextField
                                             size="small"
                                             fullWidth
-                                            type="date"
                                             id="shippedDate"
                                             label="Shipped Date *"
                                             name="shippedDate"
-                                            value={values.shippedDate}
+                                            value={formatTime(values.shippedDate)   }
                                             onChange={handleChange}
+                                            error={errors.shippedDate}
+                                        /> */}
+                                        <DatePicker
+                                            label="Shipped Date *"
+                                            name="shippedDate"
+                                            value={values.shippedDate}
+                                            onChange={(date) => handleChange({ target: { name: 'shippedDate', value: date } })}
+                                            renderInput={(params) => <TextField {...params} />}
                                             error={errors.shippedDate}
                                         />
                                     </Grid>
@@ -127,16 +136,22 @@ export const OrderData = ({ initOrder }) => {
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            size="small"
-                                            fullWidth
-                                            id="status"
-                                            label="Status *"
-                                            name="status"
-                                            value={values.status}
-                                            onChange={handleChange}
-                                            error={errors.status}
-                                        />
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                                            <Select size="small"
+                                                fullWidth
+                                                labelId="demo-simple-select-label"
+                                                id="status"
+                                                label="Status *"
+                                                name="status"
+                                                value={values.status}
+                                                onChange={handleChange}
+                                                error={errors.status}>
+                                                <MenuItem value="waiting">Waiting</MenuItem>
+                                                <MenuItem value="delivery">Delivery</MenuItem>
+                                                <MenuItem value="success">Success</MenuItem>
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
