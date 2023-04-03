@@ -30,6 +30,8 @@ import {
     GET_LAST_NAME,
     GET_PHONE,
     GET_EMAIL,
+
+    GET_CUSTOMER_BY_ID
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -39,7 +41,7 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-    orders:[],
+    orders: [],
 
     //generation
     countryOptions: [],
@@ -54,7 +56,7 @@ const initialState = {
     lastName: "",
     phone: "",
     email: "",
-    customerId:null,
+    customerId: null,
 
     //Modal update customer
     updateCustomerPending: false,
@@ -65,107 +67,165 @@ const initialState = {
     //Load country-city
     loadCountriesPending: false,
     loadCitiesPending: false,
+
+    //Get customer by id
+    customerById: "",
 }
 
 export default function customerReducers(state = initialState, action) {
     switch (action.type) {
         //Load Customer
         case FETCH_CUSTOMER_PENDING:
-            state.pending = true;
-            break;
+            return {
+                ...state,
+                pending: true,
+            };
         case FETCH_CUSTOMER_SUCCESS:
-            state.pending = false;
-            state.totalCustomer = action.totalCustomer;
-            state.customers = action.customers;
-            break;
+            return {
+                ...state,
+                pending: false,
+                totalCustomer: action.totalCustomer,
+                customers: action.customers,
+            };
         case FETCH_CUSTOMER_ERROR:
-            state.pending = false;
-            state.error=action.error
-            break;
+            return {
+                ...state,
+                pending: false,
+                error: action.error,
+            };
 
         //Create Customer
         case CREATE_CUSTOMER_PENDING:
-            state.createCustomerPending = true
-            break;
+            return {
+                ...state,
+                createCustomerPending: true,
+            };
         case CREATE_CUSTOMER_SUCCESS:
-            state.createCustomerPending = false
-            state.customerId=action.data._id
-            break;
+            return {
+                ...state,
+                createCustomerPending: false,
+                customerId: action.data._id,
+            };
         case CREATE_CUSTOMER_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error,
+            };
 
         //Update Customer
         case UPDATE_CUSTOMER_PENDING:
-            state.updateCustomerPending = true
-            break;
+            return {
+                ...state,
+                updateCustomerPending: true,
+            };
         case UPDATE_CUSTOMER_SUCCESS:
-            state.updateCustomerPending = false
-            break;
+            return {
+                ...state,
+                updateCustomerPending: false,
+            };
         case UPDATE_CUSTOMER_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error,
+            };
 
         //Delete Customer
         case DELETE_CUSTOMER_PENDING:
-            state.deleteCustomerPending = true
-            break;
+            return {
+                ...state,
+                deleteCustomerPending: true,
+            };
         case DELETE_CUSTOMER_SUCCESS:
-            state.deleteCustomerPending = false
-            break;
+            return {
+                ...state,
+                deleteCustomerPending: false,
+            };
         case DELETE_CUSTOMER_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error,
+            };
 
-        //Modal component select  
+        //Modal component select
         case FETCH_COUNTRY_PENDING:
-            state.loadCountriesPending = true
-            break;
+            return {
+                ...state,
+                loadCountriesPending: true,
+            };
         case FETCH_COUNTRY_SUCCESS:
-            state.loadCountriesPending = false
-            state.countryOptions = action.countryOptions
-            break;
+            return {
+                ...state,
+                loadCountriesPending: false,
+                countryOptions: action.countryOptions,
+            };
         case FETCH_COUNTRY_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error,
+            };
 
         //Load Cities List
         case FETCH_CITY_PENDING:
-            state.loadCitiesPending = true
-            break;
+            return {
+                ...state,
+                loadCitiesPending: true,
+            };
         case FETCH_CITY_SUCCESS:
-            state.loadCitiesPending = false
-            state.cityOptions = action.cityOptions
-            break;
+            return {
+                ...state,
+                loadCitiesPending: false,
+                cityOptions: action.cityOptions,
+            };
         case FETCH_CITY_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error,
+            };
 
         //Get customer data
         case GET_COUNTRY:
-            state.country = action.country
-            break;
+            return {
+                ...state,
+                country: action.country,
+            };
         case GET_CITY:
-            state.city = action.city
-            break;
+            return {
+                ...state,
+                city: action.city,
+            };
         case GET_ADDRESS:
-            state.address = action.address
-            break;
+            return {
+                ...state,
+                address: action.address,
+            };
         case GET_FIRST_NAME:
-            state.firstName = action.firstName
-            break;
+            return {
+                ...state,
+                firstName: action.firstName,
+            };
         case GET_LAST_NAME:
-            state.lastName = action.lastName
-            break;
+            return {
+                ...state,
+                lastName: action.lastName,
+            };
         case GET_PHONE:
-            state.phone = action.phone
-            break;
+            return {
+                ...state,
+                phone: action.phone,
+            };
         case GET_EMAIL:
-            state.email = action.email
-            break;
-        default:
-            break;
-    }
-    return { ...state };
-}
+            return {
+                ...state,
+                email: action.email,
+            };
 
+        case GET_CUSTOMER_BY_ID:
+            return {
+                ...state,
+                customerById: action.payload,
+            };
+
+        default:
+            return state;
+    }
+}

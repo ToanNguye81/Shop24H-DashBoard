@@ -5,8 +5,8 @@ import Grid from '@mui/material/Grid';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    fetchCity,
-    fetchCountry,
+    fetchCities,
+    fetchCountries,
     getCity,
     getCountry,
     getFirstName,
@@ -23,14 +23,14 @@ export const CustomerInfo = () => {
 
     React.useEffect(() => {
         if(!countryOptions.length){
-            dispatch(fetchCountry())
+            dispatch(fetchCountries())
         }
     }, []);
 
 
     const handleCountryChange = (event) => {
         dispatch(getCountry(event.target.value));
-        dispatch(fetchCity(event.target.value));
+        dispatch(fetchCities(event.target.value));
     };
 
     const handleCityChange = (event) => {

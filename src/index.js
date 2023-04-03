@@ -9,6 +9,7 @@ import { Provider } from 'react-redux';
 import reducer from "./reducers";
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import { SnackbarProvider } from 'notistack';
 
 const store = createStore(reducer, applyMiddleware(thunk));
 
@@ -19,9 +20,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <HelmetProvider>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <SnackbarProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SnackbarProvider>
     </Provider>
   </HelmetProvider>
 );

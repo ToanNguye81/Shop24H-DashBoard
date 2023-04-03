@@ -29,6 +29,8 @@ export const GET_COUNTRY="GET_COUNTRY"
 export const GET_CITY="GET_CITY"
 export const GET_ADDRESS="GET_ADDRESS"
 
+export const GET_CUSTOMER_BY_ID="GET_CUSTOMER_BY_ID"
+
 
 
 

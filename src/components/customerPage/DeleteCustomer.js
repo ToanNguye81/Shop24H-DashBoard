@@ -4,7 +4,7 @@ import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { IconButton,Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCustomer } from '../../actions/customer.actions';
+import {  deleteCustomerById } from '../../actions/customer.actions';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Iconify from '../iconify/Iconify';
 
@@ -38,7 +38,7 @@ export const DeleteCustomer = ({ idValue }) => {
     };
 
     const handleDeleteCustomer = () => {
-        dispatch(deleteCustomer(idValue))
+        dispatch(deleteCustomerById(idValue))
     }
 
     return (

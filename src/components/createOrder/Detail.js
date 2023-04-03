@@ -70,7 +70,6 @@ export const Detail = () => {
                   <TableBody>
                     {cart ? cart.map((element, index) => {
                       return (
-                        <>
                           <TableRow key={index}>
                             <TableCell>
                               <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
@@ -86,7 +85,7 @@ export const Detail = () => {
                                     <Remove />
                                   </IconButton>
                                 </Box>
-                                <Typography textColor="text.secondary">
+                                <Typography textcolor="text.secondary">
                                   {element.quantity}
                                 </Typography>
                                 <Box sx={{ border: "0.2px solid #EDEFF1" }}>
@@ -100,7 +99,7 @@ export const Detail = () => {
                               {element.quantity * element.product.promotionPrice}
                             </TableCell>
                           </TableRow>
-                        </>)
+                        )
                     }) : null}
                   </TableBody>
                   <TableFooter>

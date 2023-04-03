@@ -6,13 +6,21 @@ import {
   Table,
   TableCell,
   TableHead,
+  IconButton,
   Button,
+  TableContainer,
+  Collapse,
+  Box,
+  Typography,
 } from "@mui/material";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Scrollbar from "../scrollbar/Scrollbar";
-import { DeleteCustomer } from "./DeleteCustomer";
+import React, { useEffect, useState } from "react";
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useDispatch, useSelector } from "react-redux";
 import { EditCustomer } from "./EditCustomer";
+import { useNavigate } from "react-router-dom";
+import { DeleteCustomer } from "./DeleteCustomer";
+import ModeEditOutlineOutlinedIcon from '@mui/icons-material/ModeEditOutlineOutlined';
+import { getCustomerById } from "../../actions/customer.actions";
 
 const TABLE_HEAD =
   [
@@ -28,13 +36,6 @@ const TABLE_HEAD =
   ];
 
 export const CustomerTable = ({ customers, pending }) => {
-  const navigate=useNavigate()
-
-  const handleClickOrderCode = async (event) => {
-    const customerId=event.target.value
-    navigate(`/dashboard/customers/${customerId}/orders`)
-  };
-
   return (
     <React.Fragment>
       {pending ?
@@ -42,48 +43,94 @@ export const CustomerTable = ({ customers, pending }) => {
           <CircularProgress />
         </Grid>
         :
-        <>
-          <Scrollbar>
-            <Table sx={{ minWidth: 200 }}>
-              <TableHead>
-                <TableRow>
-                  {TABLE_HEAD.map((title, index) => {
-                    return (
-                      <TableCell align="left" key={index}>
-                        {title}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {customers.map((customer, index) => {
+        <TableContainer>
+          <Table sx={{ minWidth: 200 }}>
+            <TableHead>
+              <TableRow key={"title"}>
+                {TABLE_HEAD.map((title, index) => {
                   return (
-                      <TableRow key={index}>
-                        <TableCell align="left">
-                          <EditCustomer paramCustomer={customer}/>
-                          <DeleteCustomer idValue={customer._id} />
-                        </TableCell>
-                        <TableCell>{customer.lastName}</TableCell>
-                        <TableCell>{customer.firstName}</TableCell>
-                        <TableCell>{customer.country}</TableCell>
-                        <TableCell>{customer.city}</TableCell>
-                        <TableCell>{customer.phone}</TableCell>
-                        <TableCell>{customer.email}</TableCell>
-                        <TableCell>{customer.address}</TableCell>
-                        <TableCell>
-                          <Button variant="outlined" size="small" onClick={handleClickOrderCode} value={customer._id}>
-                            ORDERS
-                          </Button>
-                        </TableCell>
-                      </TableRow>
+                    <TableCell align="left" key={index}>
+                      {title}
+                    </TableCell>
                   );
                 })}
-              </TableBody>
-            </Table>
-          </Scrollbar>
-        </>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {customers.map((customer, index) => (
+                <Row key={index} row={index} customer={customer} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       }
     </React.Fragment>
   );
 };
+
+export const Row = ({ customer, row }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [expand, setExpand] = React.useState(false);
+  const [color, setColor] = useState(expand ? "#FFB74D" : "White")
+  const customerId = customer._id
+  const { customerById } = useSelector(reduxData => reduxData.customerReducers)
+
+  const handleClickOrderCode = async (event) => {
+    const customerId = event.target.value
+    navigate(`/dashboard/customers/${customerId}/orders`)
+  };
+
+  useEffect(() => {
+    if (expand) {
+      dispatch(getCustomerById(customerId))
+    }
+    expand ? setColor("#FFB74D") : setColor("White")
+  }, [expand])
+
+  useEffect(() => {
+    if (customerId !== customerById) {
+      setExpand(false)
+    }
+  }, [customerById])
+
+  return (
+    <React.Fragment>
+      <TableRow key={row} onClick={() => setExpand(!expand)} sx={{ backgroundColor: color }}>
+        <TableCell align="left">
+          <IconButton aria-label="expand row" size="small" onClick={() => setExpand(!expand)}>
+            {expand ? <KeyboardArrowDownIcon /> : <ModeEditOutlineOutlinedIcon />}
+          </IconButton>
+          <DeleteCustomer idValue={customer._id} />
+        </TableCell>
+        <TableCell>{customer.lastName}</TableCell>
+        <TableCell>{customer.firstName}</TableCell>
+        <TableCell>{customer.country}</TableCell>
+        <TableCell>{customer.city}</TableCell>
+        <TableCell>{customer.phone}</TableCell>
+        <TableCell>{customer.email}</TableCell>
+        <TableCell>{customer.address}</TableCell>
+        <TableCell>
+          <Button variant="outlined" size="small" onClick={handleClickOrderCode} value={customer._id}>
+            ORDERS
+          </Button>
+        </TableCell>
+      </TableRow>
+
+      {/* Collapse Row */}
+      <TableRow sx={{ border: "1px solid #FFB74D" }}>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9} >
+          <Collapse in={expand} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 3 }} >
+              <Typography variant="h6" gutterBottom component="div">
+                Customer Detail
+              </Typography>
+              <EditCustomer customer={customer} />
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </React.Fragment>
+  );
+}
+

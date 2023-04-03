@@ -30,6 +30,8 @@ import {
     DELETE_CUSTOMER_PENDING,
     DELETE_CUSTOMER_SUCCESS,
     DELETE_CUSTOMER_ERROR,
+
+    GET_CUSTOMER_BY_ID
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -87,7 +89,7 @@ export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
 }
 
 //Load cities list with REST_API
-export const fetchCity = (paramIsoCountry) => {
+export const fetchCities = (paramIsoCountry) => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -119,7 +121,7 @@ export const fetchCity = (paramIsoCountry) => {
 }
 
 //Load country list
-export const fetchCountry = () => {
+export const fetchCountries = () => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -248,9 +250,9 @@ export const createNewCustomer = (customerData) => {
 }
 
 // Update customer
-export const updateCustomer = async (paramCustomer) => {
+export const updateCustomer = async (customer) => {
     // get customer info
-    const customerInfo = await getCustomerInfo(paramCustomer);
+    const customerInfo = await getCustomerInfo(customer);
     // validate data
     const isValid = await validateCustomer(customerInfo);
     //call PUT API 
@@ -294,7 +296,7 @@ export const updateCustomer = async (paramCustomer) => {
   };
 
 //Delete customer
-export const deleteCustomer = (paramCustomerId) => {
+export const deleteCustomerById = (customerId) => {
     return async (dispatch) => {
         const requestOptions = {
             method: 'DELETE',
@@ -305,7 +307,7 @@ export const deleteCustomer = (paramCustomerId) => {
         });
 
         try {
-            const res = await fetch(gCUSTOMER_API_URL+`/${paramCustomerId}`, requestOptions);
+            const res = await fetch(gCUSTOMER_API_URL+`/${customerId}`, requestOptions);
             const resObj = await res.json();
             if (!res.ok) {
                 return dispatch({
@@ -322,45 +324,45 @@ export const deleteCustomer = (paramCustomerId) => {
 }
 
 //Get Customer Information 
-export const getCustomerInfo = (paramCustomer) => {
+export const getCustomerInfo = (customer) => {
     return {
-        email: paramCustomer.get('email'),
-        phone: paramCustomer.get('phone'),
-        firstName: paramCustomer.get('firstName'),
-        lastName: paramCustomer.get('lastName'),
-        country: paramCustomer.get('country'),
-        city: paramCustomer.get('city'),
-        address: paramCustomer.get('address'),
+        email: customer.get('email'),
+        phone: customer.get('phone'),
+        firstName: customer.get('firstName'),
+        lastName: customer.get('lastName'),
+        country: customer.get('country'),
+        city: customer.get('city'),
+        address: customer.get('address'),
     }
 }
 
 //Valid date Customer Input
-export const validateCustomer = (paramCustomer) => {
-    if (paramCustomer.firstName.trim() === "") {
+export const validateCustomer = (customer) => {
+    if (customer.firstName.trim() === "") {
         alert("You have entered an invalid First Name")
         return false
     }
-    if (paramCustomer.lastName.trim() === "") {
+    if (customer.lastName.trim() === "") {
         alert("You have entered an invalid Fast Name")
         return false
     }
-    if (!validatePhone(paramCustomer.phone)) {
+    if (!validatePhone(customer.phone)) {
         alert("You have entered an invalid Phone!")
         return false
     }
-    if (!validateEmail(paramCustomer.email)) {
+    if (!validateEmail(customer.email)) {
         alert("You have entered an invalid Email!")
         return false
     }
-    if (paramCustomer.country.trim() === "") {
+    if (customer.country.trim() === "") {
         alert("You have entered an invalid Country")
         return false
     }
-    if (paramCustomer.city.trim() === "") {
+    if (customer.city.trim() === "") {
         alert("You have entered an invalid City")
         return false
     }
-    if (paramCustomer.address.trim() === "") {
+    if (customer.address.trim() === "") {
         alert("You have entered an invalid Address")
         return false
     }
@@ -384,4 +386,12 @@ export const validatePhone = (paramPhone) => {
     else {
         return false;
     }
+}
+
+// Validate Phone Number
+export const getCustomerById = (customerId) => {
+   return{
+    type:GET_CUSTOMER_BY_ID,
+    payload: customerId
+   }
 }

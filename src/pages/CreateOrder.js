@@ -9,10 +9,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { createNewCustomer } from "../actions/customer.actions"
 import { createNewOrderDetail } from "../actions/orderDetail.actions"
 import { createNewOrder } from "../actions/order.actions"
-import { SnackbarProvider, useSnackbar } from "notistack"
+import { useSnackbar } from "notistack"
 import { Container } from "@mui/material"
 
-const CreateOrderContent = () => {
+export const CreateOrder = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
     const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
@@ -69,9 +69,3 @@ const CreateOrderContent = () => {
         </React.Fragment>
     )
 }
-
-export const CreateOrder = () => (
-    <SnackbarProvider maxSnack={3}>
-        <CreateOrderContent />
-    </SnackbarProvider>
-);
