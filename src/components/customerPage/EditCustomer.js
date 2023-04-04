@@ -309,16 +309,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { handleCreateOrder } from "../../actions/order.actions"
 import { fetchCities, fetchCountries, getCustomerById, updateCustomer } from "../../actions/customer.actions"
-import styled from "@emotion/styled"
 
-const MyGrid = styled.div`
-border:1.5px solid #E6E6E6;
-background-color:#FFFFFF;
-padding: 1rem 3rem 3rem 3rem;
-margin-bottom: 3rem;
-`
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required').trim(),
     lastName: Yup.string().required('Last Name is required').trim(),
@@ -344,7 +336,7 @@ export const EditCustomer = ({ customer }) => {
         console.log(data)
     };
 
-    
+
 
     useEffect(() => {
         dispatch(fetchCountries());
@@ -352,8 +344,8 @@ export const EditCustomer = ({ customer }) => {
 
     useEffect(() => {
         if (customer && countryOptions)
-        console.log(countryOptions)
-            dispatch(fetchCities(customer.country));
+            console.log(countryOptions)
+        dispatch(fetchCities(customer.country));
     }, [countryOptions, customer]);
 
 
@@ -361,16 +353,13 @@ export const EditCustomer = ({ customer }) => {
         dispatch(fetchCities(event.target.value));
     }
 
-    // 
     return (
         <React.Fragment>
             <Formik initialValues={{ ...customer }} validationSchema={validCustomerSchema} onSubmit={handleSubmit}>
                 {({ errors, touched, values, handleChange }) => (
                     <Form>
                         <TextField
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start">First Name * : </InputAdornment>,
-                            }}
+                            label="First name *"
                             fullWidth
                             size="small"
                             value={values.firstName}
@@ -381,10 +370,8 @@ export const EditCustomer = ({ customer }) => {
                             helperText={touched.firstName && errors.firstName}
                         />
                         <TextField sx={{ mt: 2 }}
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start">Last Name * : </InputAdornment>,
-                            }}
                             fullWidth
+                            label="Last Name *"
                             size="small"
                             value={values.lastName}
                             id="lastName"
@@ -394,10 +381,8 @@ export const EditCustomer = ({ customer }) => {
                             helperText={touched.lastName && errors.lastName}
                         />
                         <TextField sx={{ mt: 2 }}
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start">Phone * : </InputAdornment>,
-                            }}
                             fullWidth
+                            label="Phone * "
                             size="small"
                             value={values.phone}
                             id="phone"
@@ -407,10 +392,8 @@ export const EditCustomer = ({ customer }) => {
                             helperText={touched.phone && errors.phone}
                         />
                         <TextField sx={{ mt: 2 }}
-                            InputProps={{
-                                startAdornment: <InputAdornment position="start">Email * : </InputAdornment>,
-                            }}
                             fullWidth
+                            label="Email * "
                             size="small"
                             value={values.email}
                             id="email"
@@ -453,7 +436,7 @@ export const EditCustomer = ({ customer }) => {
                             startAdornment={<InputAdornment position="start">City * : </InputAdornment>}
                         >
                             {cityOptions && cityOptions.map((option, index) => (
-                                <MenuItem key={index} value={option.id}>
+                                <MenuItem key={index} value={option.name}>
                                     {option.name}
                                 </MenuItem>
                             ))}
@@ -466,9 +449,9 @@ export const EditCustomer = ({ customer }) => {
                                 </Button>
                             </Grid>
                             <Grid item>
-                                <Button 
-                                onClick={()=>dispatch(getCustomerById(""))}
-                                variant="contained" color='warning' sx={{ mt: 3, mb: 2 }}>
+                                <Button
+                                    onClick={() => dispatch(getCustomerById(""))}
+                                    variant="contained" color='warning' sx={{ mt: 3, mb: 2 }}>
                                     Cancel
                                 </Button>
                             </Grid>

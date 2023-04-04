@@ -68,22 +68,15 @@ export const OrderData = ({ initOrder }) => {
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        {/* <TextField
+                                        <TextField
                                             size="small"
                                             fullWidth
+
                                             id="shippedDate"
                                             label="Shipped Date *"
                                             name="shippedDate"
                                             value={formatTime(values.shippedDate)   }
                                             onChange={handleChange}
-                                            error={errors.shippedDate}
-                                        /> */}
-                                        <DatePicker
-                                            label="Shipped Date *"
-                                            name="shippedDate"
-                                            value={values.shippedDate}
-                                            onChange={(date) => handleChange({ target: { name: 'shippedDate', value: date } })}
-                                            renderInput={(params) => <TextField {...params} />}
                                             error={errors.shippedDate}
                                         />
                                     </Grid>
@@ -184,3 +177,32 @@ export const OrderData = ({ initOrder }) => {
     );
 };
 
+
+
+
+import * as React from 'react';
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+
+export default function DateTimePickerValue() {
+  const [value, setValue] = React.useState(dayjs('2022-04-17T15:30'));
+
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DemoContainer components={['DateTimePicker', 'DateTimePicker']}>
+        <DateTimePicker
+          label="Uncontrolled picker"
+          defaultValue={dayjs('2022-04-17T15:30')}
+        />
+        <DateTimePicker
+          label="Controlled picker"
+          value={value}
+          onChange={(newValue) => setValue(newValue)}
+        />
+      </DemoContainer>
+    </LocalizationProvider>
+  );
+}

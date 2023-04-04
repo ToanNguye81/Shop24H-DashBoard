@@ -98,7 +98,7 @@ export const Row = ({ customer, row }) => {
     <React.Fragment>
       <TableRow key={row} onClick={() => setExpand(!expand)} sx={{ backgroundColor: color }}>
         <TableCell align="left">
-          <IconButton aria-label="expand row" size="small" onClick={() => setExpand(!expand)}>
+          <IconButton sx={{ color: '#3f51b5' }} aria-label="expand row" size="small" onClick={() => setExpand(!expand)}>
             {expand ? <KeyboardArrowDownIcon /> : <ModeEditOutlineOutlinedIcon />}
           </IconButton>
           <DeleteCustomer idValue={customer._id} />
