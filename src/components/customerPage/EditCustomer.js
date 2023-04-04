@@ -436,7 +436,7 @@ export const EditCustomer = ({ customer }) => {
                             startAdornment={<InputAdornment position="start">City * : </InputAdornment>}
                         >
                             {cityOptions && cityOptions.map((option, index) => (
-                                <MenuItem key={index} value={option.name}>
+                                <MenuItem key={index} value={option.id}>
                                     {option.name}
                                 </MenuItem>
                             ))}

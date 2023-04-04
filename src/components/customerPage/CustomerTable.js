@@ -9,12 +9,11 @@ import {
   IconButton,
   Button,
   TableContainer,
-  Collapse,
   Box,
   Typography,
+  SwipeableDrawer,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useDispatch, useSelector } from "react-redux";
 import { EditCustomer } from "./EditCustomer";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +43,7 @@ export const CustomerTable = ({ customers, pending }) => {
         </Grid>
         :
         <TableContainer>
-          <Table sx={{ minWidth: 200 }}>
+          <Table>
             <TableHead>
               <TableRow key={"title"}>
                 {TABLE_HEAD.map((title, index) => {
@@ -71,35 +70,37 @@ export const CustomerTable = ({ customers, pending }) => {
 export const Row = ({ customer, row }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const [expand, setExpand] = React.useState(false);
-  const [color, setColor] = useState(expand ? "#FFB74D" : "White")
-  const customerId = customer._id
+  const [open, setOpen] = React.useState(false);
+  const [color, setColor] = useState(open ? "#FFB74D" : "White")
   const { customerById } = useSelector(reduxData => reduxData.customerReducers)
 
   const handleClickOrderCode = async (event) => {
-    const customerId = event.target.value
-    navigate(`/dashboard/customers/${customerId}/orders`)
+    navigate(`/dashboard/customers/${customer._id}/orders`)
   };
 
   useEffect(() => {
-    if (expand) {
-      dispatch(getCustomerById(customerId))
+    if (open) {
+      dispatch(getCustomerById(customer._id))
     }
-    expand ? setColor("#FFB74D") : setColor("White")
-  }, [expand])
+    open ? setColor("#FFB74D") : setColor("White")
+  }, [open])
 
   useEffect(() => {
-    if (customerId !== customerById) {
-      setExpand(false)
+    if (customer._id !== customerById) {
+      setOpen(false);
     }
   }, [customerById])
 
+  const toggleDrawer = (newOpen) => () => {
+    setOpen(newOpen);
+  };
+
   return (
     <React.Fragment>
-      <TableRow key={row} onClick={() => setExpand(!expand)} sx={{ backgroundColor: color }}>
+      <TableRow key={row} onClick={toggleDrawer(true)} sx={{ backgroundColor: color }}>
         <TableCell align="left">
-          <IconButton sx={{ color: '#3f51b5' }} aria-label="expand row" size="small" onClick={() => setExpand(!expand)}>
-            {expand ? <KeyboardArrowDownIcon /> : <ModeEditOutlineOutlinedIcon />}
+          <IconButton sx={{ color: '#3f51b5' }} aria-label="edit" size="small" onClick={toggleDrawer(true)}>
+            <ModeEditOutlineOutlinedIcon />
           </IconButton>
           <DeleteCustomer idValue={customer._id} />
         </TableCell>
@@ -111,26 +112,27 @@ export const Row = ({ customer, row }) => {
         <TableCell>{customer.email}</TableCell>
         <TableCell>{customer.address}</TableCell>
         <TableCell>
-          <Button variant="outlined" size="small" onClick={handleClickOrderCode} value={customer._id}>
+          <Button variant="outlined" size="small" onClick={handleClickOrderCode}>
             ORDERS
           </Button>
         </TableCell>
       </TableRow>
 
-      {/* Collapse Row */}
-      <TableRow sx={{ border: "1px solid #FFB74D" }}>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9} >
-          <Collapse in={expand} timeout="auto" unmountOnExit>
+       <SwipeableDrawer
+             anchor="top"
+             open={open}
+             onClose={toggleDrawer(false)}
+             onOpen={toggleDrawer(true)}
+          >
             <Box sx={{ margin: 3 }} >
               <Typography variant="h6" gutterBottom component="div">
                 Customer Detail
               </Typography>
               <EditCustomer customer={customer} />
             </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+          </SwipeableDrawer>
+
+      
     </React.Fragment>
   );
 }
-

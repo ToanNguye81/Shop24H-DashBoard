@@ -1,4 +1,3 @@
-
 //Version 2
 import React, { useState } from 'react';
 import { Form, Formik } from 'formik';
@@ -7,9 +6,13 @@ import { Box, Button, FormControl, Grid, InputLabel, MenuItem, Select, TextField
 import { useNavigate } from 'react-router-dom';
 import { SnackBarAlert } from '../common/SnackBarAlert';
 import { useDispatch, useSelector } from 'react-redux';
-import { formatTime, formatTimePicker } from '../../utils/formatTime';
+import { formatTime } from '../../utils/formatTime';
 import { updateOrderById } from '../../actions/order.actions';
-import { DatePicker } from '@mui/lab';
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
 
 const validOrderSchema = Yup.object().shape({
@@ -42,7 +45,6 @@ export const OrderData = ({ initOrder }) => {
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
-                                            size="small"
                                             fullWidth
                                             id="orderCode"
                                             label="Order Code *"
@@ -54,8 +56,7 @@ export const OrderData = ({ initOrder }) => {
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            size="small"
+                                        <TextField 
                                             fullWidth
                                             id="orderDate"
                                             label="Order Date *"
@@ -68,21 +69,19 @@ export const OrderData = ({ initOrder }) => {
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            size="small"
-                                            fullWidth
-
-                                            id="shippedDate"
-                                            label="Shipped Date *"
-                                            name="shippedDate"
-                                            value={formatTime(values.shippedDate)   }
-                                            onChange={handleChange}
-                                            error={errors.shippedDate}
-                                        />
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                            <DemoContainer components={['DateTimePicker']} >
+                                            <DateTimePicker 
+                                            label="Shipped Date"
+                                            value={dayjs(values.shippedDate)}
+                                            onChange={(newValue) => {handleChange({ target: { name: 'shippedDate', value: newValue.toISOString() } });
+                                            }}
+                                            />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField
-                                            size="small"
+                                        <TextField sx={{mt:1}}
                                             fullWidth
                                             id="cost"
                                             label="Cost*"
@@ -94,7 +93,6 @@ export const OrderData = ({ initOrder }) => {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
-                                            size="small"
                                             fullWidth
                                             id="customer"
                                             label="Customer*"
@@ -106,7 +104,6 @@ export const OrderData = ({ initOrder }) => {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
-                                            size="small"
                                             fullWidth
                                             id="phone"
                                             label="Phone *"
@@ -118,7 +115,6 @@ export const OrderData = ({ initOrder }) => {
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
                                         <TextField
-                                            size="small"
                                             fullWidth
                                             id="address"
                                             label="Address *"
@@ -131,7 +127,7 @@ export const OrderData = ({ initOrder }) => {
                                     <Grid item xs={12} sm={6}>
                                         <FormControl fullWidth>
                                             <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                                            <Select size="small"
+                                            <Select 
                                                 fullWidth
                                                 labelId="demo-simple-select-label"
                                                 id="status"
@@ -148,7 +144,6 @@ export const OrderData = ({ initOrder }) => {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
-                                            size="small"
                                             fullWidth
                                             id="note"
                                             label="Note *"
@@ -176,33 +171,3 @@ export const OrderData = ({ initOrder }) => {
         </React.Fragment>
     );
 };
-
-
-
-
-import * as React from 'react';
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
-
-export default function DateTimePickerValue() {
-  const [value, setValue] = React.useState(dayjs('2022-04-17T15:30'));
-
-  return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <DemoContainer components={['DateTimePicker', 'DateTimePicker']}>
-        <DateTimePicker
-          label="Uncontrolled picker"
-          defaultValue={dayjs('2022-04-17T15:30')}
-        />
-        <DateTimePicker
-          label="Controlled picker"
-          value={value}
-          onChange={(newValue) => setValue(newValue)}
-        />
-      </DemoContainer>
-    </LocalizationProvider>
-  );
-}

@@ -1,19 +1,18 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
-import { IconButton,Grid } from '@mui/material';
+import { IconButton, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import {  deleteCustomerById } from '../../actions/customer.actions';
+import { deleteCustomerById } from '../../actions/customer.actions';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Iconify from '../iconify/Iconify';
 
 
 const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     border: '0.1 solid pink',
     width: "60%",
@@ -46,14 +45,13 @@ export const DeleteCustomer = ({ idValue }) => {
             <IconButton sx={{ color: 'error.main' }} onClick={handleOpen}>
                 <Iconify icon={'eva:trash-2-outline'} />
             </IconButton>
-            <Modal
-                keepMounted
+            <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
+                aria-labelledby="dialog-title"
+                aria-describedby="dialog-description"
             >
-                <Box sx={style}>
+                <DialogTitle id="dialog-title">
                     <Grid
                         container
                         direction="column"
@@ -65,7 +63,7 @@ export const DeleteCustomer = ({ idValue }) => {
                         </Grid>
                         <Grid item sx={{ color: "#FF4842" }} align="center">
                             <h3>Are you sure want to delete this customer?</h3>
-                            <h3>Customer's Id = {idValue}</h3>
+                            <Typography component="h3">Customer's Id = {idValue}</Typography>
                         </Grid>
                     </Grid>
 
@@ -85,8 +83,8 @@ export const DeleteCustomer = ({ idValue }) => {
                             </Grid>
                         </Box>
                     </Box>
-                </Box>
-            </Modal>
+                </DialogTitle>
+            </Dialog>
         </React.Fragment>
     );
 }
