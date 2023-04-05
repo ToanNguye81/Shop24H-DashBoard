@@ -31,7 +31,9 @@ import {
     DELETE_CUSTOMER_SUCCESS,
     DELETE_CUSTOMER_ERROR,
 
-    GET_CUSTOMER_BY_ID
+    GET_CUSTOMER_BY_ID_PENDING,
+    GET_CUSTOMER_BY_ID_SUCCESS,
+    GET_CUSTOMER_BY_ID_ERROR,
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -144,7 +146,7 @@ export const fetchCountries = () => {
                 countryOptions: allCountriesObj
             })
         } catch (err) {
-            
+
             return dispatch({
                 type: FETCH_COUNTRY_ERROR,
                 error: err
@@ -180,7 +182,7 @@ export const getAddress = (paramAddress) => {
 //get firstName 
 export const getFirstName = (paramFirstName) => {
     return {
-        type:  GET_FIRST_NAME,
+        type: GET_FIRST_NAME,
         firstName: paramFirstName,
     }
 }
@@ -188,7 +190,7 @@ export const getFirstName = (paramFirstName) => {
 //get lastName 
 export const getLastName = (paramLastName) => {
     return {
-        type:   GET_LAST_NAME,
+        type: GET_LAST_NAME,
         lastName: paramLastName,
     }
 }
@@ -204,7 +206,7 @@ export const getEmail = (paramEmail) => {
 //get phone 
 export const getPhone = (paramPhone) => {
     return {
-        type:  GET_PHONE,
+        type: GET_PHONE,
         phone: paramPhone,
     }
 }
@@ -257,43 +259,43 @@ export const updateCustomer = async (customer) => {
     const isValid = await validateCustomer(customerInfo);
     //call PUT API 
     if (isValid) {
-      return async (dispatch) => {
-        const requestOptions = {
-          method: 'PUT',
-          headers: {
-            "Content-Type": 'application/json',
-          },
-          body: JSON.stringify(customerInfo),
-        };
-  
-        await dispatch({
-          type: UPDATE_CUSTOMER_PENDING,
-        });
-  
-        try {
-          const res = await fetch(gCUSTOMER_API_URL, requestOptions);
-          const resObj = await res.json();
-  
-          if (!res.ok) {
-            return dispatch({
-              type: UPDATE_CUSTOMER_ERROR,
+        return async (dispatch) => {
+            const requestOptions = {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": 'application/json',
+                },
+                body: JSON.stringify(customerInfo),
+            };
+
+            await dispatch({
+                type: UPDATE_CUSTOMER_PENDING,
             });
-          }
-  
-          return dispatch({
-            type: UPDATE_CUSTOMER_SUCCESS,
-            data: resObj,
-          });
-        } catch (err) {
-          return dispatch({
-            type: UPDATE_CUSTOMER_ERROR,
-            error: err,
-          });
-        }
-      };
+
+            try {
+                const res = await fetch(gCUSTOMER_API_URL, requestOptions);
+                const resObj = await res.json();
+
+                if (!res.ok) {
+                    return dispatch({
+                        type: UPDATE_CUSTOMER_ERROR,
+                    });
+                }
+
+                return dispatch({
+                    type: UPDATE_CUSTOMER_SUCCESS,
+                    data: resObj,
+                });
+            } catch (err) {
+                return dispatch({
+                    type: UPDATE_CUSTOMER_ERROR,
+                    error: err,
+                });
+            }
+        };
     }
     return isValid;
-  };
+};
 
 //Delete customer
 export const deleteCustomerById = (customerId) => {
@@ -307,7 +309,7 @@ export const deleteCustomerById = (customerId) => {
         });
 
         try {
-            const res = await fetch(gCUSTOMER_API_URL+`/${customerId}`, requestOptions);
+            const res = await fetch(gCUSTOMER_API_URL + `/${customerId}`, requestOptions);
             const resObj = await res.json();
             if (!res.ok) {
                 return dispatch({
@@ -388,10 +390,43 @@ export const validatePhone = (paramPhone) => {
     }
 }
 
-// Validate Phone Number
+//Get Customer By Id
 export const getCustomerById = (customerId) => {
-   return{
-    type:GET_CUSTOMER_BY_ID,
-    payload: customerId
-   }
+    const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+
+    return async (dispatch) => {
+        try {
+            // dispatch pending state to update the UI
+            await dispatch({
+                type: GET_CUSTOMER_BY_ID_PENDING
+            });
+
+            //fetch Customer
+            const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}`, requestOptions);
+
+            // throw an error if the response is not successful
+            if (!res.ok) {
+                throw new Error(`Could get customer By Id, status: ${res.status}`);
+            }
+            // parse the response as JSON
+            const resObj = await res.json();
+
+            //Dispatch state
+            return dispatch({
+                type: GET_CUSTOMER_BY_ID_SUCCESS,
+                payload: resObj.data
+            })
+
+        } catch (err) {
+            //if error
+            return dispatch({
+                type: GET_CUSTOMER_BY_ID_ERROR,
+                payload: err
+            })
+        }
+    }
 }
+

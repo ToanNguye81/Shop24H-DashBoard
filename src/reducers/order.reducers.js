@@ -49,9 +49,9 @@ const initialState = {
     //Add To Cart
     cart: [],//{product:...,quantity:...}
     note: "",
+
     //Create Order
     orderId: null,
-
 
     //Order detail
     orderById: {},
