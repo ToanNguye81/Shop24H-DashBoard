@@ -31,7 +31,10 @@ import {
     GET_PHONE,
     GET_EMAIL,
 
-    GET_CUSTOMER_BY_ID
+
+    GET_CUSTOMER_BY_ID_PENDING,
+    GET_CUSTOMER_BY_ID_SUCCESS,
+    GET_CUSTOMER_BY_ID_ERROR,
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -45,7 +48,9 @@ const initialState = {
 
     //generation
     countryOptions: [],
+    loadCountryOptionsPending:false,
     cityOptions: [],
+    loadCityOptionsPending:false,
 
     //Modal create new customer
     createCustomerPending: false,
@@ -64,12 +69,9 @@ const initialState = {
     //Modal Delete Customer
     deleteCustomerPending: false,
 
-    //Load country-city
-    loadCountriesPending: false,
-    loadCitiesPending: false,
-
-    //Get customer by id
-    customerById: "",
+    //Customer detail
+    customerById: {},
+    getCustomerByIdPending: false,
 }
 
 export default function customerReducers(state = initialState, action) {
@@ -150,17 +152,18 @@ export default function customerReducers(state = initialState, action) {
         case FETCH_COUNTRY_PENDING:
             return {
                 ...state,
-                loadCountriesPending: true,
+                loadCountryOptionsPending: true,
             };
         case FETCH_COUNTRY_SUCCESS:
             return {
                 ...state,
-                loadCountriesPending: false,
+                loadCountryOptionsPending: false,
                 countryOptions: action.countryOptions,
             };
         case FETCH_COUNTRY_ERROR:
             return {
                 ...state,
+                loadCountryOptionsPending:false,
                 error: action.error,
             };
 
@@ -168,17 +171,18 @@ export default function customerReducers(state = initialState, action) {
         case FETCH_CITY_PENDING:
             return {
                 ...state,
-                loadCitiesPending: true,
+                loadCityOptionsPending: true,
             };
         case FETCH_CITY_SUCCESS:
             return {
                 ...state,
-                loadCitiesPending: false,
+                loadCityOptionsPending: false,
                 cityOptions: action.cityOptions,
             };
         case FETCH_CITY_ERROR:
             return {
                 ...state,
+                loadCityOptionsPending: false,
                 error: action.error,
             };
 
@@ -219,11 +223,25 @@ export default function customerReducers(state = initialState, action) {
                 email: action.email,
             };
 
-        case GET_CUSTOMER_BY_ID:
+        case GET_CUSTOMER_BY_ID_PENDING:
+            return {
+                ...state,
+                getCustomerByIdPending: true
+            }
+
+        case GET_CUSTOMER_BY_ID_SUCCESS:
             return {
                 ...state,
                 customerById: action.payload,
-            };
+                getCustomerByIdPending: false
+            }
+
+        case GET_CUSTOMER_BY_ID_ERROR:
+            return {
+                ...state,
+                error:action.payload,
+                getCustomerByIdPending: false
+            }
 
         default:
             return state;

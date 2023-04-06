@@ -204,46 +204,6 @@ export const getOrderById = (orderId) => {
     }
 }
 
-
-
-// // Update order
-// export const updateOrderById = async (paramOrder) => {
-//     return async (dispatch) => {
-//         const requestOptions = {
-//             method: 'PUT',
-//             headers: {
-//                 "Content-Type": 'application/json',
-//             },
-//             body: JSON.stringify(paramOrder),
-//         };
-
-//         await dispatch({
-//             type: UPDATE_ORDER_PENDING,
-//         });
-
-//         try {
-//             const res = await fetch(gORDER_API_URL, requestOptions);
-//             const resObj = await res.json();
-
-//             if (!res.ok) {
-//                 return dispatch({
-//                     type: UPDATE_ORDER_ERROR,
-//                 });
-//             }
-
-//             return dispatch({
-//                 type: UPDATE_ORDER_SUCCESS,
-//                 data: resObj,
-//             });
-//         } catch (err) {
-//             return dispatch({
-//                 type: UPDATE_ORDER_ERROR,
-//                 error: err,
-//             });
-//         }
-//     };
-// };
-
 // Update customer
 export const updateOrderById = (orderId, orderData) => {
     return async (dispatch) => {

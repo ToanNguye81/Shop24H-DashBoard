@@ -64,7 +64,6 @@ export const OrderData = ({ initOrder }) => {
                                             value={formatTime(values.orderDate)}
                                             onChange={handleChange}
                                             disabled
-                                            rows={4}
                                             error={errors.orderDate}
                                         />
                                     </Grid>
