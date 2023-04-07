@@ -146,7 +146,8 @@ export const CustomerInfo = () => {
                             value={cityOptions.length || cityOptions ? city : "none"}
                         >
                             {cityOptions.length && cityOptions ?
-                                cityOptions.map((cityOptions, index) => <MenuItem key={index} id={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) :
+                                cityOptions.map((cityOptions, index) => 
+                                <MenuItem key={index} id={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) :
                                 <MenuItem key="0" value="none">Không có thành phố</MenuItem>
                             }
                         </Select>
