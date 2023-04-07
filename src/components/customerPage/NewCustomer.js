@@ -84,7 +84,6 @@ export const NewCustomer = () => {
                     <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
-                                {error ? <ErrorStack message={error.message} /> : null}
                                 <Grid item xs={12} sm={6}>
                                     <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name" />
                                 </Grid>
@@ -101,6 +100,13 @@ export const NewCustomer = () => {
                                     <FormControl size="small" required fullWidth>
                                         <InputLabel id="select-country">Country</InputLabel>
                                         <Select onChange={handleCountryChange} labelId="select-country" autoWidth id="country" label="Country" name="country" value={country}>
+
+                                            {error ?
+                                                <MenuItem value="">
+                                                    <ErrorStack message={error.message} />
+                                                </MenuItem>
+                                                : null}
+
                                             {countryOptions ?
                                                 countryOptions.map((countryOption, index) => <MenuItem key={countryOption.id} value={countryOption.iso2}>{countryOption.name}</MenuItem>) :
                                                 null
@@ -111,10 +117,16 @@ export const NewCustomer = () => {
                                 <Grid item xs={12} sm={6}>
                                     <FormControl size="small" required fullWidth>
                                         <InputLabel id="select-city">City</InputLabel>
+                                    
                                         <Select onChange={handleCityChange} size="small" required autoWidth id="city" labelId="select-city" label="City" name="city" value={city}>
                                             {cityOptions ?
                                                 cityOptions.map((cityOptions, index) => <MenuItem key={cityOptions.id} value={cityOptions.name}>{cityOptions.name}</MenuItem>) : null
                                             }
+                                                {error ?
+                                                <MenuItem value="">
+                                                    <ErrorStack message={error.message} />
+                                                </MenuItem>
+                                                : null}
                                         </Select>
                                     </FormControl>
                                 </Grid>
