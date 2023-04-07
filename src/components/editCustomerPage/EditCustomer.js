@@ -3,14 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import {
-    Box,
     Button,
     CircularProgress,
-    FormControl,
     Grid,
     InputAdornment,
-    InputLabel,
-    LinearProgress,
     MenuItem,
     Select,
     TextField,
@@ -18,10 +14,9 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { SnackBarAlert } from "../common/SnackBarAlert";
 import { useDispatch, useSelector } from "react-redux";
-import { formatTime } from "../../utils/formatTime";
 import {
-    fetchCities,
-    fetchCountries,
+    loadCities,
+    loadCountries,
     getCustomerById,
     updateCustomer,
 } from "../../actions/customer.actions";
@@ -29,19 +24,14 @@ import {
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required").trim(),
     lastName: Yup.string().required("Last Name is required").trim(),
-    phone: Yup.string()
-        .required("Phone is required")
-        .matches(/^[0-9]+$/, "Phone number should only contain digits"),
-    email: Yup.string()
-        .required("Email is required")
-        .email("Invalid email")
-        .trim(),
+    phone: Yup.string().required("Phone is required").matches(/^[0-9]+$/, "Phone number should only contain digits"),
+    email: Yup.string().required("Email is required").email("Invalid email").trim(),
     city: Yup.string().required("City is required").trim(),
     country: Yup.string().required("Country is required").trim(),
     address: Yup.string().required("Address is required").trim(),
 });
 
-export const CustomerData = () => {
+export const EditCustomer = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { customerId } = useParams();
@@ -62,19 +52,19 @@ export const CustomerData = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(fetchCountries());
+        dispatch(loadCountries());
     }, []);
 
 
     useEffect(() => {
         if (customerById.country) {
-            dispatch(fetchCities(customerById.country))
+            dispatch(loadCities(customerById.country))
         }
     }, [customerById.country]);
 
     const handleCountryChange = (event) => {
         console.log(event.target.value)
-        dispatch(fetchCities(event.target.value));
+        dispatch(loadCities(event.target.value));
     };
 
 

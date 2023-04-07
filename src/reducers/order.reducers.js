@@ -1,15 +1,15 @@
 import {
-    FETCH_ORDERS_PENDING,
-    FETCH_ORDERS_ERROR,
-    FETCH_ORDERS_SUCCESS,
+    LOAD_ORDERS_PENDING,
+    LOAD_ORDERS_ERROR,
+    LOAD_ORDERS_SUCCESS,
 
     GET_ORDER_BY_ID_PENDING,
     GET_ORDER_BY_ID_ERROR,
     GET_ORDER_BY_ID_SUCCESS,
 
-    FETCH_CITY_PENDING,
-    FETCH_CITY_SUCCESS,
-    FETCH_CITY_ERROR,
+    LOAD_CITY_PENDING,
+    LOAD_CITY_SUCCESS,
+    LOAD_CITY_ERROR,
 
     CREATE_ORDER_PENDING,
     CREATE_ORDER_SUCCESS,
@@ -66,16 +66,16 @@ const initialState = {
 export default function orderReducers(state = initialState, action) {
     switch (action.type) {
         //Load Order
-        case FETCH_ORDERS_PENDING:
+        case LOAD_ORDERS_PENDING:
             state.pending = true;
             break;
-        case FETCH_ORDERS_SUCCESS:
+        case LOAD_ORDERS_SUCCESS:
             state.pending = false;
             state.totalOrder = action.totalOrder;
             state.orders = action.orders;
             state.error = null;
             break;
-        case FETCH_ORDERS_ERROR:
+        case LOAD_ORDERS_ERROR:
             state.error = action.error
             break;
 
@@ -141,14 +141,14 @@ export default function orderReducers(state = initialState, action) {
             break;
 
         //Load Cities List
-        case FETCH_CITY_PENDING:
+        case LOAD_CITY_PENDING:
             state.loadCitiesPending = true
             break;
-        case FETCH_CITY_SUCCESS:
+        case LOAD_CITY_SUCCESS:
             state.loadCitiesPending = false
             state.cityOptions = action.cityOptions
             break;
-        case FETCH_CITY_ERROR:
+        case LOAD_CITY_ERROR:
             break;
 
         //Add To Cart

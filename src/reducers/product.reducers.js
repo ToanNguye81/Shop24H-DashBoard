@@ -1,7 +1,7 @@
 import {
-    FETCH_PRODUCTS_PENDING,
-    FETCH_PRODUCTS_ERROR,
-    FETCH_PRODUCTS_SUCCESS,
+    LOAD_PRODUCTS_PENDING,
+    LOAD_PRODUCTS_ERROR,
+    LOAD_PRODUCTS_SUCCESS,
 
     GET_PRODUCT_BY_ID_ERROR,
     GET_PRODUCT_BY_ID_PENDING,
@@ -37,16 +37,16 @@ const initialState = {
 
 export default function productReducers(state = initialState, action) {
     switch (action.type) {
-        case FETCH_PRODUCTS_PENDING:
+        case LOAD_PRODUCTS_PENDING:
             state.pending = true;
             break;
-        case FETCH_PRODUCTS_SUCCESS:
+        case LOAD_PRODUCTS_SUCCESS:
             state.pending = false;
             state.totalProduct = action.totalProduct;
             state.products = action.products;
             state.error = null;
             break;
-        case FETCH_PRODUCTS_ERROR:
+        case LOAD_PRODUCTS_ERROR:
             state.error = action.error
             break;
 

@@ -7,7 +7,8 @@ import Iconify from '../iconify/Iconify';
 import { useEffect } from 'react';
 import { FormControl, InputLabel, Select, Grid, Paper, MenuItem, Link, TextField } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewCustomer, fetchCities, fetchCountries, getAllCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
+import { createNewCustomer, loadCities, loadCountries, getAllCustomer, getAddress, getCity, getCountry } from '../../actions/customer.actions';
+import { ErrorStack } from './ErrorStack';
 
 const style = {
     position: 'absolute',
@@ -27,20 +28,23 @@ export const NewCustomer = () => {
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-        const {
-            loadCountriesPending,
-            countryOptions,
-            cityOptions,
-            country,
-            address,
-            city,
-            createCustomer,
-        } = useSelector((reduxData) => reduxData.customerReducers);
+    const {
+        loadCountriesPending,
+        countryOptions,
+        cityOptions,
+        country,
+        address,
+        city,
+        error,
+        createCustomer,
+    } = useSelector((reduxData) => reduxData.customerReducers);
 
 
     useEffect(() => {
-        dispatch(fetchCountries());
-    }, []);
+        if (open) {
+            dispatch(loadCountries())
+        }
+    }, [open]);
 
 
     const handleSubmit = (event) => {
@@ -51,7 +55,7 @@ export const NewCustomer = () => {
 
     const handleCountryChange = (event) => {
         dispatch(getCountry(event.target.value));
-        dispatch(fetchCities(event.target.value));
+        dispatch(loadCities(event.target.value));
     }
 
     const handleCityChange = (event) => {
@@ -72,6 +76,7 @@ export const NewCustomer = () => {
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
             >
+
                 <Box sx={style}>
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
                         New Customer
@@ -79,6 +84,7 @@ export const NewCustomer = () => {
                     <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
+                                {error ? <ErrorStack message={error.message} /> : null}
                                 <Grid item xs={12} sm={6}>
                                     <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name" />
                                 </Grid>

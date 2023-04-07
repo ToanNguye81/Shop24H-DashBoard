@@ -9,7 +9,7 @@ import { ErrorStack } from "../components/customerPage/ErrorStack"
 import { NewCustomer } from "../components/customerPage/NewCustomer"
 
 export const CustomerPage = () => {
-  const { customers, pending, totalCustomer, error } = useSelector((reduxData) => reduxData.customerReducers);
+  const { customers, pending, totalCustomer } = useSelector((reduxData) => reduxData.customerReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
 
   const dispatch = useDispatch();
@@ -41,8 +41,8 @@ export const CustomerPage = () => {
           </Typography>
           <NewCustomer />
         </Stack>
-        {error ?
-          <ErrorStack />
+        {!customers ?
+          <ErrorStack message={"There something wrong...!"} />
           :
           <Card>
             <CustomerTable customers={customers} pending={pending} totalCustomer={totalCustomer} />

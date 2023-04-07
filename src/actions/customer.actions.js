@@ -1,7 +1,7 @@
 import {
-    FETCH_COUNTRY_ERROR,
-    FETCH_COUNTRY_PENDING,
-    FETCH_COUNTRY_SUCCESS,
+    LOAD_COUNTRY_ERROR,
+    LOAD_COUNTRY_PENDING,
+    LOAD_COUNTRY_SUCCESS,
 
     GET_CITY,
     GET_ADDRESS,
@@ -11,13 +11,13 @@ import {
     GET_PHONE,
     GET_EMAIL,
 
-    FETCH_CITY_ERROR,
-    FETCH_CITY_PENDING,
-    FETCH_CITY_SUCCESS,
+    LOAD_CITY_ERROR,
+    LOAD_CITY_PENDING,
+    LOAD_CITY_SUCCESS,
 
-    FETCH_CUSTOMER_ERROR,
-    FETCH_CUSTOMER_PENDING,
-    FETCH_CUSTOMER_SUCCESS,
+    LOAD_CUSTOMER_ERROR,
+    LOAD_CUSTOMER_PENDING,
+    LOAD_CUSTOMER_SUCCESS,
 
     CREATE_CUSTOMER_PENDING,
     CREATE_CUSTOMER_SUCCESS,
@@ -59,7 +59,7 @@ export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
         try {
             // dispatch pending state to update the UI
             await dispatch({
-                type: FETCH_CUSTOMER_PENDING
+                type: LOAD_CUSTOMER_PENDING
             });
 
             //fetch Customer
@@ -74,7 +74,7 @@ export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
 
             //Dispatch state
             return dispatch({
-                type: FETCH_CUSTOMER_SUCCESS,
+                type: LOAD_CUSTOMER_SUCCESS,
                 totalCustomer: resObj.totalCount,
                 customers: resObj.data
             })
@@ -83,7 +83,7 @@ export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
             //if error
             console.log(err)
             return dispatch({
-                type: FETCH_CUSTOMER_ERROR,
+                type: LOAD_CUSTOMER_ERROR,
                 error: err
             })
         }
@@ -91,7 +91,7 @@ export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
 }
 
 //Load cities list with REST_API
-export const fetchCities = (paramIsoCountry) => {
+export const loadCities = (paramIsoCountry) => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -103,19 +103,19 @@ export const fetchCities = (paramIsoCountry) => {
         };
 
         await dispatch({
-            type: FETCH_CITY_PENDING
+            type: LOAD_CITY_PENDING
         });
 
         try {
             const allCitiesRes = await fetch(gCOUNTRY_API_URL + paramIsoCountry + "/cities", requestOptions);
             const allCitiesObj = await allCitiesRes.json();
             return dispatch({
-                type: FETCH_CITY_SUCCESS,
+                type: LOAD_CITY_SUCCESS,
                 cityOptions: allCitiesObj
             })
         } catch (err) {
             return dispatch({
-                type: FETCH_CITY_ERROR,
+                type: LOAD_CITY_ERROR,
                 error: err
             })
         }
@@ -123,7 +123,7 @@ export const fetchCities = (paramIsoCountry) => {
 }
 
 //Load country list
-export const fetchCountries = () => {
+export const loadCountries = () => {
     return async (dispatch) => {
         var headers = new Headers();
         headers.append("X-CSCAPI-KEY", gMY_COUNTRY_KEY);
@@ -135,20 +135,20 @@ export const fetchCountries = () => {
         };
 
         await dispatch({
-            type: FETCH_COUNTRY_PENDING
+            type: LOAD_COUNTRY_PENDING
         });
 
         try {
             const allCountriesRes = await fetch(gCOUNTRY_API_URL, requestOptions);
             const allCountriesObj = await allCountriesRes.json();
             return dispatch({
-                type: FETCH_COUNTRY_SUCCESS,
+                type: LOAD_COUNTRY_SUCCESS,
                 countryOptions: allCountriesObj
             })
         } catch (err) {
 
             return dispatch({
-                type: FETCH_COUNTRY_ERROR,
+                type: LOAD_COUNTRY_ERROR,
                 error: err
             })
         }

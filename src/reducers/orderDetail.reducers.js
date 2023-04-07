@@ -1,7 +1,7 @@
 import {
-    FETCH_ORDER_DETAILS_PENDING,
-    FETCH_ORDER_DETAILS_ERROR,
-    FETCH_ORDER_DETAILS_SUCCESS,
+    LOAD_ORDER_DETAILS_PENDING,
+    LOAD_ORDER_DETAILS_ERROR,
+    LOAD_ORDER_DETAILS_SUCCESS,
 
     CREATE_ORDER_DETAIL_PENDING,
     CREATE_ORDER_DETAIL_SUCCESS,
@@ -39,16 +39,16 @@ const initialState = {
 export default function orderDetailReducers(state = initialState, action) {
     switch (action.type) {
         //Load OrderDetail
-        case FETCH_ORDER_DETAILS_PENDING:
+        case LOAD_ORDER_DETAILS_PENDING:
             state.pending = true;
             break;
-        case FETCH_ORDER_DETAILS_SUCCESS:
+        case LOAD_ORDER_DETAILS_SUCCESS:
             state.pending = false;
             state.totalOrderDetail = action.totalOrderDetail;
             state.orderDetails = action.orderDetails;
             state.error=null;
             break;
-        case FETCH_ORDER_DETAILS_ERROR:
+        case LOAD_ORDER_DETAILS_ERROR:
             break;
 
         //Create OrderDetail

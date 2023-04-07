@@ -1,15 +1,15 @@
 import {
-    FETCH_CUSTOMER_PENDING,
-    FETCH_CUSTOMER_ERROR,
-    FETCH_CUSTOMER_SUCCESS,
+    LOAD_CUSTOMER_PENDING,
+    LOAD_CUSTOMER_ERROR,
+    LOAD_CUSTOMER_SUCCESS,
 
-    FETCH_COUNTRY_PENDING,
-    FETCH_COUNTRY_SUCCESS,
-    FETCH_COUNTRY_ERROR,
+    LOAD_COUNTRY_PENDING,
+    LOAD_COUNTRY_SUCCESS,
+    LOAD_COUNTRY_ERROR,
 
-    FETCH_CITY_PENDING,
-    FETCH_CITY_SUCCESS,
-    FETCH_CITY_ERROR,
+    LOAD_CITY_PENDING,
+    LOAD_CITY_SUCCESS,
+    LOAD_CITY_ERROR,
 
     CREATE_CUSTOMER_PENDING,
     CREATE_CUSTOMER_SUCCESS,
@@ -77,19 +77,19 @@ const initialState = {
 export default function customerReducers(state = initialState, action) {
     switch (action.type) {
         //Load Customer
-        case FETCH_CUSTOMER_PENDING:
+        case LOAD_CUSTOMER_PENDING:
             return {
                 ...state,
                 pending: true,
             };
-        case FETCH_CUSTOMER_SUCCESS:
+        case LOAD_CUSTOMER_SUCCESS:
             return {
                 ...state,
                 pending: false,
                 totalCustomer: action.totalCustomer,
                 customers: action.customers,
             };
-        case FETCH_CUSTOMER_ERROR:
+        case LOAD_CUSTOMER_ERROR:
             return {
                 ...state,
                 pending: false,
@@ -149,18 +149,18 @@ export default function customerReducers(state = initialState, action) {
             };
 
         //Modal component select
-        case FETCH_COUNTRY_PENDING:
+        case LOAD_COUNTRY_PENDING:
             return {
                 ...state,
                 loadCountryOptionsPending: true,
             };
-        case FETCH_COUNTRY_SUCCESS:
+        case LOAD_COUNTRY_SUCCESS:
             return {
                 ...state,
                 loadCountryOptionsPending: false,
                 countryOptions: action.countryOptions,
             };
-        case FETCH_COUNTRY_ERROR:
+        case LOAD_COUNTRY_ERROR:
             return {
                 ...state,
                 loadCountryOptionsPending:false,
@@ -168,18 +168,18 @@ export default function customerReducers(state = initialState, action) {
             };
 
         //Load Cities List
-        case FETCH_CITY_PENDING:
+        case LOAD_CITY_PENDING:
             return {
                 ...state,
                 loadCityOptionsPending: true,
             };
-        case FETCH_CITY_SUCCESS:
+        case LOAD_CITY_SUCCESS:
             return {
                 ...state,
                 loadCityOptionsPending: false,
                 cityOptions: action.cityOptions,
             };
-        case FETCH_CITY_ERROR:
+        case LOAD_CITY_ERROR:
             return {
                 ...state,
                 loadCityOptionsPending: false,

@@ -2,7 +2,7 @@ import {  Typography } from "@mui/material"
 import { Container, Stack } from "@mui/system"
 import React from "react"
 import { Helmet } from "react-helmet-async"
-import { CustomerData } from "../components/editCustomerPage/CustomerData"
+import { EditCustomer } from "../components/editCustomerPage/EditCustomer"
 import { useParams } from "react-router-dom"
 
 export const EditCustomerPage = () => {
@@ -17,7 +17,7 @@ export const EditCustomerPage = () => {
             Edit Customer
           </Typography>
         </Stack>
-        <CustomerData />
+        <EditCustomer />
       </Container>
     </React.Fragment>
   )

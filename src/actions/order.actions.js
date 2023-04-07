@@ -1,7 +1,7 @@
 import {
-    FETCH_ORDERS_ERROR,
-    FETCH_ORDERS_PENDING,
-    FETCH_ORDERS_SUCCESS,
+    LOAD_ORDERS_ERROR,
+    LOAD_ORDERS_PENDING,
+    LOAD_ORDERS_SUCCESS,
 
     GET_ORDER_BY_ID_ERROR,
     GET_ORDER_BY_ID_PENDING,
@@ -46,7 +46,7 @@ export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
         try {
             // dispatch pending state to update the UI
             await dispatch({
-                type: FETCH_ORDERS_PENDING
+                type: LOAD_ORDERS_PENDING
             });
 
             //fetch Order
@@ -61,7 +61,7 @@ export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
             console.log(resObj)
             //Dispatch state
             return dispatch({
-                type: FETCH_ORDERS_SUCCESS,
+                type: LOAD_ORDERS_SUCCESS,
                 totalOrder: resObj.totalCount,
                 orders: resObj.data
             })
@@ -69,7 +69,7 @@ export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
         } catch (err) {
             //if error
             return dispatch({
-                type: FETCH_ORDERS_ERROR,
+                type: LOAD_ORDERS_ERROR,
                 error: err
             })
         }
@@ -90,7 +90,7 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, cus
         try {
             // dispatch pending state to update the UI
             await dispatch({
-                type: FETCH_ORDERS_PENDING
+                type: LOAD_ORDERS_PENDING
             });
 
             //fetch Order
@@ -103,7 +103,7 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, cus
             const resObj = await res.json();
             //Dispatch state
             return dispatch({
-                type: FETCH_ORDERS_SUCCESS,
+                type: LOAD_ORDERS_SUCCESS,
                 totalOrder: resObj.totalCount,
                 orders: resObj.data
             })
@@ -111,7 +111,7 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, cus
         } catch (err) {
             //if error
             return dispatch({
-                type: FETCH_ORDERS_ERROR,
+                type: LOAD_ORDERS_ERROR,
                 error: err
             })
         }

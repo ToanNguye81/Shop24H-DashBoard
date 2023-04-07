@@ -1,7 +1,7 @@
 import {
-    FETCH_ORDER_DETAILS_ERROR,
-    FETCH_ORDER_DETAILS_PENDING,
-    FETCH_ORDER_DETAILS_SUCCESS,
+    LOAD_ORDER_DETAILS_ERROR,
+    LOAD_ORDER_DETAILS_PENDING,
+    LOAD_ORDER_DETAILS_SUCCESS,
 
     CREATE_ORDER_DETAIL_PENDING,
     CREATE_ORDER_DETAIL_SUCCESS,
@@ -36,7 +36,7 @@ export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
         try {
             // dispatch pending state to update the UI
             await dispatch({
-                type: FETCH_ORDER_DETAILS_PENDING
+                type: LOAD_ORDER_DETAILS_PENDING
             });
 
             //fetch OrderDetail
@@ -52,7 +52,7 @@ export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
 
             //Dispatch state
             return dispatch({
-                type: FETCH_ORDER_DETAILS_SUCCESS,
+                type: LOAD_ORDER_DETAILS_SUCCESS,
                 totalOrderDetail: resObj.totalCount,
                 orderDetails: resObj.data
             })
@@ -60,7 +60,7 @@ export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
         } catch (err) {
             //if error
             return dispatch({
-                type: FETCH_ORDER_DETAILS_ERROR,
+                type: LOAD_ORDER_DETAILS_ERROR,
                 error: err
             })
         }
@@ -252,7 +252,7 @@ export const getAllOrderDetailOfOrder = (paramLimit, paramPage, paramCondition, 
         try {
             // dispatch pending state to update the UI
             await dispatch({
-                type: FETCH_ORDER_DETAILS_PENDING
+                type: LOAD_ORDER_DETAILS_PENDING
             });
 
             //fetch OrderDetail
@@ -270,7 +270,7 @@ export const getAllOrderDetailOfOrder = (paramLimit, paramPage, paramCondition, 
 
             //Dispatch state
             return dispatch({
-                type: FETCH_ORDER_DETAILS_SUCCESS,
+                type: LOAD_ORDER_DETAILS_SUCCESS,
                 totalOrderDetail: resObj.totalCount,
                 orderDetails: resObj.data
             })
@@ -278,7 +278,7 @@ export const getAllOrderDetailOfOrder = (paramLimit, paramPage, paramCondition, 
         } catch (err) {
             //if error
             return dispatch({
-                type: FETCH_ORDER_DETAILS_ERROR,
+                type: LOAD_ORDER_DETAILS_ERROR,
                 error: err
             })
         }
