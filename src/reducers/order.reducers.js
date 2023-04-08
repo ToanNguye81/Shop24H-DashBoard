@@ -40,9 +40,6 @@ const initialState = {
     currentPage: 1,
     orderCondition: "",
 
-    //Modal update order
-    updateOrderPending: false,
-
     //Modal Delete Order
     deleteOrderPending: false,
 
@@ -93,6 +90,7 @@ export default function orderReducers(state = initialState, action) {
             break;
         case GET_ORDER_NOTE: 
             state.note=action.note
+            break;
         //Create Order
         case CREATE_ORDER_PENDING:
             state.createOrderPending = true

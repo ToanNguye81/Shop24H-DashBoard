@@ -4,9 +4,9 @@ import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 import { OrderDetailTable } from "../components/orderDetailPage/OrderDetailTable"
-import { ErrorStack } from "../components/orderDetailPage/ErrorStack"
 import { useParams } from "react-router-dom"
 import { getAllOrderDetail, getAllOrderDetailOfOrder } from "../actions/orderDetail.actions"
+import { ErrorStack } from "../components/common/ErrorStack"
 
 export const OrderDetailPage = () => {
   const { orderDetails, pending, totalOrderDetail, error } = useSelector((reduxData) => reduxData.orderDetailReducers);
@@ -42,7 +42,7 @@ export const OrderDetailPage = () => {
           </Typography>
         </Stack>
         {error ?
-          <ErrorStack />
+          <ErrorStack message="You do not have permission to access this data"/>
           :
           <Card>
             <OrderDetailTable orderDetails={orderDetails} pending={pending} totalOrderDetail={totalOrderDetail} />

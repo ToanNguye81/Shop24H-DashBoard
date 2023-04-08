@@ -70,8 +70,6 @@ export const EditCustomer = () => {
 
     const handleSubmit = (values) => {
         console.log(values);
-        // await dispatch(updateCustomer(values));
-        // await setOpenSnackBar(true)
     };
 
     return (
@@ -194,6 +192,19 @@ export const EditCustomer = () => {
                                                 ))}
                                         </Select>
 
+                                        <TextField
+                                            sx={{ mt: 2 }}
+                                            fullWidth
+                                            label="Address * "
+                                            size="small"
+                                            value={values.address}
+                                            id="address"
+                                            onChange={handleChange}
+                                            name="address"
+                                            error={errors.address && touched.address}
+                                            helperText={touched.address && errors.address}
+                                        />
+
                                         <Grid container justifyContent="flex-end" spacing={2}>
                                             <Grid item>
                                                 <Button
@@ -215,6 +226,7 @@ export const EditCustomer = () => {
                                                 </Button>
                                             </Grid>
                                         </Grid>
+
                                     </Form>
                                 )}
                             </Formik>

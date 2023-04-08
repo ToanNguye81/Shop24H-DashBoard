@@ -213,40 +213,35 @@ export const getPhone = (paramPhone) => {
 
 
 //Create new customer
-export const createNewCustomer = (customerData) => {
-    const isValid = validateCustomer(customerData)
-    if (isValid) {
-        return async (dispatch) => {
-            const requestOptions = {
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify(customerData)
-            };
+export const createNewCustomer = (newCustomer) => {
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json'
+            },
+            body: JSON.stringify(newCustomer)
+        };
 
-            await dispatch({
-                type: CREATE_CUSTOMER_PENDING
-            });
+        await dispatch({
+            type: CREATE_CUSTOMER_PENDING
+        });
 
-            try {
-                const res = await fetch(gCUSTOMER_API_URL, requestOptions);
-                const resObj = await res.json();
-                if (!res.ok) {
-                    return dispatch({
-                        type: CREATE_CUSTOMER_ERROR,
-                    })
-                }
-                return dispatch({
-                    type: CREATE_CUSTOMER_SUCCESS,
-                    data: resObj.data
-                })
-            } catch (err) {
-                return dispatch({
-                    type: CREATE_CUSTOMER_ERROR,
-                    error: err
-                })
+        try {
+            const res = await fetch(gCUSTOMER_API_URL, requestOptions);
+            const resObj = await res.json();
+            if (!res.ok) {
+                throw new Error(`Could not create customer, status: ${res.status}`);
             }
+            return dispatch({
+                type: CREATE_CUSTOMER_SUCCESS,
+                data: resObj.data
+            })
+        } catch (err) {
+            return dispatch({
+                type: CREATE_CUSTOMER_ERROR,
+                error: err
+            })
         }
     }
 }

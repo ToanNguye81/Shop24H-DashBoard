@@ -5,8 +5,8 @@ import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 import { getAllProduct } from "../actions/product.actions"
 import { ProductTable } from "../components/productPage/ProductTable"
-import { ErrorStack } from "../components/productPage/ErrorStack"
 import { NewProduct } from "../components/productPage/NewProduct"
+import { ErrorStack } from "../components/common/ErrorStack"
 
 export const ProductPage = () => {
   const { products, pending, totalProduct, error } = useSelector((reduxData) => reduxData.productReducers);
@@ -42,7 +42,7 @@ export const ProductPage = () => {
           <NewProduct />
         </Stack>
         {error ?
-          <ErrorStack />
+          <ErrorStack message="You do not have permission to access this data" />
           :
           <Card>
             <ProductTable products={products} pending={pending} totalProduct={totalProduct} />

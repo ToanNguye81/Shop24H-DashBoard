@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { useParams } from "react-router-dom"
 import { getProductById } from "../actions/product.actions"
-import { ErrorStack } from "../components/productDetailPage/ErrorStack"
 import { EditProduct } from "../components/productPage/EditProduct"
 import { NewProduct } from "../components/productPage/NewProduct"
+import { ErrorStack } from "../components/common/ErrorStack"
 
 export const ProductDetailPage = () => {
   const dispatch = useDispatch();
@@ -32,7 +32,7 @@ export const ProductDetailPage = () => {
           </Typography>
           <NewProduct />
         </Stack>
-        {error ? <ErrorStack description={error.stack} /> :
+        {error ? <ErrorStack message="There's something wrong" /> :
           getProductByIdPending ?
             <CircularProgress /> 
             :

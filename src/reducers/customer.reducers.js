@@ -48,9 +48,9 @@ const initialState = {
 
     //generation
     countryOptions: [],
-    loadCountryOptionsPending:false,
+    loadCountryOptionsPending: false,
     cityOptions: [],
-    loadCityOptionsPending:false,
+    loadCityOptionsPending: false,
 
     //Modal create new customer
     createCustomerPending: false,
@@ -62,6 +62,18 @@ const initialState = {
     phone: "",
     email: "",
     customerId: null,
+
+    //Create New Customer
+    newCustomer: {
+        country: "",
+        city: "",
+        address: "",
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+    },
+
 
     //Modal update customer
     updateCustomerPending: false,
@@ -163,7 +175,7 @@ export default function customerReducers(state = initialState, action) {
         case LOAD_COUNTRY_ERROR:
             return {
                 ...state,
-                loadCountryOptionsPending:false,
+                loadCountryOptionsPending: false,
                 error: action.error,
             };
 
@@ -239,7 +251,7 @@ export default function customerReducers(state = initialState, action) {
         case GET_CUSTOMER_BY_ID_ERROR:
             return {
                 ...state,
-                error:action.payload,
+                error: action.payload,
                 getCustomerByIdPending: false
             }
 

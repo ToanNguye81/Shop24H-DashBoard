@@ -5,7 +5,7 @@ import { Helmet } from "react-helmet-async"
 import { useDispatch, useSelector } from "react-redux"
 import { getAllCustomer } from "../actions/customer.actions"
 import { CustomerTable } from "../components/customerPage/CustomerTable"
-import { ErrorStack } from "../components/customerPage/ErrorStack"
+import { ErrorStack } from "../components/common/ErrorStack"
 import { NewCustomer } from "../components/customerPage/NewCustomer"
 
 export const CustomerPage = () => {
