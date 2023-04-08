@@ -37,6 +37,7 @@ import {
     GET_CUSTOMER_BY_ID_ERROR,
 
     UPDATE_NEW_CUSTOMER,
+    UPDATE_CUSTOMER_LOAD_CONDITION
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -47,6 +48,7 @@ const initialState = {
     error: null,
     currentPage: 1,
     orders: [],
+    customerLoadCondition: {},
 
     //generation
     countryOptions: [],
@@ -265,7 +267,11 @@ export default function customerReducers(state = initialState, action) {
                     ...action.payload
                 }
             }
-
+        case UPDATE_CUSTOMER_LOAD_CONDITION:
+            return {
+                ...state,
+                customerLoadCondition: action.payload
+            }
         default:
             return state;
     }

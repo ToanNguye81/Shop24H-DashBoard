@@ -7,9 +7,10 @@ import { getAllCustomer } from "../actions/customer.actions"
 import { CustomerTable } from "../components/customerPage/CustomerTable"
 import { ErrorStack } from "../components/common/ErrorStack"
 import { NewCustomer } from "../components/customerPage/NewCustomer"
+import { SearchBar } from "../components/customerPage/SearchBar"
 
 export const CustomerPage = () => {
-  const { customers, pending, totalCustomer } = useSelector((reduxData) => reduxData.customerReducers);
+  const { customers, pending, totalCustomer,customerLoadCondition } = useSelector((reduxData) => reduxData.customerReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
 
   const dispatch = useDispatch();
@@ -17,8 +18,8 @@ export const CustomerPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    dispatch(getAllCustomer(rowsPerPage, page));
-  }, [rowsPerPage, page, role]);
+    dispatch(getAllCustomer(rowsPerPage, page,customerLoadCondition));
+  }, [rowsPerPage, page, role,customerLoadCondition]);
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
@@ -41,6 +42,7 @@ export const CustomerPage = () => {
           </Typography>
           <NewCustomer />
         </Stack>
+        <SearchBar />
         {!customers ?
           <ErrorStack message={"There something wrong...!"} />
           :

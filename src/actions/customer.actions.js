@@ -36,6 +36,7 @@ import {
     GET_CUSTOMER_BY_ID_ERROR,
 
     UPDATE_NEW_CUSTOMER,
+    UPDATE_CUSTOMER_LOAD_CONDITION,
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -47,7 +48,7 @@ const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=
 //Get All Customer
 export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
     // build the request string
-    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
+    let condition = JSON.stringify(paramCondition ? paramCondition : {});
     const request = `limit=${rowsPerPage}&page=${page}&condition=${condition}`
 
     // options for the fetch request
@@ -436,3 +437,11 @@ export const getCustomerById = (customerId) => {
     }
 }
 
+//update condition to load Customer
+//input: condition ={[name]:value}
+export const updateCustomerLoadCondition=(condition)=>{
+    return{
+        type: UPDATE_CUSTOMER_LOAD_CONDITION,
+        payload:condition
+    }
+}
