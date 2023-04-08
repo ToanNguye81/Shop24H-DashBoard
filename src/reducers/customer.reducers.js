@@ -35,6 +35,8 @@ import {
     GET_CUSTOMER_BY_ID_PENDING,
     GET_CUSTOMER_BY_ID_SUCCESS,
     GET_CUSTOMER_BY_ID_ERROR,
+
+    UPDATE_NEW_CUSTOMER,
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -253,6 +255,15 @@ export default function customerReducers(state = initialState, action) {
                 ...state,
                 error: action.payload,
                 getCustomerByIdPending: false
+            }
+
+        case UPDATE_NEW_CUSTOMER:
+            return {
+                ...state,
+                newCustomer: {
+                    ...state.newCustomer,
+                    ...action.payload
+                }
             }
 
         default:

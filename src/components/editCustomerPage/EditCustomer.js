@@ -24,7 +24,9 @@ import {
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required").trim(),
     lastName: Yup.string().required("Last Name is required").trim(),
-    phone: Yup.string().required("Phone is required").matches(/^[0-9]+$/, "Phone number should only contain digits"),
+    phone: Yup.string()
+  .required("Phone is required")
+  .matches(/^[0-9]{10}$/, "Phone number should only contain 10 digits"),
     email: Yup.string().required("Email is required").email("Invalid email").trim(),
     city: Yup.string().required("City is required").trim(),
     country: Yup.string().required("Country is required").trim(),

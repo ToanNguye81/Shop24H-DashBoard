@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import Iconify from '../iconify/Iconify';
-import {Typography,Box, Button, Select, Grid, MenuItem, TextField, DialogTitle, Dialog, Divider, CircularProgress, InputAdornment } from '@mui/material';
-import { useNavigate, useParams } from "react-router-dom";
-import { SnackBarAlert } from "../common/SnackBarAlert";
+import { Typography, Box, Button, Select, Grid, MenuItem, TextField, DialogTitle, Dialog, Divider, CircularProgress, InputAdornment } from '@mui/material';
+import {  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
     loadCities,
     loadCountries,
-    getCustomerById,
-    updateCustomer,
+    updateNewCustomer,
 } from "../../actions/customer.actions";
 
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required").trim(),
     lastName: Yup.string().required("Last Name is required").trim(),
-    phone: Yup.string().required("Phone is required").matches(/^[0-9]+$/, "Phone number should only contain digits"),
+    phone: Yup.string()
+        .required("Phone is required")
+        .matches(/^[0-9]{10}$/, "Phone number should only contain 10 digits"),
     email: Yup.string().required("Email is required").email("Invalid email").trim(),
     city: Yup.string().required("City is required").trim(),
     country: Yup.string().required("Country is required").trim(),
@@ -53,6 +53,11 @@ export const NewCustomer = () => {
         dispatch(loadCities(event.target.value));
     };
 
+    const handleUpdateNewCustomer = (event) => {
+        const { name, value } = event.target;
+        const keyValue = { [name]: value };
+        dispatch(updateNewCustomer(keyValue))
+    }
     return (
         <React.Fragment>
             <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Customer</Button>
@@ -84,6 +89,7 @@ export const NewCustomer = () => {
                                             id="firstName"
                                             name="firstName"
                                             onChange={handleChange}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             error={errors.firstName && touched.firstName}
                                             helperText={touched.firstName && errors.firstName}
                                         />
@@ -96,6 +102,7 @@ export const NewCustomer = () => {
                                             id="lastName"
                                             name="lastName"
                                             onChange={handleChange}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             error={errors.lastName && touched.lastName}
                                             helperText={touched.lastName && errors.lastName}
                                         />
@@ -108,6 +115,7 @@ export const NewCustomer = () => {
                                             id="phone"
                                             name="phone"
                                             onChange={handleChange}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             error={errors.phone && touched.phone}
                                             helperText={touched.phone && errors.phone}
                                         />
@@ -119,6 +127,7 @@ export const NewCustomer = () => {
                                             value={values.email}
                                             id="email"
                                             onChange={handleChange}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             name="email"
                                             error={errors.email && touched.email}
                                             helperText={touched.email && errors.email}
@@ -135,6 +144,7 @@ export const NewCustomer = () => {
                                                 handleCountryChange(e);
                                                 setFieldValue("city", "")
                                             }}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             error={errors.country && touched.country}
                                             helpertext={touched.country && errors.country}
                                             startAdornment={
@@ -158,6 +168,7 @@ export const NewCustomer = () => {
                                             value={values.city}
                                             name="city"
                                             onChange={handleChange}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             error={errors.city && touched.city}
                                             helpertext={touched.city && errors.city}
                                             startAdornment={
@@ -186,6 +197,7 @@ export const NewCustomer = () => {
                                             label="Address * "
                                             size="small"
                                             value={values.address}
+                                            onBlur={(e) => handleUpdateNewCustomer(e)}
                                             id="address"
                                             onChange={handleChange}
                                             name="address"

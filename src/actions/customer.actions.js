@@ -34,6 +34,8 @@ import {
     GET_CUSTOMER_BY_ID_PENDING,
     GET_CUSTOMER_BY_ID_SUCCESS,
     GET_CUSTOMER_BY_ID_ERROR,
+
+    UPDATE_NEW_CUSTOMER,
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -87,6 +89,15 @@ export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
                 error: err
             })
         }
+    }
+}
+
+//Update Value Of New Customer To Reducer
+// input: updateData={[name]:value}
+export const updateNewCustomer=(updatedData)=>{
+    return{
+        type:UPDATE_NEW_CUSTOMER,
+        payload:updatedData
     }
 }
 
