@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Iconify from '../iconify/Iconify';
@@ -16,7 +16,7 @@ const style = {
     transform: 'translate(-50%, -50%)',
     bgcolor: 'background.paper',
     border: '0.1 solid pink',
-    width:"60%",
+    width: "60%",
     boxShadow: 24,
     p: 4,
 };
@@ -40,14 +40,13 @@ export const NewOrderDetail = () => {
     return (
         <React.Fragment>
             <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Order Detail</Button>
-            <Modal
-                keepMounted
+            <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
+                aria-labelledby="dialog-title"
+                aria-describedby="dialog-description"
             >
-                <Box sx={style}>
+                <Box>
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
                         New Order Detail
                     </Typography>
@@ -55,7 +54,7 @@ export const NewOrderDetail = () => {
                         <Box component="form" noValidate onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
-                                    <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name"/>
+                                    <TextField size="small" name="firstName" required fullWidth id="firstName" label="First Name" />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
                                     <TextField size="small" required fullWidth id="lastName" label="Last Name" name="lastName" />
@@ -82,7 +81,7 @@ export const NewOrderDetail = () => {
                         </Box>
                     </Box>
                 </Box>
-            </Modal>
+            </Dialog>
         </React.Fragment>
     );
 }

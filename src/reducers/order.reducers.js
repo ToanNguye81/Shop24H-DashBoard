@@ -40,7 +40,7 @@ const initialState = {
     currentPage: 1,
     orderCondition: "",
 
-    //Modal Delete Order
+    // Delete Order
     deleteOrderPending: false,
 
     //Add To Cart

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+
 import Button from '@mui/material/Button';
 import Iconify from '../iconify/Iconify';
-import { IconButton,Grid } from '@mui/material';
+import { IconButton, Grid, Dialog, DialogContent, DialogTitle } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteOrder } from '../../actions/order.actions';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -46,47 +46,49 @@ export const DeleteOrder = ({ idValue }) => {
             <IconButton sx={{ color: 'error.main' }} onClick={handleOpen}>
                 <Iconify icon={'eva:trash-2-outline'} />
             </IconButton>
-            <Modal
-                keepMounted
+            <Dialog
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
+                aria-labelledby="dialog-title"
+                aria-describedby="dialog-description"
             >
-                <Box sx={style}>
-                    <Grid
-                        container
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                    >
-                        <Grid item>
-                            <HighlightOffIcon sx={{ fontSize: 80, color: "#FF4842" }} />
-                        </Grid>
-                        <Grid item sx={{ color: "#FF4842" }} align="center">
-                            <h3>Are you sure want to delete this order?</h3>
-                            <h3>Order's Id = {idValue}</h3>
-                        </Grid>
-                    </Grid>
-
-                    <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
-                        <Box component="form" noValidate onSubmit={handleSubmit}>
-                            <Grid container justifyContent="flex-end" spacing={2}>
-                                <Grid item>
-                                    <Button variant="contained" onClick={handleDeleteOrder}>
-                                        Delete
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button onClick={handleClose} variant="contained" color='warning'>
-                                        Cancel
-                                    </Button>
-                                </Grid>
+                <DialogTitle id="dialog-title">Delete Order</DialogTitle>
+                <DialogContent>
+                    <Box >
+                        <Grid
+                            container
+                            direction="column"
+                            justifyContent="center"
+                            alignItems="center"
+                        >
+                            <Grid item>
+                                <HighlightOffIcon sx={{ fontSize: 80, color: "#FF4842" }} />
                             </Grid>
+                            <Grid item sx={{ color: "#FF4842" }} align="center">
+                                <h3>Are you sure want to delete this order?</h3>
+                                <h3>Order's Id = {idValue}</h3>
+                            </Grid>
+                        </Grid>
+
+                        <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }} >
+                            <Box component="form" noValidate onSubmit={handleSubmit}>
+                                <Grid container justifyContent="flex-end" spacing={2}>
+                                    <Grid item>
+                                        <Button variant="contained" onClick={handleDeleteOrder}>
+                                            Delete
+                                        </Button>
+                                    </Grid>
+                                    <Grid item>
+                                        <Button onClick={handleClose} variant="contained" color='warning'>
+                                            Cancel
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </Box>
                         </Box>
                     </Box>
-                </Box>
-            </Modal>
+                </DialogContent>
+            </Dialog>
         </React.Fragment>
     );
 }

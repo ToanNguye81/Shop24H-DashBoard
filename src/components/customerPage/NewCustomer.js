@@ -28,7 +28,6 @@ export const NewCustomer = () => {
     const [open, setOpen] = useState(false)
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
-    const navigate = useNavigate();
     const {
         countryOptions,
         loadCityOptionsPending,

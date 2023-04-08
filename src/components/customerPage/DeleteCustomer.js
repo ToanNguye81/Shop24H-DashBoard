@@ -43,7 +43,7 @@ export const DeleteCustomer = ({ idValue }) => {
                         </Grid>
                         <Grid item sx={{ color: "#FF4842" }} align="center">
                             <h3>Are you sure want to delete this customer?</h3>
-                            <Typography component="h3">Customer's Id = {idValue}</Typography>
+                            <h4>Customer's Id = {idValue}</h4>
                         </Grid>
                     </Grid>
 

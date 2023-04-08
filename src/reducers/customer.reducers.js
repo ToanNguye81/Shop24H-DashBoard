@@ -54,7 +54,7 @@ const initialState = {
     cityOptions: [],
     loadCityOptionsPending: false,
 
-    //Modal create new customer
+    // create new customer
     createCustomerPending: false,
     country: "",
     city: "",
@@ -77,10 +77,10 @@ const initialState = {
     },
 
 
-    //Modal update customer
+    // update customer
     updateCustomerPending: false,
 
-    //Modal Delete Customer
+    // Delete Customer
     deleteCustomerPending: false,
 
     //Customer detail
@@ -162,7 +162,7 @@ export default function customerReducers(state = initialState, action) {
                 error: action.error,
             };
 
-        //Modal component select
+        // component select
         case LOAD_COUNTRY_PENDING:
             return {
                 ...state,

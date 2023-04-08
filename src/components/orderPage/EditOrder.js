@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Iconify from '../iconify/Iconify';
@@ -57,14 +57,15 @@ export const EditOrder = ({ paramOrder }) => {
     return (
         <React.Fragment>
            
-            <Modal
-                keepMounted
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
-            >
-                <Box sx={style}>
+           <Dialog
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-description"
+>
+ <DialogTitle id="dialog-title">Edit Order</DialogTitle>
+  <DialogContent>
+                <Box >
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2" >
                         Edit Order
                     </Typography>
@@ -105,7 +106,8 @@ export const EditOrder = ({ paramOrder }) => {
                         </Box>
                     </Box>
                 </Box>
-            </Modal>
+                </DialogContent>
+            </Dialog>
         </React.Fragment>
     );
 }

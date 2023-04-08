@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import Button from '@mui/material/Button';
 import Iconify from '../iconify/Iconify';
 import { IconButton,Grid } from '@mui/material';
@@ -46,14 +46,15 @@ export const DeleteProduct = ({ productId }) => {
             <IconButton sx={{ color: 'error.main' }} onClick={handleOpen}>
                 <Iconify icon={'eva:trash-2-outline'} />
             </IconButton>
-            <Modal
-                keepMounted
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="keep-mounted-modal-title"
-                aria-describedby="keep-mounted-modal-description"
-            >
-                <Box sx={style}>
+           <Dialog
+  open={open}
+  onClose={handleClose}
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-description"
+>
+ <DialogTitle id="dialog-title">Delete Product</DialogTitle>
+  <DialogContent>
+                <Box>
                     <Grid
                         container
                         direction="column"
@@ -86,7 +87,8 @@ export const DeleteProduct = ({ productId }) => {
                         </Box>
                     </Box>
                 </Box>
-            </Modal>
+                </DialogContent>
+            </Dialog>
         </React.Fragment>
     );
 }

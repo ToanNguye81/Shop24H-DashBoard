@@ -25,10 +25,10 @@ const initialState = {
     error: null,
     currentPage: 1,
 
-    //Modal update orderDetail
+    // update orderDetail
     updateOrderDetailPending: false,
 
-    //Modal Delete OrderDetail
+    // Delete OrderDetail
     deleteOrderDetailPending: false,
      
     //Create OrderDetail
