@@ -103,18 +103,6 @@ export default function orderReducers(state = initialState, action) {
             state.error = action.error
             break;
 
-        // //Update Order
-        // case UPDATE_ORDER_PENDING:
-        //     state.updateOrderPending = true
-        //     break;
-        // case UPDATE_ORDER_SUCCESS:
-        //     state.updateOrderPending = false
-            
-        //     break;
-        // case UPDATE_ORDER_ERROR:
-        //     state.error = action.error
-        //     break;
-
         case UPDATE_ORDER_BY_ID_PENDING:
             state.updateOrderPending = true
             break;
