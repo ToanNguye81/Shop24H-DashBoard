@@ -17,12 +17,17 @@ export const SearchBar = () => {
 
     const dispatch = useDispatch()
     const { customerLoadCondition } = useSelector(reduxData => reduxData.customerReducers)
-    const [key, setKey] = useState(Object.keys(customerLoadCondition) || "")
-    const [value, setValue] = useState(Object.values(customerLoadCondition) || "")
+    const [key, setKey] = useState(Object.keys(customerLoadCondition))
+    const [value, setValue] = useState(Object.values(customerLoadCondition)[0])
     const handleClickFind = () => {
         console.log(value)
-        if (!value) {
-            dispatch(updateCustomerLoadCondition({ [key]: value }))
+        if (!value.trim()) {
+            setKey("all")
+            setValue("")
+            dispatch(updateCustomerLoadCondition({ all: "all" }))
+        }
+        else {
+            dispatch(updateCustomerLoadCondition({ [key]: value.trim() }))
         }
     }
 
@@ -36,7 +41,7 @@ export const SearchBar = () => {
                 </Select>
             </Grid>
             <Grid item xs={8} sm={8} md={8} >
-                <TextField fullWidth type="text" size="small" label={"Find customer with " + key} name={key} value={value} onChange={(e) => setValue(e.target.value)} />
+                <TextField fullWidth type="text" size="small" label={"Find customer with " + key} value={value} onChange={(e) => setValue(e.target.value)} />
             </Grid>
             <Grid item xs={12} sm={4} md={2}>
                 <Button variant="contained" sx={{ p: 1 }} fullWidth onClick={handleClickFind}>Find</Button>

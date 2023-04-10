@@ -48,7 +48,7 @@ const initialState = {
     error: null,
     currentPage: 1,
     orders: [],
-    customerLoadCondition: {},
+    customerLoadCondition: {all:"all"},
 
     //generation
     countryOptions: [],
@@ -268,6 +268,7 @@ export default function customerReducers(state = initialState, action) {
                 }
             }
         case UPDATE_CUSTOMER_LOAD_CONDITION:
+            console.log(action.payload)
             return {
                 ...state,
                 customerLoadCondition: action.payload
