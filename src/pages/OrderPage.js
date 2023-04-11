@@ -10,19 +10,20 @@ import { OrderTable } from "../components/orderPage/OrderTable"
 import { NewOrder } from "../components/orderPage/NewOrder"
 import { useParams } from "react-router-dom"
 import { ErrorStack } from "../components/common/ErrorStack"
+import { OrderSearchBar } from "../components/orderPage/OrderSearchBar"
 
 export const OrderPage = () => {
-  const { orders, pending, totalOrder, error } = useSelector((reduxData) => reduxData.orderReducers);
+  const { orders, pending, totalOrder, error, searchQuery } = useSelector((reduxData) => reduxData.orderReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
   const { customerId } = useParams()
 
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [limit, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    customerId ? dispatch(getAllOrderOfCustomer(rowsPerPage, page, "", customerId)) : dispatch(getAllOrder(rowsPerPage, page));
-  }, [rowsPerPage, page, role, customerId]);
+    customerId ? dispatch(getAllOrderOfCustomer({ limit, page, searchQuery, customerId })) : dispatch(getAllOrder({ limit, page, searchQuery }));
+  }, [limit, page, role, customerId, searchQuery]);
 
 
   const handleChangeRowsPerPage = (event) => {
@@ -46,16 +47,18 @@ export const OrderPage = () => {
           </Typography>
           <NewOrder />
         </Stack>
+        <OrderSearchBar />
         {error ?
           <ErrorStack message="You do not have permission to access this data" />
           :
           <Card>
+            <></>
             <OrderTable orders={orders} pending={pending} totalOrder={totalOrder} />
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
               count={totalOrder}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={limit}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}

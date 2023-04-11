@@ -36,7 +36,7 @@ import {
     GET_CUSTOMER_BY_ID_ERROR,
 
     UPDATE_NEW_CUSTOMER,
-    UPDATE_CUSTOMER_LOAD_CONDITION,
+    UPDATE_CUSTOMER_SEARCH_QUERY,
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -46,10 +46,9 @@ const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
 const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
 
 //Get All Customer
-export const getAllCustomer = (rowsPerPage, page, paramCondition) => {
+export const getAllCustomer = (rowsPerPage, page, searchQuery) => {
     // build the request string
-    let condition = JSON.stringify(paramCondition ? paramCondition : {});
-    const request = `limit=${rowsPerPage}&page=${page}&condition=${condition}`
+    const request = `limit=${rowsPerPage}&page=${page}&searchQuery=${searchQuery}`
 
     // options for the fetch request
     const requestOptions = {
@@ -437,11 +436,11 @@ export const getCustomerById = (customerId) => {
     }
 }
 
-//update condition to load Customer
-//input: condition ={[name]:value}
-export const updateCustomerLoadCondition=(condition)=>{
+//update searchQuey to load Customer
+//input: searchQuey ="string"
+export const updateCustomerSearchQuery=(searchQuey)=>{
     return{
-        type: UPDATE_CUSTOMER_LOAD_CONDITION,
-        payload:condition
+        type: UPDATE_CUSTOMER_SEARCH_QUERY,
+        payload:searchQuey
     }
 }

@@ -28,7 +28,9 @@ import {
     ADD_FIRST_PRODUCT,
     ADD_NEW_PRODUCT,
     DECREASE_QUANTITY,
-    INCREASE_QUANTITY
+    INCREASE_QUANTITY,
+
+    UPDATE_ORDER_SEARCH_QUERY
 } from "../constants/order.constants";
 
 const initialState = {
@@ -38,7 +40,7 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
-    orderCondition: "",
+    searchQuery: "",
 
     // Delete Order
     deleteOrderPending: false,
@@ -64,96 +66,139 @@ export default function orderReducers(state = initialState, action) {
     switch (action.type) {
         //Load Order
         case LOAD_ORDERS_PENDING:
-            state.pending = true;
-            break;
+            return {
+                ...state,
+                pending: true
+            };
         case LOAD_ORDERS_SUCCESS:
-            state.pending = false;
-            state.totalOrder = action.totalOrder;
-            state.orders = action.orders;
-            state.error = null;
-            break;
+            return {
+                ...state,
+                pending: false,
+                totalOrder: action.totalOrder,
+                orders: action.orders,
+                error: null
+            };
         case LOAD_ORDERS_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error
+            };
 
         //Get product By Id
         case GET_ORDER_BY_ID_PENDING:
-            state.getOrderByIdPending = true
-            break;
+            return {
+                ...state,
+                getOrderByIdPending: true
+            };
         case GET_ORDER_BY_ID_SUCCESS:
-            state.getOrderByIdPending = false;
-            state.orderById = action.orderById
-            state.error = null
-            break;
+            return {
+                ...state,
+                getOrderByIdPending: false,
+                orderById: action.orderById,
+                error: null
+            };
         case GET_ORDER_BY_ID_ERROR:
-            state.error = action.error
-            break;
-        case GET_ORDER_NOTE: 
-            state.note=action.note
-            break;
+            return {
+                ...state,
+                error: action.error
+            };
+        case GET_ORDER_NOTE:
+            return {
+                ...state,
+                note: action.note
+            };
         //Create Order
         case CREATE_ORDER_PENDING:
-            state.createOrderPending = true
-            break;
+            return {
+                ...state,
+                createOrderPending: true
+            };
         case CREATE_ORDER_SUCCESS:
-            state.createOrderPending = false
-            state.orderId = action.data._id
-            break;
+            return {
+                ...state,
+                createOrderPending: false,
+                orderId: action.data._id
+            };
         case CREATE_ORDER_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error
+            };
 
         case UPDATE_ORDER_BY_ID_PENDING:
-            state.updateOrderPending = true
-            break;
+            return {
+                ...state,
+                updateOrderPending: true
+            };
         case UPDATE_ORDER_BY_ID_SUCCESS:
-            state.updateOrderPending = false
-            state.updateStatus = "success"
-            break;
+            return {
+                ...state,
+                updateOrderPending: false,
+                updateStatus: "success"
+            };
         case UPDATE_ORDER_BY_ID_ERROR:
-            state.updateOrderPending = false
-            state.updateStatus = "error"
-            break;
+            return {
+                ...state,
+                updateOrderPending: false,
+                updateStatus: "error"
+            };
 
         //Delete Order
         case DELETE_ORDER_PENDING:
-            state.deleteOrderPending = true
-            break;
+            return {
+                ...state,
+                deleteOrderPending: true
+            };
         case DELETE_ORDER_SUCCESS:
-            state.deleteOrderPending = false
-            break;
+            return {
+                ...state,
+                deleteOrderPending: false
+            };
         case DELETE_ORDER_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error
+            };
 
         //Load Cities List
         case LOAD_CITY_PENDING:
-            state.loadCitiesPending = true
-            break;
+            return {
+                ...state,
+                loadCitiesPending: true
+            };
         case LOAD_CITY_SUCCESS:
-            state.loadCitiesPending = false
-            state.cityOptions = action.cityOptions
-            break;
+            return {
+                ...state,
+                loadCitiesPending: false,
+                cityOptions: action.cityOptions
+            };
         case LOAD_CITY_ERROR:
-            break;
+            return state;
 
         //Add To Cart
         case ADD_FIRST_PRODUCT:
-            state.cart = [{ product: action.product, quantity: action.quantity }]
+            state.cart = [{ product: action.product, quantity: action.quantity }];
             break;
         case ADD_NEW_PRODUCT:
-            state.cart.push({ product: action.product, quantity: action.quantity })
+            state.cart.push({ product: action.product, quantity: action.quantity });
             break;
         case INCREASE_QUANTITY:
-            state.cart[action.index].quantity++
+            state.cart[action.index].quantity++;
             break;
         case DECREASE_QUANTITY:
             if (state.cart[action.index].quantity <= 1) {
-                state.cart.splice(action.index, 1)
+                state.cart.splice(action.index, 1);
             } else {
-                state.cart[action.index].quantity--
+                state.cart[action.index].quantity--;
             }
             break;
+
+        case UPDATE_ORDER_SEARCH_QUERY:
+            console.log(action.payload)
+            return {
+                ...state,
+                searchQuery: action.payload
+            };
         default:
             break;
     }

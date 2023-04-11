@@ -7,10 +7,10 @@ import { getAllCustomer } from "../actions/customer.actions"
 import { CustomerTable } from "../components/customerPage/CustomerTable"
 import { ErrorStack } from "../components/common/ErrorStack"
 import { NewCustomer } from "../components/customerPage/NewCustomer"
-import { SearchBar } from "../components/customerPage/SearchBar"
+import { CustomerSearchBar } from "../components/customerPage/CustomerSearchBar"
 
 export const CustomerPage = () => {
-  const { customers, pending, totalCustomer,customerLoadCondition } = useSelector((reduxData) => reduxData.customerReducers);
+  const { customers, pending, totalCustomer,searchQuery } = useSelector((reduxData) => reduxData.customerReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
 
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ export const CustomerPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    dispatch(getAllCustomer(rowsPerPage, page,customerLoadCondition));
-  }, [rowsPerPage, page, role,customerLoadCondition]);
+    dispatch(getAllCustomer(rowsPerPage, page,searchQuery));
+  }, [rowsPerPage, page, role,searchQuery]);
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
@@ -42,7 +42,7 @@ export const CustomerPage = () => {
           </Typography>
           <NewCustomer />
         </Stack>
-        <SearchBar />
+        <CustomerSearchBar />
         {!customers ?
           <ErrorStack message={"There something wrong...!"} />
           :

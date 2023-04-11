@@ -37,7 +37,7 @@ import {
     GET_CUSTOMER_BY_ID_ERROR,
 
     UPDATE_NEW_CUSTOMER,
-    UPDATE_CUSTOMER_LOAD_CONDITION
+    UPDATE_CUSTOMER_SEARCH_QUERY
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -48,7 +48,7 @@ const initialState = {
     error: null,
     currentPage: 1,
     orders: [],
-    customerLoadCondition: {all:"all"},
+    searchQuery: "",
 
     //generation
     countryOptions: [],
@@ -267,11 +267,11 @@ export default function customerReducers(state = initialState, action) {
                     ...action.payload
                 }
             }
-        case UPDATE_CUSTOMER_LOAD_CONDITION:
+        case UPDATE_CUSTOMER_SEARCH_QUERY:
             console.log(action.payload)
             return {
                 ...state,
-                customerLoadCondition: action.payload
+            searchQuery: action.payload
             }
         default:
             return state;

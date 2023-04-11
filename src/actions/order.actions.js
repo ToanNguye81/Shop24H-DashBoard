@@ -24,16 +24,17 @@ import {
     ADD_NEW_PRODUCT,
     ADD_FIRST_PRODUCT,
 
-    GET_ORDER_NOTE
+    GET_ORDER_NOTE,
+    UPDATE_ORDER_SEARCH_QUERY
 } from "../constants/order.constants";
 
 const gORDER_API_URL = '//localhost:8000/orders';
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
 
-export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
+export const getAllOrder = ({ limit, page, searchQuery }) => {
+    console.log({limit, page,searchQuery})
     // build the request string
-    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
-    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
+    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}`
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -76,10 +77,9 @@ export const getAllOrder = (paramLimit, paramPage, paramCondition) => {
     }
 }
 
-export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, customerId) => {
+export const getAllOrderOfCustomer = (limit, page, searchQuery, customerId) => {
     // build the request string
-    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
-    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
+    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}`
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -119,7 +119,7 @@ export const getAllOrderOfCustomer = (paramLimit, paramPage, paramCondition, cus
 }
 
 //Create new order
-export const createNewOrder = (customerId,note) => {
+export const createNewOrder = (customerId, note) => {
     // if (isValid) {
     return async (dispatch) => {
         const requestOptions = {
@@ -127,7 +127,7 @@ export const createNewOrder = (customerId,note) => {
             headers: {
                 "Content-Type": 'application/json',
             },
-            body: JSON.stringify({note:note}),
+            body: JSON.stringify({ note: note }),
         };
 
         await dispatch({
@@ -157,8 +157,8 @@ export const createNewOrder = (customerId,note) => {
     }
 }
 
-export const getOrderNote=(note)=>{
-    return({
+export const getOrderNote = (note) => {
+    return ({
         type: GET_ORDER_NOTE,
         note: note
     })
@@ -317,5 +317,14 @@ export const addToCart = (cart, product) => {
         type: ADD_NEW_PRODUCT,
         product: product,
         quantity: 1,
+    }
+}
+
+//update searchQuery to load Order
+//input: searchQuery ="string"
+export const updateOrderSearchQuery = (searchQuery) => {
+    return {
+        type: UPDATE_ORDER_SEARCH_QUERY,
+        payload: searchQuery
     }
 }
