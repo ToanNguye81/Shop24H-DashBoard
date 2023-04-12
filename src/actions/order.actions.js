@@ -77,7 +77,8 @@ export const getAllOrder = ({ limit, page, searchQuery }) => {
     }
 }
 
-export const getAllOrderOfCustomer = (limit, page, searchQuery, customerId) => {
+export const getAllOrderOfCustomer = ({limit, page, searchQuery, customerId}) => {
+    console.log({limit,page,searchQuery})
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}`
     // options for the fetch request
