@@ -41,6 +41,8 @@ const initialState = {
     error: null,
     currentPage: 1,
     searchQuery: "",
+    sortBy:"",
+    sortOrder:"",
 
     // Delete Order
     deleteOrderPending: false,

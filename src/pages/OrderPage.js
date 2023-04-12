@@ -52,7 +52,6 @@ export const OrderPage = () => {
           <ErrorStack message="You do not have permission to access this data" />
           :
           <Card>
-            <></>
             <OrderTable orders={orders} pending={pending} totalOrder={totalOrder} />
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
