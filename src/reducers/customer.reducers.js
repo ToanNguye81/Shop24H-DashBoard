@@ -49,6 +49,8 @@ const initialState = {
     currentPage: 1,
     orders: [],
     searchQuery: "",
+    sortBy:"",
+    sortOrder:"",
 
     //generation
     countryOptions: [],
