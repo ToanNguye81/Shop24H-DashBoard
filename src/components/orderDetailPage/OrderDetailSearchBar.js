@@ -5,11 +5,11 @@ import { Sort } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 // component
 import { Grid, TextField } from "@mui/material"
-import { setSortBy, setSortOrder, updateOrderSearchQuery } from "../../actions/order.actions"
+import { setSortBy, setSortOrder, updateOrderDetailSearchQuery } from "../../actions/orderDetail.actions"
 
 const SORT_BY_OPTIONS = [
   { value: 'shippedDate', label: 'Shipped' },
-  { value: 'orderDate', label: 'Order' },
+  { value: 'orderDetailDate', label: 'Order' },
 ];
 
 const SORT_ORDER_OPTIONS = [
@@ -18,10 +18,10 @@ const SORT_ORDER_OPTIONS = [
 ];
 
 
-export const OrderSearchBar = () => {
+export const OrderDetailSearchBar = () => {
   const [open, setOpen] = useState(null);
   const dispatch = useDispatch()
-  const { searchQuery, sortBy, sortOrder } = useSelector(reduxData => reduxData.orderReducers)
+  const { searchQuery, sortBy, sortOrder } = useSelector(reduxData => reduxData.orderDetailReducers)
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -40,7 +40,7 @@ export const OrderSearchBar = () => {
     dispatch(setSortOrder(sortOrder))
   }
   const handleChangeSearchQuery = (searchQuery) => {
-    dispatch(updateOrderSearchQuery(searchQuery))
+    dispatch(updateOrderDetailSearchQuery(searchQuery))
   }
 
   return (

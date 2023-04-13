@@ -15,16 +15,19 @@ import {
     DELETE_ORDER_DETAIL_SUCCESS,
     DELETE_ORDER_DETAIL_ERROR,
 
+    SET_SORT_BY,
+SET_SORT_ORDER,
+UPDATE_ORDER_DETAIL_SEARCH_QUERY
+
 } from "../constants/orderDetail.constants";
 
 const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
 const gORDERS_API_URL = '//localhost:8000/orders';
 
 
-export const getAllOrderDetail = (paramLimit, paramPage, paramCondition) => {
+export const getAllOrderDetail = ({limit, page, searchQuery,sortBy,sortOrder}) => {
     // build the request string
-    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
-    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
+    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
     // options for the fetch request
     const requestOptions = {
@@ -236,10 +239,9 @@ export const validatePhone = (paramPhone) => {
     }
 }
 
-export const getAllOrderDetailOfOrder = (paramLimit, paramPage, paramCondition, orderId) => {
+export const getAllOrderDetailOfOrder = ({limit, page, searchQuery,sortBy,sortOrder, orderId}) => {
     // build the request string
-    let condition = encodeURIComponent(JSON.stringify(paramCondition ? paramCondition : {}));
-    const request = `limit=${paramLimit}&page=${paramPage}&condition=${condition}`
+    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
   
     // options for the fetch request
@@ -282,5 +284,26 @@ export const getAllOrderDetailOfOrder = (paramLimit, paramPage, paramCondition, 
                 error: err
             })
         }
+    }
+}
+
+//Set sort By
+export const setSortBy = (sortBy) => {
+    return {
+        type: SET_SORT_BY,
+        payload: sortBy
+    }
+}
+//Set sort By
+export const setSortOrder = (sortOrder) => {
+    return {
+        type: SET_SORT_ORDER,
+        payload: sortOrder
+    }
+}
+ export const updateOrderDetailSearchQuery = (searchQuey) => {
+    return {
+        type: UPDATE_ORDER_DETAIL_SEARCH_QUERY,
+        payload: searchQuey
     }
 }

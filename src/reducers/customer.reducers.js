@@ -290,6 +290,6 @@ export default function customerReducers(state = initialState, action) {
                 sortBy: action.payload
             }
         default:
-            return state;
+            return { ...state };
     }
 }

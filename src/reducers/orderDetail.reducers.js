@@ -15,7 +15,10 @@ import {
     DELETE_ORDER_DETAIL_SUCCESS,
     DELETE_ORDER_DETAIL_ERROR,
 
-} from "../constants/orderDetail.constants";
+    SET_SORT_BY,
+    SET_SORT_ORDER,
+    UPDATE_ORDER_DETAIL_SEARCH_QUERY,
+} from "../constants/orderDetail.constants"
 
 const initialState = {
     //Load orderDetail
@@ -24,15 +27,18 @@ const initialState = {
     pending: false,
     error: null,
     currentPage: 1,
+    sortBy: "",
+    sortOrder: "",
+    searchQuery: "",
 
     // update orderDetail
     updateOrderDetailPending: false,
 
     // Delete OrderDetail
     deleteOrderDetailPending: false,
-     
+
     //Create OrderDetail
-    orderDetailId:null
+    orderDetailId: null
 
 }
 
@@ -40,53 +46,96 @@ export default function orderDetailReducers(state = initialState, action) {
     switch (action.type) {
         //Load OrderDetail
         case LOAD_ORDER_DETAILS_PENDING:
-            state.pending = true;
-            break;
+            return {
+                ...state,
+                pending: true,
+
+            }
         case LOAD_ORDER_DETAILS_SUCCESS:
-            state.pending = false;
-            state.totalOrderDetail = action.totalOrderDetail;
-            state.orderDetails = action.orderDetails;
-            state.error=null;
-            break;
+            return {
+                ...state,
+                pending: false,
+                totalOrderDetail: action.totalOrderDetail,
+                orderDetails: action.orderDetails,
+                error: null,
+
+            }
         case LOAD_ORDER_DETAILS_ERROR:
-            break;
+            return {
+                ...state,
 
-        //Create OrderDetail
+
+                //Create OrderDetail
+            }
         case CREATE_ORDER_DETAIL_PENDING:
-            state.createOrderDetailPending = true
-            break;
+            return {
+                ...state,
+                createOrderDetailPending: true
+
+            }
         case CREATE_ORDER_DETAIL_SUCCESS:
-            state.createOrderDetailPending = false
-            break;
+            return {
+                ...state,
+                createOrderDetailPending: false
+
+            }
         case CREATE_ORDER_DETAIL_ERROR:
-            state.error = action.error
-            break;
+            return {
+                ...state,
+                error: action.error
 
-        //Update OrderDetail
+
+                //Update OrderDetail
+            }
         case UPDATE_ORDER_DETAIL_PENDING:
-            state.updateOrderDetailPending = true
-            break;
-        case UPDATE_ORDER_DETAIL_SUCCESS:
-            state.updateOrderDetailPending = false
-            state.orderDetailId=action.data._id
-            break;
-        case UPDATE_ORDER_DETAIL_ERROR:
-            break;
+            return {
+                ...state,
+                updateOrderDetailPending: true
 
+            }
+        case UPDATE_ORDER_DETAIL_SUCCESS:
+            return {
+                ...state,
+                updateOrderDetailPending: false,
+                orderDetailId: action.data._id
+            }
+        case UPDATE_ORDER_DETAIL_ERROR:
+            return {
+                ...state,
+            }
         //Delete OrderDetail
         case DELETE_ORDER_DETAIL_PENDING:
-            state.deleteOrderDetailPending = true
-            break;
+            return {
+                ...state,
+                deleteOrderDetailPending: true
+            }
         case DELETE_ORDER_DETAIL_SUCCESS:
-            state.deleteOrderDetailPending = false
-            break;
+            return {
+                ...state,
+                deleteOrderDetailPending: false
+            }
         case DELETE_ORDER_DETAIL_ERROR:
-            state.error = action.error
-            break;
-
+            return {
+                ...state,
+                error: action.error
+            }
+        case SET_SORT_BY:
+            return {
+                ...state,
+                sortBy: action.payload
+            }
+        case SET_SORT_ORDER:
+            return {
+                ...state,
+                sortOrder: action.payload
+            }
+        case UPDATE_ORDER_DETAIL_SEARCH_QUERY:
+            return {
+                ...state,
+                searchQuery: action.payload
+            }
         default:
-            break;
+            return state;
     }
-    return { ...state };
 }
 

@@ -7,20 +7,21 @@ import { OrderDetailTable } from "../components/orderDetailPage/OrderDetailTable
 import { useParams } from "react-router-dom"
 import { getAllOrderDetail, getAllOrderDetailOfOrder } from "../actions/orderDetail.actions"
 import { ErrorStack } from "../components/common/ErrorStack"
+import { OrderDetailSearchBar } from "../components/orderDetailPage/OrderDetailSearchBar"
 
 export const OrderDetailPage = () => {
-  const { orderDetails, pending, totalOrderDetail, error } = useSelector((reduxData) => reduxData.orderDetailReducers);
+  const { orderDetails, pending, totalOrderDetail, error, searchQuery, sortBy, sortOrder } = useSelector((reduxData) => reduxData.orderDetailReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
   const { orderId } = useParams()
 
   const dispatch = useDispatch();
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  
+  const [limit, setRowsPerPage] = useState(5);
+
   useEffect(() => {
-    orderId ? dispatch(getAllOrderDetailOfOrder(rowsPerPage, page,"", orderId)) : dispatch(getAllOrderDetail(rowsPerPage, page));
-  }, [rowsPerPage, page, role, orderId]);
- 
+    orderId ? dispatch(getAllOrderDetailOfOrder({ limit, page, searchQuery, sortBy, sortOrder, orderId })) : dispatch(getAllOrderDetail({ limit, page, searchQuery, sortBy, sortOrder }));
+  }, [limit, page, role, searchQuery, sortBy, sortOrder, orderId]);
+
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -41,16 +42,17 @@ export const OrderDetailPage = () => {
             {orderId ? `All OrderDetails Of Order: ${orderId}` : 'All OrderDetails'}
           </Typography>
         </Stack>
+        <OrderDetailSearchBar />
         {error ?
-          <ErrorStack message="You do not have permission to access this data"/>
+          <ErrorStack message="You do not have permission to access this data" />
           :
           <Card>
             <OrderDetailTable orderDetails={orderDetails} pending={pending} totalOrderDetail={totalOrderDetail} />
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              limitOptions={[5, 10, 25]}
               component="div"
               count={totalOrderDetail}
-              rowsPerPage={rowsPerPage}
+              limit={limit}
               page={page}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
