@@ -1,19 +1,20 @@
 import React, { useState } from 'react';
 // @mui
-import { Menu, Button, MenuItem, Typography, Divider } from '@mui/material';
+import { Menu, Button, MenuItem, Typography} from '@mui/material';
 import { Sort } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 // component
 import { Grid, TextField } from "@mui/material"
-import { updateOrderSearchQuery } from "../../actions/order.actions"
+import { setSortBy, setSortOrder, updateOrderSearchQuery } from "../../actions/order.actions"
 
 const SORT_BY_OPTIONS = [
-  { value: 'status', label: 'Status' },
+  { value: 'shippedDate', label: 'Shipped' },
+  { value: 'orderDate', label: 'Order' },
 ];
 
 const SORT_ORDER_OPTIONS = [
-  { value: 'asc', label: 'Latest' },
-  { value: 'desc', label: 'Oldest' },
+  { value: 'asc', label: 'Oldest' },
+  { value: 'desc', label: 'Newest' },
 ];
 
 
@@ -29,14 +30,14 @@ export const OrderSearchBar = () => {
   const handleClose = () => {
     setOpen(null);
   };
-  const handleClickSortBy = (sortBy) => {
+  const handleClickSortBy = (sortDate) => {
     setOpen(null)
-    // dispatch(setSortBy(sortBy))
+    dispatch(setSortBy(sortDate))
   }
 
   const handleClickSortOrder = (sortOrder) => {
     setOpen(null)
-    // dispatch(setSortOrder(sortOrder))
+    dispatch(setSortOrder(sortOrder))
   }
   const handleChangeSearchQuery = (searchQuery) => {
     dispatch(updateOrderSearchQuery(searchQuery))
@@ -47,7 +48,7 @@ export const OrderSearchBar = () => {
       direction="row"
       justifyContent="space-between"
       alignItems="center">
-      <Grid item xs={8} sm={9} md={10.5}>
+      <Grid item xs={12} sm={10} md={9}>
         <TextField fullWidth type="text" size="small" label={"Find order .."} value={searchQuery} onChange={(e) => handleChangeSearchQuery(e.target.value)} />
       </Grid>
       <Grid item sx={{width:"auto"}}>
@@ -57,7 +58,7 @@ export const OrderSearchBar = () => {
           onClick={handleOpen}
           endIcon={<Sort />}
         >
-          Sort By:&nbsp;
+          Sort Date:&nbsp;
           <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
             {
               SORT_BY_OPTIONS.map((option, index) => sortBy === option.value ? option.label : null)}

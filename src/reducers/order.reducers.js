@@ -30,7 +30,9 @@ import {
     DECREASE_QUANTITY,
     INCREASE_QUANTITY,
 
-    UPDATE_ORDER_SEARCH_QUERY
+    UPDATE_ORDER_SEARCH_QUERY,
+    SET_SORT_BY,
+    SET_SORT_ORDER,
 } from "../constants/order.constants";
 
 const initialState = {
@@ -41,8 +43,8 @@ const initialState = {
     error: null,
     currentPage: 1,
     searchQuery: "",
-    sortBy:"",
-    sortOrder:"",
+    sortBy: "orderDate",
+    sortOrder: "desc",
 
     // Delete Order
     deleteOrderPending: false,
@@ -161,7 +163,6 @@ export default function orderReducers(state = initialState, action) {
                 ...state,
                 error: action.error
             };
-
         //Load Cities List
         case LOAD_CITY_PENDING:
             return {
@@ -177,6 +178,18 @@ export default function orderReducers(state = initialState, action) {
         case LOAD_CITY_ERROR:
             return state;
 
+        case SET_SORT_ORDER:
+            return {
+                ...state,
+                sortOrder: action.payload
+            };
+
+        case SET_SORT_BY:
+            return {
+                ...state,
+                sortBy: action.payload
+            }
+            
         //Add To Cart
         case ADD_FIRST_PRODUCT:
             state.cart = [{ product: action.product, quantity: action.quantity }];
@@ -201,6 +214,7 @@ export default function orderReducers(state = initialState, action) {
                 ...state,
                 searchQuery: action.payload
             };
+
         default:
             break;
     }

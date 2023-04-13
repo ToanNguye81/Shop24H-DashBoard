@@ -25,16 +25,18 @@ import {
     ADD_FIRST_PRODUCT,
 
     GET_ORDER_NOTE,
-    UPDATE_ORDER_SEARCH_QUERY
+    UPDATE_ORDER_SEARCH_QUERY,
+    SET_SORT_BY,
+    SET_SORT_ORDER,
 } from "../constants/order.constants";
 
 const gORDER_API_URL = '//localhost:8000/orders';
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
 
-export const getAllOrder = ({ limit, page, searchQuery }) => {
-    console.log({limit, page,searchQuery})
+export const getAllOrder = ({ limit, page, searchQuery,sortBy,sortOrder }) => {
+    console.log({ limit, page, searchQuery })
     // build the request string
-    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}`
+    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -77,10 +79,10 @@ export const getAllOrder = ({ limit, page, searchQuery }) => {
     }
 }
 
-export const getAllOrderOfCustomer = ({limit, page, searchQuery, customerId}) => {
-    console.log({limit,page,searchQuery})
+export const getAllOrderOfCustomer = ({ limit, page, searchQuery,sortBy,sortOrder,customerId }) => {
+    console.log({ limit, page, searchQuery,sortBy,sortOrder })
     // build the request string
-    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}`
+    const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
@@ -327,5 +329,20 @@ export const updateOrderSearchQuery = (searchQuery) => {
     return {
         type: UPDATE_ORDER_SEARCH_QUERY,
         payload: searchQuery
+    }
+}
+
+//Set sort By
+export const setSortBy = (sortBy) => {
+    return {
+        type: SET_SORT_BY,
+        payload: sortBy
+    }
+}
+//Set sort By
+export const setSortOrder = (sortOrder) => {
+    return {
+        type: SET_SORT_ORDER,
+        payload: sortOrder
     }
 }

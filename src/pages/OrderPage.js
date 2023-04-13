@@ -13,7 +13,7 @@ import { ErrorStack } from "../components/common/ErrorStack"
 import { OrderSearchBar } from "../components/orderPage/OrderSearchBar"
 
 export const OrderPage = () => {
-  const { orders, pending, totalOrder, error, searchQuery } = useSelector((reduxData) => reduxData.orderReducers);
+  const { orders, pending, totalOrder, error, searchQuery,sortBy,sortOrder } = useSelector((reduxData) => reduxData.orderReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
   const { customerId } = useParams()
 
@@ -22,8 +22,8 @@ export const OrderPage = () => {
   const [limit, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    customerId ? dispatch(getAllOrderOfCustomer({ limit, page, searchQuery, customerId })) : dispatch(getAllOrder({ limit, page, searchQuery }));
-  }, [limit, page, role, customerId, searchQuery]);
+    customerId ? dispatch(getAllOrderOfCustomer({ limit, page, searchQuery, customerId,sortBy,sortOrder })) : dispatch(getAllOrder({ limit, page, searchQuery,sortBy,sortOrder }));
+  }, [limit, page, role, customerId, searchQuery,sortBy,sortOrder]);
 
 
   const handleChangeRowsPerPage = (event) => {
