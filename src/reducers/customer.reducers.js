@@ -37,7 +37,9 @@ import {
     GET_CUSTOMER_BY_ID_ERROR,
 
     UPDATE_NEW_CUSTOMER,
-    UPDATE_CUSTOMER_SEARCH_QUERY
+    UPDATE_CUSTOMER_SEARCH_QUERY,
+    SET_SORT_ORDER,
+    SET_SORT_BY
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -49,8 +51,8 @@ const initialState = {
     currentPage: 1,
     orders: [],
     searchQuery: "",
-    sortBy:"",
-    sortOrder:"",
+    sortBy: "createdAt",
+    sortOrder: "desc",
 
     //generation
     countryOptions: [],
@@ -273,7 +275,19 @@ export default function customerReducers(state = initialState, action) {
             console.log(action.payload)
             return {
                 ...state,
-            searchQuery: action.payload
+                searchQuery: action.payload
+            }
+
+        case SET_SORT_ORDER:
+            return {
+                ...state,
+                sortOrder: action.payload
+            };
+
+        case SET_SORT_BY:
+            return {
+                ...state,
+                sortBy: action.payload
             }
         default:
             return state;

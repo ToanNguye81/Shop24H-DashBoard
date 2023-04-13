@@ -37,6 +37,8 @@ import {
 
     UPDATE_NEW_CUSTOMER,
     UPDATE_CUSTOMER_SEARCH_QUERY,
+    SET_SORT_BY,
+    SET_SORT_ORDER
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -46,9 +48,9 @@ const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
 const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
 
 //Get All Customer
-export const getAllCustomer = (rowsPerPage, page, searchQuery) => {
+export const getAllCustomer = ({rowsPerPage, page, searchQuery,sortBy,sortOrder}) => {
     // build the request string
-    const request = `limit=${rowsPerPage}&page=${page}&searchQuery=${searchQuery}`
+    const request = `limit=${rowsPerPage}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
     // options for the fetch request
     const requestOptions = {
@@ -94,10 +96,10 @@ export const getAllCustomer = (rowsPerPage, page, searchQuery) => {
 
 //Update Value Of New Customer To Reducer
 // input: updateData={[name]:value}
-export const updateNewCustomer=(updatedData)=>{
-    return{
-        type:UPDATE_NEW_CUSTOMER,
-        payload:updatedData
+export const updateNewCustomer = (updatedData) => {
+    return {
+        type: UPDATE_NEW_CUSTOMER,
+        payload: updatedData
     }
 }
 
@@ -438,9 +440,25 @@ export const getCustomerById = (customerId) => {
 
 //update searchQuey to load Customer
 //input: searchQuey ="string"
-export const updateCustomerSearchQuery=(searchQuey)=>{
-    return{
+export const updateCustomerSearchQuery = (searchQuey) => {
+    return {
         type: UPDATE_CUSTOMER_SEARCH_QUERY,
-        payload:searchQuey
+        payload: searchQuey
+    }
+}
+
+//Set sort By
+export const setSortBy = (sortBy) => {
+    return {
+        type: SET_SORT_BY,
+        payload: sortBy
+    }
+}
+
+//Set sort By
+export const setSortOrder = (sortOrder) => {
+    return {
+        type: SET_SORT_ORDER,
+        payload: sortOrder
     }
 }
