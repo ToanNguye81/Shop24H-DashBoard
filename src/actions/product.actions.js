@@ -18,6 +18,17 @@ import {
     UPDATE_PRODUCT_PENDING,
     UPDATE_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_ERROR,
+
+    //Set filter Condition
+    SET_PAGE,
+    SET_SORT_BY,
+    SET_SORT_ORDER,
+    SET_GENDER,
+    SET_BRAND,
+    SET_CATEGORY,
+    SET_MIN_PRICE,
+    SET_MAX_PRICE,
+    RESET_CONDITION
 } from "../constants/product.constants";
 
 const gPRODUCT_API_URL = "//localhost:8000/products"
@@ -256,5 +267,71 @@ export const createNewProduct = (productData) => {
                 error: err
             })
         }
+    }
+}
+
+
+//set Page
+export const setPage = (page) => {
+    return {
+        type: SET_PAGE,
+        payload: page
+    }
+}
+
+//set SortBy
+export const setSortBy = (SortBy) => {
+    return {
+        type: SET_SORT_BY,
+        payload: SortBy
+    }
+}
+//set sortOrder
+export const setSortOrder = (sortOrder) => {
+    return {
+        type: SET_SORT_ORDER,
+        payload: sortOrder
+    }
+}
+//set Gender
+export const setGender = (gender) => {
+    return {
+        type: SET_GENDER,
+        payload: gender
+    }
+}
+//set Brand
+export const setBrand = (brand) => {
+    return {
+        type: SET_BRAND,
+        payload: brand
+    }
+}
+//set Category
+export const setCategory = (category) => {
+    return {
+        type: SET_CATEGORY,
+        payload: category
+    }
+}
+//set MinPrice
+export const setMinPrice = (minPrice) => {
+    return {
+        type: SET_MIN_PRICE,
+        payload: minPrice
+    }
+}
+//set MaxPrice
+export const setMaxPrice = (maxPrice) => {
+    return {
+        type: SET_MAX_PRICE,
+        payload: maxPrice
+    }
+}
+
+//Reset Condition
+export const resetCondition = () => {
+    return {
+        type: RESET_CONDITION,
     }
 }

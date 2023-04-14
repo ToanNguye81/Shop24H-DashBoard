@@ -49,13 +49,13 @@ export const OrderDetailPage = () => {
           <Card>
             <OrderDetailTable orderDetails={orderDetails} pending={pending} totalOrderDetail={totalOrderDetail} />
             <TablePagination
-              limitOptions={[5, 10, 25]}
-              component="div"
-              count={totalOrderDetail}
-              limit={limit}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
+               rowsPerPageOptions={[5, 10, 25]}
+               component="div"
+               count={totalOrderDetail}
+               rowsPerPage={limit}
+               page={page}
+               onPageChange={handleChangePage}
+               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </Card>
         }

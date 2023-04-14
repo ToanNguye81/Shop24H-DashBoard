@@ -1,27 +1,29 @@
 import React, { useState } from 'react';
 // @mui
-import { Menu, Button, MenuItem, Typography} from '@mui/material';
+import { Menu, Button, MenuItem, Typography, Divider } from '@mui/material';
 import { Sort } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
+import { setSortBy, setSortOrder } from '../../../actions/product.actions';
 // component
-import { Grid, TextField } from "@mui/material"
-import { setSortBy, setSortOrder, updateOrderDetailSearchQuery } from "../../actions/orderDetail.actions"
+
+// ----------------------------------------------------------------------
 
 const SORT_BY_OPTIONS = [
-  { value: 'shippedDate', label: 'Shipped' },
-  { value: 'orderDetailDate', label: 'Order' },
+  { value: 'createdAt', label: 'Newest' },
+  { value: 'category', label: 'Category' },
+  { value: 'brand', label: 'Brand' },
+  { value: 'promotionPrice', label: 'Price' },
 ];
 
 const SORT_ORDER_OPTIONS = [
-  { value: 'asc', label: 'Oldest' },
-  { value: 'desc', label: 'Newest' },
+  { value: 'desc', label: 'Low-High' },
+  { value: 'asc', label: 'High-Low' },
 ];
 
-
-export const OrderDetailSearchBar = () => {
+export default function ProductSort() {
   const [open, setOpen] = useState(null);
+  const { sortBy, sortOrder } = useSelector(reduxData => reduxData.productReducers)
   const dispatch = useDispatch()
-  const { searchQuery, sortBy, sortOrder } = useSelector(reduxData => reduxData.orderDetailReducers)
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -30,39 +32,28 @@ export const OrderDetailSearchBar = () => {
   const handleClose = () => {
     setOpen(null);
   };
-  const handleClickSortBy = (sortDate) => {
+  const handleClickSortBy = (sortBy) => {
     setOpen(null)
-    dispatch(setSortBy(sortDate))
-  }
+    dispatch(setSortBy(sortBy))
 
+  }
   const handleClickSortOrder = (sortOrder) => {
     setOpen(null)
     dispatch(setSortOrder(sortOrder))
   }
-  const handleChangeSearchQuery = (searchQuery) => {
-    dispatch(updateOrderDetailSearchQuery(searchQuery))
-  }
 
   return (
-    <Grid item container direction="row" alignItems="center" columnSpacing={1} mb={2} spacing={2} mt={2}>
-      <TextField
-        sx={{ flexGrow: 1 ,ml:1}}
-        type="text"
-        size="small"
-        label={"Find order detail or product .."}
-        value={searchQuery}
-        onChange={(e) => handleChangeSearchQuery(e.target.value)}
-      />
+    <React.Fragment>
       <Button
-        sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}
         color="inherit"
         disableRipple
         onClick={handleOpen}
         endIcon={<Sort />}
       >
-        Sort Date:&nbsp;
+        Sort By:&nbsp;
         <Typography component="span" variant="subtitle2" sx={{ color: 'text.secondary' }}>
-          {SORT_BY_OPTIONS.map((option, index) => sortBy === option.value ? option.label : null)}
+          {
+          SORT_BY_OPTIONS.map((option,index)=>sortBy===option.value?option.label:null)}
         </Typography>
       </Button>
       <Menu
@@ -73,7 +64,7 @@ export const OrderDetailSearchBar = () => {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
-        {SORT_BY_OPTIONS.map((option, index) => (
+        {SORT_BY_OPTIONS.map((option,index) => (
           <MenuItem
             key={option.value}
             selected={option.value === sortBy}
@@ -83,7 +74,7 @@ export const OrderDetailSearchBar = () => {
             {option.label}
           </MenuItem>
         ))}
-        <hr />
+        <hr/>
         {SORT_ORDER_OPTIONS.map((option) => (
           <MenuItem
             key={option.value}
@@ -95,8 +86,6 @@ export const OrderDetailSearchBar = () => {
           </MenuItem>
         ))}
       </Menu>
-    </Grid>
-  )
+    </React.Fragment>
+  );
 }
-
-

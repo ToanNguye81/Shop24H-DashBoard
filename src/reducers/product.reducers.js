@@ -15,6 +15,17 @@ import {
     DELETE_PRODUCT_PENDING,
     DELETE_PRODUCT_SUCCESS,
 
+    //Set Filter Condition
+    SET_PAGE,
+    SET_SORT_BY,
+    SET_SORT_ORDER,
+    SET_GENDER,
+    SET_BRAND,
+    SET_CATEGORY,
+    SET_MIN_PRICE,
+    SET_MAX_PRICE,
+    RESET_CONDITION,
+
 } from "../constants/product.constants";
 
 const initialState = {
@@ -31,7 +42,18 @@ const initialState = {
     //Update Product
     updateProductPending: false,
     updateStatus: null,
-    updateError:null
+    updateError: null,
+
+    //Filter and sort
+    productPerPage: 10,
+    page: 0,
+    sortBy: "",
+    sortOrder: "",
+    gender: [],
+    brand: [],
+    category: [],
+    minPrice: 0,
+    maxPrice: 2000,
 
 }
 
@@ -86,6 +108,56 @@ export default function productReducers(state = initialState, action) {
             state.updateProductPending = false
             state.updateStatus = "error"
             break;
+        case SET_PAGE:
+            console.log(action.payload)
+            return {
+                ...state,
+                page: action.payload
+            };
+        case SET_SORT_BY:
+            return {
+                ...state,
+                sortBy: action.payload
+            }
+        case SET_SORT_ORDER:
+            return {
+                ...state,
+                sortOrder: action.payload
+            }
+        case SET_GENDER:
+            return {
+                ...state,
+                gender: action.payload
+            }
+        case SET_BRAND:
+            return {
+                ...state,
+                brand: action.payload
+            }
+        case SET_CATEGORY:
+            return {
+                ...state,
+                category: action.payload
+            }
+        case SET_MIN_PRICE:
+            return {
+                ...state,
+                minPrice: action.payload
+            }
+        case SET_MAX_PRICE:
+            return {
+                ...state,
+                maxPrice: action.payload
+            }
+        case RESET_CONDITION:
+            return {
+                ...state,
+                gender: [],
+                brand: [],
+                category: [],
+                minPrice: 0,
+                maxPrice: 2000,
+            }
         default:
             break;
     }

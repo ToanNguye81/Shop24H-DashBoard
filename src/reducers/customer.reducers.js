@@ -53,7 +53,10 @@ const initialState = {
     searchQuery: "",
     sortBy: "createdAt",
     sortOrder: "desc",
-
+    brand:"",
+    gender:"",
+    category:"",
+    
     //generation
     countryOptions: [],
     loadCountryOptionsPending: false,

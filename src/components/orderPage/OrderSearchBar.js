@@ -49,7 +49,7 @@ export const OrderSearchBar = () => {
         sx={{ flexGrow: 1 ,ml:1}}
         type="text"
         size="small"
-        label={"Find customer .."}
+        label={"Find Order..."}
         value={searchQuery}
         onChange={(e) => handleChangeSearchQuery(e.target.value)}
       />

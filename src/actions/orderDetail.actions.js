@@ -243,7 +243,6 @@ export const getAllOrderDetailOfOrder = ({limit, page, searchQuery,sortBy,sortOr
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
-  
     // options for the fetch request
     const requestOptions = {
         method: 'GET',
