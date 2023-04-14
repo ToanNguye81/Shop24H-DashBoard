@@ -16,8 +16,8 @@ const SORT_BY_OPTIONS = [
 ];
 
 const SORT_ORDER_OPTIONS = [
-  { value: 'desc', label: 'Low-High' },
-  { value: 'asc', label: 'High-Low' },
+  { value: 'asc', label: 'Low-High' },
+  { value: 'desc', label: 'High-Low' },
 ];
 
 export default function ProductSort() {

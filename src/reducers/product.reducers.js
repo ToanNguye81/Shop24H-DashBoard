@@ -33,7 +33,6 @@ const initialState = {
     products: [],
     pending: false,
     error: null,
-    currentPage: 1,
 
     //Product detail
     productById: {},
@@ -45,7 +44,7 @@ const initialState = {
     updateError: null,
 
     //Filter and sort
-    productPerPage: 10,
+    productPerPage: 5,
     page: 0,
     sortBy: "",
     sortOrder: "",
@@ -54,7 +53,6 @@ const initialState = {
     category: [],
     minPrice: 0,
     maxPrice: 2000,
-
 }
 
 export default function productReducers(state = initialState, action) {
