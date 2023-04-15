@@ -72,7 +72,6 @@ export const AddToCart = () => {
           />
           <ProductSort />
         </Grid>
-        {/* </Grid> */}
 
         {/* Result Table  */}
         <Grid container
