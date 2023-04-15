@@ -19,15 +19,21 @@ const TABLE_HEAD = [
 export const Detail = () => {
 
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
+  // const [page, setPage] = useState(0);
+  // const [rowsPerPage, setRowsPerPage] = useState(5);
+  // const { pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
   const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
+  const { products, pending, totalProduct, error, category,
+    productPerPage, page, sortBy, sortOrder, gender, brand, minPrice, maxPrice } = useSelector((reduxData) => reduxData.productReducers);
 
 
+
+  // useEffect(() => {
+  //   dispatch(getAllProduct(rowsPerPage, page));
+  // }, [rowsPerPage, page]);
   useEffect(() => {
-    dispatch(getAllProduct(rowsPerPage, page));
-  }, [rowsPerPage, page]);
+    dispatch(getAllProduct({ productPerPage, page, sortBy, sortOrder, gender, brand, minPrice, maxPrice, category }))
+  }, [page, sortBy, sortOrder, gender, brand, minPrice, maxPrice, category]);
 
 
   const handleClickIncrease = (index) => {
@@ -70,36 +76,36 @@ export const Detail = () => {
                   <TableBody>
                     {cart ? cart.map((element, index) => {
                       return (
-                          <TableRow key={index}>
-                            <TableCell>
-                              <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
-                                <img src={element.product.imageUrl} />
-                              </Grid>
-                            </TableCell>
-                            <TableCell>{element.product.name}</TableCell>
-                            <TableCell>{element.product.promotionPrice}</TableCell>
-                            <TableCell>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                <Box sx={{ border: "0.2px solid #EDEFF1" }}>
-                                  <IconButton size="sm" variant="outlined" onClick={() => handleClickDecrease(index)} >
-                                    <Remove />
-                                  </IconButton>
-                                </Box>
-                                <Typography textcolor="text.secondary">
-                                  {element.quantity}
-                                </Typography>
-                                <Box sx={{ border: "0.2px solid #EDEFF1" }}>
-                                  <IconButton size="sm" variant="outlined" onClick={() => handleClickIncrease(index)}>
-                                    <Add />
-                                  </IconButton>
-                                </Box>
+                        <TableRow key={index}>
+                          <TableCell>
+                            <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
+                              <img src={element.product.imageUrl} />
+                            </Grid>
+                          </TableCell>
+                          <TableCell>{element.product.name}</TableCell>
+                          <TableCell>{element.product.promotionPrice}</TableCell>
+                          <TableCell>
+                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                              <Box sx={{ border: "0.2px solid #EDEFF1" }}>
+                                <IconButton size="sm" variant="outlined" onClick={() => handleClickDecrease(index)} >
+                                  <Remove />
+                                </IconButton>
                               </Box>
-                            </TableCell>
-                            <TableCell align="left">
-                              {element.quantity * element.product.promotionPrice}
-                            </TableCell>
-                          </TableRow>
-                        )
+                              <Typography textcolor="text.secondary">
+                                {element.quantity}
+                              </Typography>
+                              <Box sx={{ border: "0.2px solid #EDEFF1" }}>
+                                <IconButton size="sm" variant="outlined" onClick={() => handleClickIncrease(index)}>
+                                  <Add />
+                                </IconButton>
+                              </Box>
+                            </Box>
+                          </TableCell>
+                          <TableCell align="left">
+                            {element.quantity * element.product.promotionPrice}
+                          </TableCell>
+                        </TableRow>
+                      )
                     }) : null}
                   </TableBody>
                   <TableFooter>
@@ -125,8 +131,6 @@ export const Detail = () => {
                   </TableFooter>
                 </Table>
               </TableContainer>
-
-
             </Card>
           }
         </Grid>

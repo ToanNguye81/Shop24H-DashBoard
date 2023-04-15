@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
 import { useState } from 'react';
 // @mui
-import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton, Card } from '@mui/material';
+import { TextField, Table, Button, TableRow, TableBody, TableCell, TableContainer, Grid, TableHead, CircularProgress, TablePagination, IconButton, Card, Stack, Pagination } from '@mui/material';
 // components
 import { useDispatch, useSelector } from "react-redux";
-import { getAllProduct } from "../../actions/product.actions";
+import { getAllProduct, setPage } from "../../actions/product.actions";
 import { AddShoppingCartSharp } from "@mui/icons-material";
 import { addToCart } from "../../actions/order.actions";
+import ProductFilter from "../productPage/ProductFilter/ProductFilter";
+import ProductSort from "../productPage/ProductFilter/ProductSort";
 
 
 const TABLE_HEAD = [
@@ -19,51 +21,58 @@ const TABLE_HEAD = [
 
 export const AddToCart = () => {
   const dispatch = useDispatch();
-  const [page, setPage] = useState(0);
-  const [name, setName] = useState("")
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { products, pending, totalProduct } = useSelector((reduxData) => reduxData.productReducers);
-  const { cart} = useSelector((reduxData) => reduxData.orderReducers);
+  const { cart } = useSelector((reduxData) => reduxData.orderReducers);
+  const { products, pending, totalProduct, error, category,
+    productPerPage, page, sortBy, sortOrder, gender, brand, minPrice, maxPrice } = useSelector((reduxData) => reduxData.productReducers);
 
- 
-  const condition = name.trim()? { name: name.trim() } : undefined;
-  const handleClickFind = () => {
-    dispatch(getAllProduct(5, 0, condition))
-  }
 
-  const handleChangeRowsPerPage = (event) => {
-    setPage(0);
-    setRowsPerPage(parseInt(event.target.value, 10));
+  const totalPages = Math.ceil(totalProduct / productPerPage)
+
+  useEffect(() => {
+    dispatch(getAllProduct({ productPerPage, page, sortBy, sortOrder, gender, brand, minPrice, maxPrice, category }))
+  }, [page, sortBy, sortOrder, gender, brand, minPrice, maxPrice, category]);
+
+
+  const handleChangePage = (event, value) => {
+    dispatch(setPage(value - 1));
   };
 
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+  const [openFilter, setOpenFilter] = useState(false);
+
+  const handleOpenFilter = () => {
+    setOpenFilter(true);
   };
 
-  const handelChangeName = (event) => {
-    setName(event.target.value)
-  }
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
 
-  const handleClickAddToCart=(product)=>{
-      dispatch(addToCart(cart,product))
+
+  const handleClickAddToCart = (product) => {
+    dispatch(addToCart(cart, product))
   }
 
   useEffect(() => {
-    dispatch(getAllProduct(rowsPerPage, page));
-  }, [rowsPerPage, page]);
+    dispatch(setPage(0))
+  }, [gender, brand, minPrice, maxPrice, category])
 
   return (
     <React.Fragment>
       <Grid container rowSpacing={1} mt={1}>
-        {/* Search */}
-        <Grid container columnSpacing={1}>
-          <Grid item xs={8} sm={8} md={8}>
-            <TextField fullWidth size="small" label="Find Products by name" onChange={handelChangeName} value={name} />
-          </Grid>
-          <Grid item xs={4} sm={4} md={4}>
-            <Button variant="contained" sx={{ p: 1 }} fullWidth onClick={handleClickFind}>Find</Button>
-          </Grid>
+        <Grid container
+          direction="row"
+          justifyContent="flex-end"
+          alignItems="center">
+          <Grid item></Grid>
+          <Grid item></Grid>
+          <ProductFilter
+            openFilter={openFilter}
+            onOpenFilter={handleOpenFilter}
+            onCloseFilter={handleCloseFilter}
+          />
+          <ProductSort />
         </Grid>
+        {/* </Grid> */}
 
         {/* Result Table  */}
         <Grid container
@@ -77,20 +86,20 @@ export const AddToCart = () => {
             </Grid>
             :
             <Card>
-            <TableContainer>
-              <Table >
-                <TableHead>
-                  <TableRow >
-                    {TABLE_HEAD.map((title, index) => {
+              <TableContainer>
+                <Table >
+                  <TableHead>
+                    <TableRow >
+                      {TABLE_HEAD.map((title, index) => {
+                        return (
+                          <TableCell key={index}>{title}</TableCell>
+                        )
+                      })}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {products.map((element, index) => {
                       return (
-                        <TableCell key={index}>{title}</TableCell>
-                      )
-                    })}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {products.map((element, index) => {
-                    return (
                         <TableRow key={index}>
                           <TableCell>
                             <Grid container maxWidth={"100px"} direction="column" justifyContent="flex-start" alignItems="center" >
@@ -101,30 +110,28 @@ export const AddToCart = () => {
                           <TableCell>{element.buyPrice}</TableCell>
                           <TableCell>{element.promotionPrice}</TableCell>
                           <TableCell align="center">
-                            <IconButton variant="outline" ml={0} onClick={()=>handleClickAddToCart(element)}>
-                              <AddShoppingCartSharp variant="outline"/>
+                            <IconButton variant="outline" ml={0} onClick={() => handleClickAddToCart(element)}>
+                              <AddShoppingCartSharp variant="outline" />
                             </IconButton>
                           </TableCell>
                         </TableRow>
                       )
-                  })}
-                </TableBody>
-              </Table>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                component="div"
-                count={totalProduct}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </TableContainer>
+                    })}
+                  </TableBody>
+                </Table>
+                <Stack direction="row" justifyContent="center" alignItems="center" sx={{ mt: 5, mb: 5 }}>
+                  <Pagination
+                    count={totalPages}
+                    page={page + 1}
+                    onChange={handleChangePage}
+                    variant="outlined" color="secondary"
+                  />
+                </Stack>
+              </TableContainer>
             </Card>
           }
         </Grid>
       </Grid>
     </React.Fragment>
-
   );
 }

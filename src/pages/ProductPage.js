@@ -11,38 +11,6 @@ import ProductFilter from "../components/productPage/ProductFilter/ProductFilter
 import ProductSort from "../components/productPage/ProductFilter/ProductSort"
 
 export const ProductPage = () => {
-  // const [openFilter, setOpenFilter] = useState(false);
-  // const {productPerPage, products, pending, totalProduct, error } = useSelector((reduxData) => reduxData.productReducers);
-  // const { role } = useSelector((reduxData) => reduxData.loginReducers);
-
-  // const dispatch = useDispatch();
-  // const [page, setPage] = useState(0);
-  // const [rowsPerPage, setRowsPerPage] = useState(5);
-
-  // useEffect(() => {
-  //   dispatch(getAllProduct(rowsPerPage, page))
-  // }, [rowsPerPage, page, role]);
-
-  // const handleChangeRowsPerPage = (event) => {
-  //   setPage(0);
-  //   setRowsPerPage(parseInt(event.target.value, 10));
-  // };
-
-  // const totalPages = Math.ceil(totalProduct / productPerPage)
-
-  // const handleChangePage = (event, newPage) => {
-  //   setPage(newPage);
-  // };
-
-
-  // const handleOpenFilter = () => {
-  //   setOpenFilter(true);
-  // };
-
-  // const handleCloseFilter = () => {
-  //   setOpenFilter(false);
-  // };
-
   const { products, pending, totalProduct, error, category,
     productPerPage, page, sortBy, sortOrder, gender, brand, minPrice, maxPrice } = useSelector((reduxData) => reduxData.productReducers);
 
