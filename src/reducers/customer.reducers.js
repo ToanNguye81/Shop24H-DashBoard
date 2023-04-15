@@ -63,7 +63,7 @@ const initialState = {
     cityOptions: [],
     loadCityOptionsPending: false,
 
-    // create new customer
+    // create customer for order
     createCustomerPending: false,
     country: "",
     city: "",

@@ -43,8 +43,6 @@ import {
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
 const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
-// const gCOUNTRY_API_URL="https://restcountries.com/v3.1/all" 
-// const gCOUNTRY_API_URL="https://countriesnow.space/api/v0.1/countries/states" 
 const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
 
 //Get All Customer

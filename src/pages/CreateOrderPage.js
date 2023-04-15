@@ -12,7 +12,7 @@ import { createNewOrder } from "../actions/order.actions"
 import { useSnackbar } from "notistack"
 import { Container } from "@mui/material"
 
-export const CreateOrder = () => {
+export const CreateOrderPage = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
     const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
@@ -54,6 +54,8 @@ export const CreateOrder = () => {
             enqueueSnackbar('Something went wrong.', { variant: "error" })
         }
     }
+
+
 
     return (
         <React.Fragment>

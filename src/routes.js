@@ -14,7 +14,7 @@ import DemoPage from './pages/DemoPage';
 import { ProductPage } from './pages/ProductPage';
 import { OrderPage } from './pages/OrderPage';
 import { OrderDetailPage } from './pages/OrderDetailPage';
-import { CreateOrder } from './pages/CreateOrder';
+import { CreateOrderPage } from './pages/CreateOrderPage';
 import { ProductDetailPage } from './pages/ProductDetailPage';
 import { EditOrderPage } from './pages/EditOrderPage';
 import BlogPage from './pages/BlogPage';
@@ -28,7 +28,7 @@ export default function Router() {
     children: [
       { element: <Navigate to="/dashboard/app" />, index: true },
       { path: 'app', element: <DashboardAppPage/> },
-      { path: 'createOrder', element: <CreateOrder/> },
+      { path: 'createOrder', element: <CreateOrderPage/> },
      
       { path: 'customers', element: <CustomerPage/> },
       { path: 'customers/:customerId', element: <EditCustomerPage/> },
