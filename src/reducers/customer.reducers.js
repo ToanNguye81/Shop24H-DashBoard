@@ -121,17 +121,20 @@ export default function customerReducers(state = initialState, action) {
 
         //Create Customer
         case CREATE_CUSTOMER_PENDING:
+            console.log("CREATE_CUSTOMER_PENDING")
             return {
                 ...state,
                 createCustomerPending: true,
             };
         case CREATE_CUSTOMER_SUCCESS:
+            console.log("CREATE_CUSTOMER_SUCCESS")
             return {
                 ...state,
                 createCustomerPending: false,
                 customerId: action.data._id,
             };
         case CREATE_CUSTOMER_ERROR:
+            console.log("CREATE_CUSTOMER_ERROR")
             return {
                 ...state,
                 error: action.error,

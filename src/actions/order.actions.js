@@ -1,3 +1,4 @@
+import { enqueueSnackbar } from "notistack";
 import {
     LOAD_ORDERS_ERROR,
     LOAD_ORDERS_PENDING,
@@ -7,7 +8,7 @@ import {
     GET_ORDER_BY_ID_PENDING,
     GET_ORDER_BY_ID_SUCCESS,
 
-    CREATE_ORDER_PENDING,
+    CREATE_ORDER_PENDING,   
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_ERROR,
 
@@ -29,11 +30,13 @@ import {
     SET_SORT_BY,
     SET_SORT_ORDER,
 } from "../constants/order.constants";
+import { createNewCustomer } from "./customer.actions";
+import { createNewOrderDetail } from "./orderDetail.actions";
 
 const gORDER_API_URL = '//localhost:8000/orders';
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
 
-export const getAllOrder = ({ limit, page, searchQuery,sortBy,sortOrder }) => {
+export const getAllOrder = ({ limit, page, searchQuery, sortBy, sortOrder }) => {
     console.log({ limit, page, searchQuery })
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
@@ -79,8 +82,8 @@ export const getAllOrder = ({ limit, page, searchQuery,sortBy,sortOrder }) => {
     }
 }
 
-export const getAllOrderOfCustomer = ({ limit, page, searchQuery,sortBy,sortOrder,customerId }) => {
-    console.log({ limit, page, searchQuery,sortBy,sortOrder })
+export const getAllOrderOfCustomer = ({ limit, page, searchQuery, sortBy, sortOrder, customerId }) => {
+    console.log({ limit, page, searchQuery, sortBy, sortOrder })
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     // options for the fetch request
@@ -121,44 +124,7 @@ export const getAllOrderOfCustomer = ({ limit, page, searchQuery,sortBy,sortOrde
     }
 }
 
-//Create new order
-export const createNewOrder = (customerId, note) => {
-    // if (isValid) {
-    return async (dispatch) => {
-        const requestOptions = {
-            method: 'POST',
-            headers: {
-                "Content-Type": 'application/json',
-            },
-            body: JSON.stringify({ note: note }),
-        };
 
-        await dispatch({
-            type: CREATE_ORDER_PENDING
-        });
-
-        try {
-            const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}/orders`, requestOptions);
-            const resObj = await res.json();
-
-            if (!res.ok) {
-                return dispatch({
-                    type: CREATE_ORDER_ERROR,
-                })
-            }
-
-            return dispatch({
-                type: CREATE_ORDER_SUCCESS,
-                data: resObj.data
-            })
-        } catch (err) {
-            return dispatch({
-                type: CREATE_ORDER_ERROR,
-                error: err
-            })
-        }
-    }
-}
 
 export const getOrderNote = (note) => {
     return ({
@@ -344,5 +310,45 @@ export const setSortOrder = (sortOrder) => {
     return {
         type: SET_SORT_ORDER,
         payload: sortOrder
+    }
+}
+
+
+//Create new order
+export const createNewOrder = (customerId, note) => {
+    // if (isValid) {
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify({ note: note }),
+        };
+
+        await dispatch({
+            type: CREATE_ORDER_PENDING
+        });
+
+        try {
+            const res = await fetch(`${gCUSTOMER_API_URL}/${customerId}/orders`, requestOptions);
+            const resObj = await res.json();
+
+            if (!res.ok) {
+                return dispatch({
+                    type: CREATE_ORDER_ERROR,
+                })
+            }
+
+            return dispatch({
+                type: CREATE_ORDER_SUCCESS,
+                data: resObj.data
+            })
+        } catch (err) {
+            return dispatch({
+                type: CREATE_ORDER_ERROR,
+                error: err
+            })
+        }
     }
 }

@@ -20,11 +20,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <HelmetProvider>
     <Provider store={store}>
-      <SnackbarProvider>
-        <BrowserRouter>
+      <BrowserRouter>
+        <SnackbarProvider maxSnack={3} anchorOrigin={{ vertical: 'top', horizontal: 'right', }} autoHideDuration={1500}>
           <App />
-        </BrowserRouter>
-      </SnackbarProvider>
+        </SnackbarProvider>
+      </BrowserRouter>
     </Provider>
   </HelmetProvider>
 );

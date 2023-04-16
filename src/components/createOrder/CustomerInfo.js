@@ -158,18 +158,20 @@
 //     );
 // }
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
-import Iconify from '../iconify/Iconify';
-import { Typography, Box, Button, Select, Grid, MenuItem, TextField, CircularProgress, InputAdornment } from '@mui/material';
-import { useNavigate } from "react-router-dom";
+import { Box, Button, Select, Grid, MenuItem, TextField, CircularProgress, InputAdornment, Card, CardContent } from '@mui/material';
 import { useDispatch, useSelector } from "react-redux";
 import {
+    createNewCustomer,
     loadCities,
     loadCountries,
     updateNewCustomer,
 } from "../../actions/customer.actions";
+import { createNewOrder, handleCreateOrder } from "../../actions/order.actions";
+import { enqueueSnackbar } from "notistack";
+import { createNewOrderDetail } from "../../actions/orderDetail.actions";
 
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required").trim(),
@@ -185,7 +187,6 @@ const validCustomerSchema = Yup.object().shape({
 
 export const CustomerInfo = () => {
     const dispatch = useDispatch();
-    const [open, setOpen] = useState(false)
     const {
         countryOptions,
         loadCityOptionsPending,
@@ -193,18 +194,55 @@ export const CustomerInfo = () => {
         newCustomer
     } = useSelector((reduxData) => reduxData.customerReducers);
 
+    const { cart } = useSelector(reduxData => reduxData.orderReducers)
+
 
     useEffect(() => {
-        if (open && !countryOptions[0]) {
+        if (!countryOptions[0]) {
             dispatch(loadCountries())
         }
-    }, [open]);
+    }, []);
 
 
-    const handleSubmit = (values) => {
-        console.log(values)
-        // dispatch(createNewCustomer(values));
+    const handleSubmit = (customer) => {
+        dispatch(handleCreateOrder({ customer, cart }))
     };
+
+    const handleCreateOrder = async ({ customer, cart }) => {
+        try {
+            const customerResult = await dispatch(createNewCustomer(customer))
+    
+            const customerId = await customerResult.data._id
+    
+            if (!cart.length) {
+                // Warning if cart is empty
+                enqueueSnackbar("Your cart is empty", { variant: "warning" })
+            }
+    
+            if (customerId && cart.length) {
+                const orderResult = await dispatch(createNewOrder(customerId, customer.note))
+    
+                const orderId = orderResult.data._id;
+    
+                if (orderId) {
+                    const orderDetailPromises = cart.map(async (orderDetail) => {
+                        await dispatch(createNewOrderDetail(orderId, orderDetail))
+                    })
+    
+                    await Promise.all(orderDetailPromises)
+    
+                    // Show success Snackbar
+                    enqueueSnackbar(`Create successfully Order: ${orderResult.data.orderCode}`, { variant: "success" })
+                }
+            }
+    
+        } catch (error) {
+            // Handle any errors here
+            console.log(error)
+            // Show success Snackbar
+            enqueueSnackbar('Something went wrong.', { variant: "error" })
+        }
+    }
 
     const handleCountryChange = (event) => {
         dispatch(loadCities(event.target.value));
@@ -218,178 +256,156 @@ export const CustomerInfo = () => {
 
     return (
         <React.Fragment>
-            {/* <Button onClick={handleOpen} variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>New Customer</Button> */}
-            {/* <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="dialog-title"
-                aria-describedby="dialog-description"
-            >
-                <DialogTitle id="dialog-title">
-                    <Box>
-                        <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
-                            New Customer
-                        </Typography>
-                        <Divider /> */}
-            <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}  >
-                <Formik
-                    initialValues={{ ...newCustomer }}
-                    validationSchema={validCustomerSchema}
-                    onSubmit={handleSubmit}
-                >
-                    {({ errors, touched, values, handleChange, setFieldValue }) => (
-                        <Form>
-                            <TextField
-                                label="First name *"
-                                fullWidth
-                                size="small"
-                                value={values.firstName}
-                                id="firstName"
-                                name="firstName"
-                                onChange={handleChange}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                error={errors.firstName && touched.firstName}
-                                helperText={touched.firstName && errors.firstName}
-                            />
-                            <TextField
-                                sx={{ mt: 2 }}
-                                fullWidth
-                                label="Last Name *"
-                                size="small"
-                                value={values.lastName}
-                                id="lastName"
-                                name="lastName"
-                                onChange={handleChange}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                error={errors.lastName && touched.lastName}
-                                helperText={touched.lastName && errors.lastName}
-                            />
-                            <TextField
-                                sx={{ mt: 2 }}
-                                fullWidth
-                                label="Phone * "
-                                size="small"
-                                value={values.phone}
-                                id="phone"
-                                name="phone"
-                                onChange={handleChange}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                error={errors.phone && touched.phone}
-                                helperText={touched.phone && errors.phone}
-                            />
-                            <TextField
-                                sx={{ mt: 2 }}
-                                fullWidth
-                                label="Email * "
-                                size="small"
-                                value={values.email}
-                                id="email"
-                                onChange={handleChange}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                name="email"
-                                error={errors.email && touched.email}
-                                helperText={touched.email && errors.email}
-                            />
-                            <Select
-                                sx={{ mt: 2 }}
-                                fullWidth
-                                size="small"
-                                value={values.country}
-                                id="country"
-                                name="country"
-                                onChange={(e) => {
-                                    handleChange(e);
-                                    handleCountryChange(e);
-                                    setFieldValue("city", "")
-                                }}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                error={errors.country && touched.country}
-                                helpertext={touched.country && errors.country}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        Country * :{" "}
-                                    </InputAdornment>
-                                }
-                            >
-                                {countryOptions[0] &&
-                                    countryOptions.map((option) => (
-                                        <MenuItem key={option.id} value={option.iso2}>
-                                            {option.name}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
-                            <Select
-                                sx={{ mt: 2 }}
-                                fullWidth
-                                size="small"
-                                id="city"
-                                value={values.city}
-                                name="city"
-                                onChange={handleChange}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                error={errors.city && touched.city}
-                                helpertext={touched.city && errors.city}
-                                startAdornment={
-                                    <InputAdornment position="start">
-                                        City * :{" "}
-                                    </InputAdornment>
-                                }
-                            >
-                                {loadCityOptionsPending ?
-                                    (<MenuItem value="">
-                                        <CircularProgress size={20} />
-                                    </MenuItem>
-                                    ) : (
-                                        <MenuItem value="">Select a city</MenuItem>
-                                    )}
-                                {cityOptions[0] &&
-                                    cityOptions.map((option) => (
-                                        <MenuItem key={option.id} value={option.name}>
-                                            {option.name}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
-                            <TextField
-                                sx={{ mt: 2 }}
-                                fullWidth
-                                label="Address * "
-                                size="small"
-                                value={values.address}
-                                onBlur={(e) => handleUpdateNewCustomer(e)}
-                                id="address"
-                                onChange={handleChange}
-                                name="address"
-                                error={errors.address && touched.address}
-                                helperText={touched.address && errors.address}
-                            />
-                            <Grid container justifyContent="flex-end" spacing={2}>
-                                <Grid item>
-                                    <Button
-                                        type="submit"
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
+            <Card>
+                <CardContent>
+                    <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'center' }}  >
+                        <Formik
+                            initialValues={{ ...newCustomer }}
+                            validationSchema={validCustomerSchema}
+                            onSubmit={handleSubmit}
+                        >
+                            {({ errors, touched, values, handleChange, setFieldValue }) => (
+                                <Form>
+                                    <TextField
+                                        label="First name *"
+                                        fullWidth
+                                        size="small"
+                                        value={values.firstName}
+                                        id="firstName"
+                                        name="firstName"
+                                        onChange={handleChange}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        error={errors.firstName && touched.firstName}
+                                        helperText={touched.firstName && errors.firstName}
+                                    />
+                                    <TextField
+                                        sx={{ mt: 2 }}
+                                        fullWidth
+                                        label="Last Name *"
+                                        size="small"
+                                        value={values.lastName}
+                                        id="lastName"
+                                        name="lastName"
+                                        onChange={handleChange}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        error={errors.lastName && touched.lastName}
+                                        helperText={touched.lastName && errors.lastName}
+                                    />
+                                    <TextField
+                                        sx={{ mt: 2 }}
+                                        fullWidth
+                                        label="Phone * "
+                                        size="small"
+                                        value={values.phone}
+                                        id="phone"
+                                        name="phone"
+                                        onChange={handleChange}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        error={errors.phone && touched.phone}
+                                        helperText={touched.phone && errors.phone}
+                                    />
+                                    <TextField
+                                        sx={{ mt: 2 }}
+                                        fullWidth
+                                        label="Email * "
+                                        size="small"
+                                        value={values.email}
+                                        id="email"
+                                        onChange={handleChange}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        name="email"
+                                        error={errors.email && touched.email}
+                                        helperText={touched.email && errors.email}
+                                    />
+                                    <Select
+                                        sx={{ mt: 2 }}
+                                        fullWidth
+                                        size="small"
+                                        value={values.country}
+                                        id="country"
+                                        name="country"
+                                        onChange={(e) => {
+                                            handleChange(e);
+                                            handleCountryChange(e);
+                                            setFieldValue("city", "")
+                                        }}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        error={errors.country && touched.country}
+                                        helpertext={touched.country && errors.country}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                Country * :{" "}
+                                            </InputAdornment>
+                                        }
                                     >
-                                        Send
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button
-                                        onClick={() => setOpen(false)}
-                                        variant="contained"
-                                        color="warning"
-                                        sx={{ mt: 3, mb: 2 }}
+                                        {countryOptions[0] &&
+                                            countryOptions.map((option) => (
+                                                <MenuItem key={option.id} value={option.iso2}>
+                                                    {option.name}
+                                                </MenuItem>
+                                            ))}
+                                    </Select>
+                                    <Select
+                                        sx={{ mt: 2 }}
+                                        fullWidth
+                                        size="small"
+                                        id="city"
+                                        value={values.city}
+                                        name="city"
+                                        onChange={handleChange}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        error={errors.city && touched.city}
+                                        helpertext={touched.city && errors.city}
+                                        startAdornment={
+                                            <InputAdornment position="start">
+                                                City * :{" "}
+                                            </InputAdornment>
+                                        }
                                     >
-                                        Cancel
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </Form>
-                    )}
-                </Formik>
-            </Box>
-            {/* </Box>
-                </DialogTitle>
-            </Dialog> */}
+                                        {loadCityOptionsPending ?
+                                            (<MenuItem value="">
+                                                <CircularProgress size={20} />
+                                            </MenuItem>
+                                            ) : (
+                                                <MenuItem value="">Select a city</MenuItem>
+                                            )}
+                                        {cityOptions[0] &&
+                                            cityOptions.map((option) => (
+                                                <MenuItem key={option.id} value={option.name}>
+                                                    {option.name}
+                                                </MenuItem>
+                                            ))}
+                                    </Select>
+                                    <TextField
+                                        sx={{ mt: 2 }}
+                                        fullWidth
+                                        label="Address * "
+                                        size="small"
+                                        value={values.address}
+                                        onBlur={(e) => handleUpdateNewCustomer(e)}
+                                        id="address"
+                                        onChange={handleChange}
+                                        name="address"
+                                        error={errors.address && touched.address}
+                                        helperText={touched.address && errors.address}
+                                    />
+                                    <Grid container justifyContent="flex-end" spacing={2}>
+                                        <Grid item>
+                                            <Button
+                                                type="submit"
+                                                variant="contained"
+                                                sx={{ mt: 3, mb: 2 }}
+                                            >
+                                                Create Order
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Form>
+                            )}
+                        </Formik>
+                    </Box>
+                </CardContent>
+            </Card>
         </React.Fragment>
     );
 }

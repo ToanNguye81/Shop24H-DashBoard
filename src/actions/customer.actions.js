@@ -46,7 +46,7 @@ const gCOUNTRY_API_URL = "https://api.countrystatecity.in/v1/countries/"
 const gMY_COUNTRY_KEY = "NjFRSUdoSm5EY2RIaE9TSTlMdHcxOExGN2QwWnJJTFVNelFQQVExVQ=="
 
 //Get All Customer
-export const getAllCustomer = ({rowsPerPage, page, searchQuery,sortBy,sortOrder}) => {
+export const getAllCustomer = ({ rowsPerPage, page, searchQuery, sortBy, sortOrder }) => {
     // build the request string
     const request = `limit=${rowsPerPage}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
@@ -238,12 +238,14 @@ export const createNewCustomer = (newCustomer) => {
             type: CREATE_CUSTOMER_PENDING
         });
 
+
         try {
             const res = await fetch(gCUSTOMER_API_URL, requestOptions);
             const resObj = await res.json();
             if (!res.ok) {
                 throw new Error(`Could not create customer, status: ${res.status}`);
             }
+
             return dispatch({
                 type: CREATE_CUSTOMER_SUCCESS,
                 data: resObj.data

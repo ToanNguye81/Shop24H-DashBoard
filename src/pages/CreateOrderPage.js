@@ -9,14 +9,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { createNewCustomer } from "../actions/customer.actions"
 import { createNewOrderDetail } from "../actions/orderDetail.actions"
 import { createNewOrder } from "../actions/order.actions"
-import { useSnackbar } from "notistack"
+import { enqueueSnackbar } from "notistack"
 import { Container } from "@mui/material"
 
 export const CreateOrderPage = () => {
     const dispatch = useDispatch()
     const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
     const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
-    const { enqueueSnackbar } = useSnackbar()
+    // const { enqueueSnackbar } = useSnackbar()
 
     const handleCreateOrder = async () => {
         const customerData = { country, city, firstName, lastName, phone, email, address }
