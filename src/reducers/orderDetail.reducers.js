@@ -26,7 +26,6 @@ const initialState = {
     orderDetails: [],
     pending: false,
     error: null,
-    currentPage: 1,
     sortBy: "",
     sortOrder: "",
     searchQuery: "",

@@ -13,50 +13,6 @@ import { enqueueSnackbar } from "notistack"
 import { Container } from "@mui/material"
 
 export const CreateOrderPage = () => {
-    const dispatch = useDispatch()
-    const { country, city, firstName, lastName, phone, email, address } = useSelector((reduxData) => reduxData.customerReducers);
-    const { cart, note } = useSelector((reduxData) => reduxData.orderReducers);
-    // const { enqueueSnackbar } = useSnackbar()
-
-    const handleCreateOrder = async () => {
-        const customerData = { country, city, firstName, lastName, phone, email, address }
-        try {
-            const customerResult = await dispatch(createNewCustomer(customerData))
-
-            const customerId = customerResult.data._id
-
-            if (!cart.length) {
-                // Warning if cart is empty
-                enqueueSnackbar("Your cart is empty", { variant: "warning" })
-            }
-
-            if (customerId && cart.length) {
-                const orderResult = await dispatch(createNewOrder(customerId, note))
-
-                const orderId = orderResult.data._id;
-
-                if (orderId) {
-                    const orderDetailPromises = cart.map((orderDetail) =>
-                        dispatch(createNewOrderDetail(orderId, orderDetail))
-                    )
-
-                    await Promise.all(orderDetailPromises)
-
-                    // Show success Snackbar
-                    enqueueSnackbar(`Create successfully Order: ${orderResult.data.orderCode}`, { variant: "success" })
-                }
-            }
-
-        } catch (error) {
-            // Handle any errors here
-            console.log(error)
-            // Show success Snackbar
-            enqueueSnackbar('Something went wrong.', { variant: "error" })
-        }
-    }
-
-
-
     return (
         <React.Fragment>
             <Container>
@@ -66,7 +22,6 @@ export const CreateOrderPage = () => {
                 <Detail />
                 <h2>Customer information</h2>
                 <CustomerInfo />
-                <Button sx={{ mt: 3 }} variant="contained" onClick={handleCreateOrder}>Create Order</Button>
             </Container>
         </React.Fragment>
     )

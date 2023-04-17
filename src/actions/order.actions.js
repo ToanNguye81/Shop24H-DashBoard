@@ -1,4 +1,3 @@
-import { enqueueSnackbar } from "notistack";
 import {
     LOAD_ORDERS_ERROR,
     LOAD_ORDERS_PENDING,
@@ -30,8 +29,6 @@ import {
     SET_SORT_BY,
     SET_SORT_ORDER,
 } from "../constants/order.constants";
-import { createNewCustomer } from "./customer.actions";
-import { createNewOrderDetail } from "./orderDetail.actions";
 
 const gORDER_API_URL = '//localhost:8000/orders';
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -125,7 +122,7 @@ export const getAllOrderOfCustomer = ({ limit, page, searchQuery, sortBy, sortOr
 }
 
 
-
+//Get order Note
 export const getOrderNote = (note) => {
     return ({
         type: GET_ORDER_NOTE,
@@ -149,6 +146,7 @@ export const getOrderById = (orderId) => {
 
             //fetch Order
             const res = await fetch(`${gORDER_API_URL}/${orderId}`, requestOptions);
+            console.log(`${gORDER_API_URL}/${orderId}`)
 
             // throw an error if the response is not successful
             if (!res.ok) {

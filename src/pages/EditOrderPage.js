@@ -16,7 +16,8 @@ export const EditOrderPage = () => {
   console.log(orderById)
   useEffect(() => {
     if (orderId)
-      dispatch(getOrderById(orderId))
+      console.log(orderId)
+    dispatch(getOrderById(orderId))
   }, [orderId]);
 
   return (
@@ -32,10 +33,10 @@ export const EditOrderPage = () => {
             Edit Order
           </Typography>
         </Stack>
-        {getOrderByIdPending?
-        <CircularProgress />
-        :
-        <OrderData initOrder={orderById} />
+        {getOrderByIdPending  ?
+          <CircularProgress />
+          :
+          orderById?<OrderData initOrder={orderById} />:null
         }
       </Container>
     </React.Fragment>

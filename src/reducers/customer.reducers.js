@@ -48,7 +48,7 @@ const initialState = {
     customers: [],
     pending: false,
     error: null,
-    currentPage: 1,
+    
     orders: [],
     searchQuery: "",
     sortBy: "createdAt",

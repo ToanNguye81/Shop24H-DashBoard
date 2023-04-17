@@ -10,7 +10,7 @@ import { NewCustomer } from "../components/customerPage/NewCustomer"
 import { CustomerSearchBar } from "../components/customerPage/CustomerSearchBar"
 
 export const CustomerPage = () => {
-  const { customers, pending, totalCustomer,searchQuery,sortBy,sortOrder } = useSelector((reduxData) => reduxData.customerReducers);
+  const { customers, pending, totalCustomer, searchQuery, sortBy, sortOrder } = useSelector((reduxData) => reduxData.customerReducers);
   const { role } = useSelector((reduxData) => reduxData.loginReducers);
 
   const dispatch = useDispatch();
@@ -18,8 +18,8 @@ export const CustomerPage = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
-    dispatch(getAllCustomer({rowsPerPage, page,searchQuery,sortBy,sortOrder}));
-  }, [rowsPerPage, page, role,searchQuery,sortBy,sortOrder]);
+    dispatch(getAllCustomer({ rowsPerPage, page, searchQuery, sortBy, sortOrder }));
+  }, [rowsPerPage, page, role, searchQuery, sortBy, sortOrder]);
 
   const handleChangeRowsPerPage = (event) => {
     setPage(0);
@@ -29,6 +29,7 @@ export const CustomerPage = () => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
+  useEffect(() => { setPage(0) }, [searchQuery,sortBy,sortOrder])
 
   return (
     <React.Fragment>

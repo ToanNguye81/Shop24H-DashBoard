@@ -21,7 +21,6 @@ const validOrderSchema = Yup.object().shape({
     shippedDate: Yup.string().required('Shipped Date is required').trim(),
     cost: Yup.number().required('Cost is required').min(0),
     status: Yup.string().required('Status is required').trim(),
-    address: Yup.string().required('Address is required').trim(),
     note: Yup.string().required('Note is required').trim(),
 });
 
@@ -52,11 +51,11 @@ export const OrderData = ({ initOrder }) => {
                                             disabled
                                             value={values.orderCode}
                                             onChange={handleChange}
-                                            error={errors.orderCode}
+                                            error={errors.orderCode&&touched.orderCode}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <TextField 
+                                        <TextField
                                             fullWidth
                                             id="orderDate"
                                             label="Order Date *"
@@ -64,41 +63,42 @@ export const OrderData = ({ initOrder }) => {
                                             value={formatTime(values.orderDate)}
                                             onChange={handleChange}
                                             disabled
-                                            error={errors.orderDate}
+                                            error={errors.orderDate&&touched.orderDate}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
-                                        <LocalizationProvider dateAdapter={AdapterDayjs} >
-                                            <DemoContainer components={['DateTimePicker']} >
-                                            <DateTimePicker 
-                                            label="Shipped Date"
-                                            value={dayjs(values.shippedDate)}
-                                            onChange={(newValue) => {handleChange({ target: { name: 'shippedDate', value: newValue.toISOString() } });
-                                            }}
-                                            />
-                                            </DemoContainer>
-                                        </LocalizationProvider>
-                                    </Grid>
-                                    <Grid item xs={12} sm={6}>
-                                        <TextField sx={{mt:1}}
+                                        <TextField sx={{ mt: 1 }}
                                             fullWidth
                                             id="cost"
+                                            disabled
                                             label="Cost*"
                                             name="cost"
                                             value={values.cost}
                                             onChange={handleChange}
-                                            error={errors.cost}
+                                            error={errors.cost&&touched.cost}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             fullWidth
-                                            id="customer"
-                                            label="Customer*"
-                                            name="customer"
-                                            value={values.customer}
+                                            id="firstName"
+                                            label="First Name *"
+                                            name="customer.firstName"
+                                            value={values.customer.firstName}
                                             onChange={handleChange}
-                                            error={errors.customer}
+                                            disabled
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            disabled
+                                            fullWidth
+                                            id="lastName"
+                                            label="Last Name *"
+                                            name="customer.lastName"
+                                            value={values.customer.lastName}
+                                            onChange={handleChange}
+                                        // error={errors.lastName&&touched.lastName}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
@@ -106,42 +106,89 @@ export const OrderData = ({ initOrder }) => {
                                             fullWidth
                                             id="phone"
                                             label="Phone *"
-                                            name="phone"
-                                            value={values.phone}
+                                            name="customer.phone"
+                                            disabled
+                                            value={values.customer.phone}
                                             onChange={handleChange}
-                                            error={errors.phone}
-                                        />
-                                    </Grid>
-                                    <Grid item xs={12} sm={12}>
-                                        <TextField
-                                            fullWidth
-                                            id="address"
-                                            label="Address *"
-                                            name="address"
-                                            value={values.address}
-                                            onChange={handleChange}
-                                            error={errors.address}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            fullWidth
+                                            id="email"
+                                            label="Email *"
+                                            name="customer.email"
+                                            disabled
+                                            value={values.customer.email}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            fullWidth
+                                            id="City"
+                                            label="City *"
+                                            name="customer.city"
+                                            disabled
+                                            value={values.customer.city}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            fullWidth
+                                            id="country"
+                                            label="Country *"
+                                            name="customer.country"
+                                            disabled
+                                            value={values.customer.country}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <TextField
+                                            fullWidth
+                                            disabled
+                                            id="address"
+                                            label="Address *"
+                                            name="customer.address"
+                                            value={values.customer.address}
+                                            onChange={handleChange}
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
+                                        <LocalizationProvider dateAdapter={AdapterDayjs} >
+                                            <DemoContainer components={['DateTimePicker']} >
+                                                <DateTimePicker
+                                                    label="Shipped Date"
+                                                    value={dayjs(values.shippedDate)}
+                                                    onChange={(newValue) => {
+                                                        handleChange({ target: { name: 'shippedDate', value: newValue.toISOString() } });
+                                                    }}
+                                                />
+                                            </DemoContainer>
+                                        </LocalizationProvider>
+                                    </Grid>
+                                    <Grid item xs={12} sm={6}>
                                         <FormControl fullWidth>
-                                            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                                            <Select 
+                                            <InputLabel id="order-status">Order Status</InputLabel>
+                                            <Select
                                                 fullWidth
-                                                labelId="demo-simple-select-label"
+                                                labelId="order-status"
                                                 id="status"
                                                 label="Status *"
                                                 name="status"
-                                                value={values.status}
+                                                value={values.status||""}
                                                 onChange={handleChange}
-                                                error={errors.status}>
-                                                <MenuItem value="waiting">Waiting</MenuItem>
+                                                error={errors.status&&touched.status}>
+                                                <MenuItem value="">Update State</MenuItem>
                                                 <MenuItem value="delivery">Delivery</MenuItem>
+                                                <MenuItem value="waiting">Waiting</MenuItem>
                                                 <MenuItem value="success">Success</MenuItem>
                                             </Select>
                                         </FormControl>
                                     </Grid>
-                                    <Grid item xs={12} sm={6}>
+                                    <Grid item xs={12} sm={12}>
                                         <TextField
                                             fullWidth
                                             id="note"
@@ -149,7 +196,7 @@ export const OrderData = ({ initOrder }) => {
                                             name="note"
                                             value={values.note}
                                             onChange={handleChange}
-                                            error={errors.note}
+                                            error={errors.note&&touched.note}
                                         />
                                     </Grid>
                                     <Grid container direction="row" justifyContent="flex-end" alignItems="flex-start" spacing={1} mt={1}>

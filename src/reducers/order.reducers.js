@@ -41,7 +41,6 @@ const initialState = {
     orders: [],
     pending: false,
     error: null,
-    currentPage: 1,
     searchQuery: "",
     sortBy: "orderDate",
     sortOrder: "desc",
@@ -57,7 +56,22 @@ const initialState = {
     orderId: null,
 
     //Order detail
-    orderById: {},
+    orderById: {
+        orderCode: "",
+        orderDate: "",
+        cost:"",
+        shippedDate: "",
+        status: "",
+        customer: {
+            firstName: "",
+            lastName: "",
+            phone: "",
+            email: "",
+            city: "",
+            country: "",
+            address: "",
+        },
+    },
     getOrderByIdPending: false,
 
     //Update Order
@@ -189,7 +203,7 @@ export default function orderReducers(state = initialState, action) {
                 ...state,
                 sortBy: action.payload
             }
-            
+
         //Add To Cart
         case ADD_FIRST_PRODUCT:
             state.cart = [{ product: action.product, quantity: action.quantity }];
