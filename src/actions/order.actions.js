@@ -27,7 +27,7 @@ import {
     GET_ORDER_NOTE,
     UPDATE_ORDER_SEARCH_QUERY,
     SET_SORT_BY,
-    SET_SORT_ORDER,
+    SET_SORT_ORDER_OF_ORDER,
 } from "../constants/order.constants";
 
 const gORDER_API_URL = '//localhost:8000/orders';
@@ -306,7 +306,7 @@ export const setSortBy = (sortBy) => {
 //Set sort By
 export const setSortOrder = (sortOrder) => {
     return {
-        type: SET_SORT_ORDER,
+        type: SET_SORT_ORDER_OF_ORDER,
         payload: sortOrder
     }
 }

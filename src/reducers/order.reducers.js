@@ -32,7 +32,7 @@ import {
 
     UPDATE_ORDER_SEARCH_QUERY,
     SET_SORT_BY,
-    SET_SORT_ORDER,
+    SET_SORT_ORDER_OF_ORDER,
 } from "../constants/order.constants";
 
 const initialState = {
@@ -192,7 +192,7 @@ export default function orderReducers(state = initialState, action) {
         case LOAD_CITY_ERROR:
             return state;
 
-        case SET_SORT_ORDER:
+        case SET_SORT_ORDER_OF_ORDER:
             return {
                 ...state,
                 sortOrder: action.payload
