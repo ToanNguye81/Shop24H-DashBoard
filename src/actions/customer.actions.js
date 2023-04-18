@@ -177,10 +177,11 @@ export const createNewCustomer = (newCustomer) => {
         try {
             const res = await fetch(gCUSTOMER_API_URL, requestOptions);
             const resObj = await res.json();
+            
             if (!res.ok) {
-                throw new Error(`Could not create customer, status: ${res.status}`);
+                throw new Error(`Could not create customer: ${resObj.message}`);
             }
-
+            
             return dispatch({
                 type: CREATE_CUSTOMER_SUCCESS,
                 data: resObj.data
@@ -195,7 +196,7 @@ export const createNewCustomer = (newCustomer) => {
 }
 
 // Update customer
-export const updateCustomer = (customerId,customerData) => {
+export const updateCustomer = (customerId, customerData) => {
     return async (dispatch) => {
         const requestOptions = {
             method: 'PUT',
@@ -212,13 +213,14 @@ export const updateCustomer = (customerId,customerData) => {
 
         try {
             const res = await fetch(gCUSTOMER_API_URL + `/${customerId}`, requestOptions);
-            const resObj = await res.json();
 
             // throw an error if the response is not successful
             if (!res.ok) {
+                console.log(resObj)
                 throw new Error(`Could update customer By Id, status: ${res.status}`);
             }
-            
+            const resObj = await res.json();
+
             return dispatch({
                 type: UPDATE_CUSTOMER_SUCCESS,
                 data: resObj,

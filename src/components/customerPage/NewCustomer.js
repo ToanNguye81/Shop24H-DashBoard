@@ -3,13 +3,14 @@ import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import Iconify from '../iconify/Iconify';
 import { Typography, Box, Button, Select, Grid, MenuItem, TextField, DialogTitle, Dialog, Divider, CircularProgress, InputAdornment } from '@mui/material';
-import {  useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+    createNewCustomer,
     loadCities,
     loadCountries,
     updateNewCustomer,
 } from "../../actions/customer.actions";
+import { enqueueSnackbar } from "notistack";
 
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required").trim(),
@@ -43,9 +44,14 @@ export const NewCustomer = () => {
     }, [open]);
 
 
-    const handleSubmit = (values) => {
-        console.log(values)
-        // dispatch(createNewCustomer(values));
+    const handleSubmit = async (values) => {
+        const { data ,error} = await dispatch(createNewCustomer(values));
+        if (data) {
+            enqueueSnackbar(`Success in create customer ${values.email}`, { variant: "success" })
+        }
+        else {
+            enqueueSnackbar(`${error}`, { variant: "error" })
+        }
     };
 
     const handleCountryChange = (event) => {
