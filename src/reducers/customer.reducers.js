@@ -29,8 +29,8 @@ import {
 
     UPDATE_NEW_CUSTOMER,
     UPDATE_CUSTOMER_SEARCH_QUERY,
-    SET_SORT_ORDER,
-    SET_SORT_BY
+    SET_CUSTOMER_SORT_ORDER,
+    SET_CUSTOMER_SORT_BY
 } from "../constants/customer.constants";
 
 const initialState = {
@@ -238,13 +238,13 @@ export default function customerReducers(state = initialState, action) {
                 searchQuery: action.payload
             }
 
-        case SET_SORT_ORDER:
+        case SET_CUSTOMER_SORT_ORDER:
             return {
                 ...state,
                 sortOrder: action.payload
             };
 
-        case SET_SORT_BY:
+        case SET_CUSTOMER_SORT_BY:
             return {
                 ...state,
                 sortBy: action.payload

@@ -7,7 +7,7 @@ import {
     GET_ORDER_BY_ID_PENDING,
     GET_ORDER_BY_ID_SUCCESS,
 
-    CREATE_ORDER_PENDING,   
+    CREATE_ORDER_PENDING,
     CREATE_ORDER_SUCCESS,
     CREATE_ORDER_ERROR,
 
@@ -26,15 +26,15 @@ import {
 
     GET_ORDER_NOTE,
     UPDATE_ORDER_SEARCH_QUERY,
-    SET_SORT_BY,
-    SET_SORT_ORDER_OF_ORDER,
+    SET_ORDER_SORT_BY,
+    SET_ORDER_SORT_ORDER,
 } from "../constants/order.constants";
 
 const gORDER_API_URL = '//localhost:8000/orders';
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
 
+// Get all Order 
 export const getAllOrder = ({ limit, page, searchQuery, sortBy, sortOrder }) => {
-    console.log({ limit, page, searchQuery })
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     // options for the fetch request
@@ -42,8 +42,6 @@ export const getAllOrder = ({ limit, page, searchQuery, sortBy, sortOrder }) => 
         method: 'GET',
         redirect: 'follow'
     };
-
-    console.log("Get All Order")
 
     return async (dispatch) => {
         try {
@@ -61,7 +59,6 @@ export const getAllOrder = ({ limit, page, searchQuery, sortBy, sortOrder }) => 
             }
             // parse the response as JSON
             const resObj = await res.json();
-            console.log(resObj)
             //Dispatch state
             return dispatch({
                 type: LOAD_ORDERS_SUCCESS,
@@ -79,6 +76,7 @@ export const getAllOrder = ({ limit, page, searchQuery, sortBy, sortOrder }) => 
     }
 }
 
+//Get All Order Of Customer
 export const getAllOrderOfCustomer = ({ limit, page, searchQuery, sortBy, sortOrder, customerId }) => {
     console.log({ limit, page, searchQuery, sortBy, sortOrder })
     // build the request string
@@ -120,7 +118,6 @@ export const getAllOrderOfCustomer = ({ limit, page, searchQuery, sortBy, sortOr
         }
     }
 }
-
 
 //Get order Note
 export const getOrderNote = (note) => {
@@ -222,18 +219,21 @@ export const deleteOrder = (paramOrderId) => {
         try {
             const res = await fetch(gORDER_API_URL + `/${paramOrderId}`, requestOptions);
             const resObj = await res.json();
-
+            
+            // throw an error if the response is not successful
             if (!res.ok) {
-                return dispatch({
-                    type: DELETE_ORDER_ERROR,
-                })
+                throw new Error(`Could not delete orders, status: ${res.status}`);
             }
 
             return dispatch({
                 type: DELETE_ORDER_SUCCESS,
+                payload: resObj.status
             })
         } catch (err) {
-            console.log(err)
+            return dispatch({
+                type: DELETE_ORDER_ERROR,
+                payload: err
+            })
         }
     }
 }
@@ -299,22 +299,20 @@ export const updateOrderSearchQuery = (searchQuery) => {
 //Set sort By
 export const setSortBy = (sortBy) => {
     return {
-        type: SET_SORT_BY,
+        type: SET_ORDER_SORT_BY,
         payload: sortBy
     }
 }
 //Set sort By
 export const setSortOrder = (sortOrder) => {
     return {
-        type: SET_SORT_ORDER_OF_ORDER,
+        type: SET_ORDER_SORT_ORDER,
         payload: sortOrder
     }
 }
 
-
 //Create new order
 export const createNewOrder = (customerId, note) => {
-    // if (isValid) {
     return async (dispatch) => {
         const requestOptions = {
             method: 'POST',

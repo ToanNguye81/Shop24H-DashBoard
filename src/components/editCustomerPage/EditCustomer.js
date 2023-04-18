@@ -50,7 +50,9 @@ export const EditCustomer = () => {
     }, []);
 
     useEffect(() => {
-        dispatch(loadCountries());
+        if (!countryOptions) {
+            dispatch(loadCountries());
+        }
     }, []);
 
 
@@ -61,7 +63,6 @@ export const EditCustomer = () => {
     }, [customerById.country]);
 
     const handleCountryChange = (event) => {
-        console.log(event.target.value)
         dispatch(loadCities(event.target.value));
     };
 

@@ -29,8 +29,8 @@ import {
 
     UPDATE_NEW_CUSTOMER,
     UPDATE_CUSTOMER_SEARCH_QUERY,
-    SET_SORT_BY,
-    SET_SORT_ORDER
+    SET_CUSTOMER_SORT_BY,
+    SET_CUSTOMER_SORT_ORDER
 } from "../constants/customer.constants";
 
 const gCUSTOMER_API_URL = '//localhost:8000/customers';
@@ -158,7 +158,6 @@ export const loadCountries = () => {
     }
 }
 
-
 //Create new customer
 export const createNewCustomer = (newCustomer) => {
     return async (dispatch) => {
@@ -260,19 +259,6 @@ export const deleteCustomerById = (customerId) => {
     }
 }
 
-//Get Customer Information 
-export const getCustomerInfo = (customer) => {
-    return {
-        email: customer.get('email'),
-        phone: customer.get('phone'),
-        firstName: customer.get('firstName'),
-        lastName: customer.get('lastName'),
-        country: customer.get('country'),
-        city: customer.get('city'),
-        address: customer.get('address'),
-    }
-}
-
 //Get Customer By Id
 export const getCustomerById = (customerId) => {
     const requestOptions = {
@@ -325,7 +311,7 @@ export const updateCustomerSearchQuery = (searchQuey) => {
 //Set sort By
 export const setSortBy = (sortBy) => {
     return {
-        type: SET_SORT_BY,
+        type: SET_CUSTOMER_SORT_BY,
         payload: sortBy
     }
 }
@@ -333,7 +319,7 @@ export const setSortBy = (sortBy) => {
 //Set sort By
 export const setSortOrder = (sortOrder) => {
     return {
-        type: SET_SORT_ORDER,
+        type: SET_CUSTOMER_SORT_ORDER,
         payload: sortOrder
     }
 }

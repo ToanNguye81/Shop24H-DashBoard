@@ -2,6 +2,7 @@ import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 import { AUTHENTICATED, LOGOUT } from '../constants/login.constants';
 
+//Authentication email
 export const authenticate = (email, password) => {
     return async dispatch => {
         try {
@@ -37,6 +38,8 @@ export const authenticate = (email, password) => {
     };
 };
 
+
+//Handle Logout
 export const logout = () => {
     Cookies.remove("token")
     Cookies.remove("isAuth")

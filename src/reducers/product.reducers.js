@@ -17,8 +17,8 @@ import {
 
     //Set Filter Condition
     SET_PAGE,
-    SET_SORT_BY,
-    SET_SORT_ORDER,
+    SET_PRODUCT_SORT_BY,
+    SET_PRODUCT_SORT_ORDER,
     SET_GENDER,
     SET_BRAND,
     SET_CATEGORY,
@@ -112,12 +112,12 @@ export default function productReducers(state = initialState, action) {
                 ...state,
                 page: action.payload
             };
-        case SET_SORT_BY:
+        case SET_PRODUCT_SORT_BY:
             return {
                 ...state,
                 sortBy: action.payload
             }
-        case SET_SORT_ORDER:
+        case SET_PRODUCT_SORT_ORDER:
             return {
                 ...state,
                 sortOrder: action.payload

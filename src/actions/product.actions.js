@@ -21,8 +21,8 @@ import {
 
     //Set filter Condition
     SET_PAGE,
-    SET_SORT_BY,
-    SET_SORT_ORDER,
+    SET_PRODUCT_SORT_BY,
+    SET_PRODUCT_SORT_ORDER,
     SET_GENDER,
     SET_BRAND,
     SET_CATEGORY,
@@ -184,54 +184,6 @@ export const updateProductById = (productId, productData) => {
     };
 }
 
-//Valid Product
-export const validateProduct = (product) => {
-    const { name, brand, description, type, imageUrl, buyPrice, promotionPrice, amount } = product;
-    const result = { error: null, isValid: true };
-
-    if (name.trim() === '') {
-        result.errors = 'Name must not be empty';
-        result.isValid = false;
-        return result;
-    }
-    if (brand.trim() === '') {
-        result.errors = 'Brand must not be empty';
-        result.isValid = false;
-        return result
-    }
-    if (description.trim() === '') {
-        result.errors = 'Description must not be empty';
-        result.isValid = false;
-        return result
-    }
-    if (type.trim() === '') {
-        errors = 'Type must not be empty';
-        result.isValid = false;
-        return result
-    }
-    if (imageUrl.trim() === '') {
-        result.errors = 'Image URL must not be empty';
-        result.isValid = false;
-        return result
-    }
-    if (isNaN(parseFloat(buyPrice)) || parseFloat(buyPrice) <= 0) {
-        result.errors = 'Buy price must be a number greater than 0';
-        result.isValid = false;
-        return result
-    }
-    if (isNaN(parseFloat(promotionPrice)) || parseFloat(promotionPrice) <= 0) {
-        result.errors = 'Promotion price must be a number greater than 0';
-        result.isValid = false;
-        return result
-    }
-    if (isNaN(parseInt(amount)) || parseInt(amount) < 0) {
-        result.errors = 'Amount must be an integer greater than or equal to 0';
-        result.isValid = false;
-        return result
-    }
-    return result
-}
-
 //Create new product
 export const createNewProduct = (productData) => {
     return async (dispatch) => {
@@ -280,14 +232,14 @@ export const setPage = (page) => {
 //set SortBy
 export const setSortBy = (SortBy) => {
     return {
-        type: SET_SORT_BY,
+        type: SET_PRODUCT_SORT_BY,
         payload: SortBy
     }
 }
 //set sortOrder
 export const setSortOrder = (sortOrder) => {
     return {
-        type: SET_SORT_ORDER,
+        type: SET_PRODUCT_SORT_ORDER,
         payload: sortOrder
     }
 }
@@ -305,6 +257,7 @@ export const setBrand = (brand) => {
         payload: brand
     }
 }
+
 //set Category
 export const setCategory = (category) => {
     return {
@@ -312,6 +265,7 @@ export const setCategory = (category) => {
         payload: category
     }
 }
+
 //set MinPrice
 export const setMinPrice = (minPrice) => {
     return {
@@ -319,6 +273,7 @@ export const setMinPrice = (minPrice) => {
         payload: minPrice
     }
 }
+
 //set MaxPrice
 export const setMaxPrice = (maxPrice) => {
     return {

@@ -24,7 +24,7 @@ import {
 const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
 const gORDERS_API_URL = '//localhost:8000/orders';
 
-
+//Get All Order Detail
 export const getAllOrderDetail = ({ limit, page, searchQuery, sortBy, sortOrder }) => {
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
@@ -115,46 +115,39 @@ export const createNewOrderDetail = (orderId, orderDetail) => {
 
 // Update orderDetail
 export const updateOrderDetail = async (paramOrderDetail) => {
-    // validate data
-    const isValid = await validateOrderDetail(paramOrderDetail);
-    //call PUT API 
-    if (isValid) {
-        return async (dispatch) => {
-            const requestOptions = {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: JSON.stringify(paramOrderDetail),
-            };
-
-            await dispatch({
-                type: UPDATE_ORDER_DETAIL_PENDING,
-            });
-
-            try {
-                const res = await fetch(gORDER_DETAILS_API_URL, requestOptions);
-                const resObj = await res.json();
-
-                if (!res.ok) {
-                    return dispatch({
-                        type: UPDATE_ORDER_DETAIL_ERROR,
-                    });
-                }
-
-                return dispatch({
-                    type: UPDATE_ORDER_DETAIL_SUCCESS,
-                    data: resObj,
-                });
-            } catch (err) {
-                return dispatch({
-                    type: UPDATE_ORDER_DETAIL_ERROR,
-                    error: err,
-                });
-            }
+    
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify(paramOrderDetail),
         };
-    }
-    return isValid;
+
+        await dispatch({
+            type: UPDATE_ORDER_DETAIL_PENDING,
+        });
+
+        try {
+            const res = await fetch(gORDER_DETAILS_API_URL, requestOptions);
+            const resObj = await res.json();
+
+            if (!res.ok) {
+                throw new Error(`Could not update orderDetails, status: ${res.status}`);
+            }
+
+            return dispatch({
+                type: UPDATE_ORDER_DETAIL_SUCCESS,
+                data: resObj,
+            });
+        } catch (err) {
+            return dispatch({
+                type: UPDATE_ORDER_DETAIL_ERROR,
+                error: err,
+            });
+        }
+    };
 };
 
 //Delete orderDetail
@@ -173,72 +166,24 @@ export const deleteOrderDetail = (paramOrderDetailId) => {
             const resObj = await res.json();
 
             if (!res.ok) {
-                return dispatch({
-                    type: DELETE_ORDER_DETAIL_ERROR,
-                })
+                throw new Error(`Could not delete orderDetails, status: ${res.status}`);
             }
 
             return dispatch({
                 type: DELETE_ORDER_DETAIL_SUCCESS,
+                payload: resObj.status
             })
+
         } catch (err) {
-            console.log(err)
+            return dispatch({
+                type: DELETE_ORDER_DETAIL_ERROR,
+                payload: err
+            })
         }
     }
 }
 
-//Valid date OrderDetail Input
-export const validateOrderDetail = (paramOrderDetail) => {
-    if (paramOrderDetail.firstName.trim() === "") {
-        alert("You have entered an invalid First Name")
-        return false
-    }
-    if (paramOrderDetail.lastName.trim() === "") {
-        alert("You have entered an invalid Fast Name")
-        return false
-    }
-    if (!validatePhone(paramOrderDetail.phone)) {
-        alert("You have entered an invalid Phone!")
-        return false
-    }
-    if (!validateEmail(paramOrderDetail.email)) {
-        alert("You have entered an invalid Email!")
-        return false
-    }
-    if (paramOrderDetail.country.trim() === "") {
-        alert("You have entered an invalid Country")
-        return false
-    }
-    if (paramOrderDetail.city.trim() === "") {
-        alert("You have entered an invalid City")
-        return false
-    }
-    if (paramOrderDetail.address.trim() === "") {
-        alert("You have entered an invalid Address")
-        return false
-    }
-    return true
-}
-
-//Valid Email
-export const validateEmail = (paramEmail) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(paramEmail)) {
-        return (true)
-    }
-    return (false)
-}
-
-// Validate Phone Number
-export const validatePhone = (paramPhone) => {
-    var phone = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-    if ((paramPhone.match(phone))) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
-
+//Get All Order detail of Order
 export const getAllOrderDetailOfOrder = ({ limit, page, searchQuery, sortBy, sortOrder, orderId }) => {
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
@@ -259,6 +204,7 @@ export const getAllOrderDetailOfOrder = ({ limit, page, searchQuery, sortBy, sor
             //fetch OrderDetail
             const res = await fetch(`${gORDERS_API_URL}/${orderId}/orderDetails?${request}`, requestOptions);
             console.log(res.ok)
+
             // throw an error if the response is not successful
             if (!res.ok) {
                 throw new Error(`Could not fetch orderDetails, status: ${res.status}`);
@@ -300,6 +246,8 @@ export const setSortOrder = (sortOrder) => {
         payload: sortOrder
     }
 }
+
+//Update changed value in the search box of detail
 export const updateOrderDetailSearchQuery = (searchQuey) => {
     return {
         type: UPDATE_ORDER_DETAIL_SEARCH_QUERY,
