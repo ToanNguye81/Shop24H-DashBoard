@@ -23,15 +23,6 @@ import {
     DELETE_CUSTOMER_SUCCESS,
     DELETE_CUSTOMER_ERROR,
 
-    GET_COUNTRY,
-    GET_CITY,
-    GET_ADDRESS,
-    GET_FIRST_NAME,
-    GET_LAST_NAME,
-    GET_PHONE,
-    GET_EMAIL,
-
-
     GET_CUSTOMER_BY_ID_PENDING,
     GET_CUSTOMER_BY_ID_SUCCESS,
     GET_CUSTOMER_BY_ID_ERROR,
@@ -210,43 +201,6 @@ export default function customerReducers(state = initialState, action) {
                 ...state,
                 loadCityOptionsPending: false,
                 error: action.error,
-            };
-
-        //Get customer data
-        case GET_COUNTRY:
-            return {
-                ...state,
-                country: action.country,
-            };
-        case GET_CITY:
-            return {
-                ...state,
-                city: action.city,
-            };
-        case GET_ADDRESS:
-            return {
-                ...state,
-                address: action.address,
-            };
-        case GET_FIRST_NAME:
-            return {
-                ...state,
-                firstName: action.firstName,
-            };
-        case GET_LAST_NAME:
-            return {
-                ...state,
-                lastName: action.lastName,
-            };
-        case GET_PHONE:
-            return {
-                ...state,
-                phone: action.phone,
-            };
-        case GET_EMAIL:
-            return {
-                ...state,
-                email: action.email,
             };
 
         case GET_CUSTOMER_BY_ID_PENDING:

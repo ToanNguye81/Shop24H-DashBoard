@@ -223,7 +223,6 @@ export default function orderReducers(state = initialState, action) {
             break;
 
         case UPDATE_ORDER_SEARCH_QUERY:
-            console.log(action.payload)
             return {
                 ...state,
                 searchQuery: action.payload

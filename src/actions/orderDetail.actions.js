@@ -16,8 +16,8 @@ import {
     DELETE_ORDER_DETAIL_ERROR,
 
     SET_SORT_BY,
-SET_SORT_ORDER,
-UPDATE_ORDER_DETAIL_SEARCH_QUERY
+    SET_SORT_ORDER,
+    UPDATE_ORDER_DETAIL_SEARCH_QUERY
 
 } from "../constants/orderDetail.constants";
 
@@ -25,7 +25,7 @@ const gORDER_DETAILS_API_URL = '//localhost:8000/orderDetails';
 const gORDERS_API_URL = '//localhost:8000/orders';
 
 
-export const getAllOrderDetail = ({limit, page, searchQuery,sortBy,sortOrder}) => {
+export const getAllOrderDetail = ({ limit, page, searchQuery, sortBy, sortOrder }) => {
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
@@ -239,7 +239,7 @@ export const validatePhone = (paramPhone) => {
     }
 }
 
-export const getAllOrderDetailOfOrder = ({limit, page, searchQuery,sortBy,sortOrder, orderId}) => {
+export const getAllOrderDetailOfOrder = ({ limit, page, searchQuery, sortBy, sortOrder, orderId }) => {
     // build the request string
     const request = `limit=${limit}&page=${page}&searchQuery=${searchQuery}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 
@@ -263,10 +263,10 @@ export const getAllOrderDetailOfOrder = ({limit, page, searchQuery,sortBy,sortOr
             if (!res.ok) {
                 throw new Error(`Could not fetch orderDetails, status: ${res.status}`);
             }
-            
+
             // parse the response as JSON
             const resObj = await res.json();
-            
+
             console.log(resObj)
 
             //Dispatch state
@@ -300,7 +300,7 @@ export const setSortOrder = (sortOrder) => {
         payload: sortOrder
     }
 }
- export const updateOrderDetailSearchQuery = (searchQuey) => {
+export const updateOrderDetailSearchQuery = (searchQuey) => {
     return {
         type: UPDATE_ORDER_DETAIL_SEARCH_QUERY,
         payload: searchQuey

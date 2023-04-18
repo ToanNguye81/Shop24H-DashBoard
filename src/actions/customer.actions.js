@@ -3,14 +3,6 @@ import {
     LOAD_COUNTRY_PENDING,
     LOAD_COUNTRY_SUCCESS,
 
-    GET_CITY,
-    GET_ADDRESS,
-    GET_COUNTRY,
-    GET_FIRST_NAME,
-    GET_LAST_NAME,
-    GET_PHONE,
-    GET_EMAIL,
-
     LOAD_CITY_ERROR,
     LOAD_CITY_PENDING,
     LOAD_CITY_SUCCESS,
@@ -166,62 +158,6 @@ export const loadCountries = () => {
     }
 }
 
-//get country name
-export const getCountry = (paramCountry) => {
-    return {
-        type: GET_COUNTRY,
-        country: paramCountry,
-    }
-}
-
-//get city name
-export const getCity = (paramCity) => {
-    return {
-        type: GET_CITY,
-        city: paramCity
-    }
-}
-
-//get address 
-export const getAddress = (paramAddress) => {
-    return {
-        type: GET_ADDRESS,
-        address: paramAddress,
-    }
-}
-
-//get firstName 
-export const getFirstName = (paramFirstName) => {
-    return {
-        type: GET_FIRST_NAME,
-        firstName: paramFirstName,
-    }
-}
-
-//get lastName 
-export const getLastName = (paramLastName) => {
-    return {
-        type: GET_LAST_NAME,
-        lastName: paramLastName,
-    }
-}
-
-//get email 
-export const getEmail = (paramEmail) => {
-    return {
-        type: GET_EMAIL,
-        email: paramEmail,
-    }
-}
-
-//get phone 
-export const getPhone = (paramPhone) => {
-    return {
-        type: GET_PHONE,
-        phone: paramPhone,
-    }
-}
-
 
 //Create new customer
 export const createNewCustomer = (newCustomer) => {
@@ -261,48 +197,39 @@ export const createNewCustomer = (newCustomer) => {
 
 // Update customer
 export const updateCustomer = async (customer) => {
-    // get customer info
-    const customerInfo = await getCustomerInfo(customer);
-    // validate data
-    const isValid = await validateCustomer(customerInfo);
-    //call PUT API 
-    if (isValid) {
-        return async (dispatch) => {
-            const requestOptions = {
-                method: 'PUT',
-                headers: {
-                    "Content-Type": 'application/json',
-                },
-                body: JSON.stringify(customerInfo),
-            };
-
-            await dispatch({
-                type: UPDATE_CUSTOMER_PENDING,
-            });
-
-            try {
-                const res = await fetch(gCUSTOMER_API_URL, requestOptions);
-                const resObj = await res.json();
-
-                if (!res.ok) {
-                    return dispatch({
-                        type: UPDATE_CUSTOMER_ERROR,
-                    });
-                }
-
-                return dispatch({
-                    type: UPDATE_CUSTOMER_SUCCESS,
-                    data: resObj,
-                });
-            } catch (err) {
-                return dispatch({
-                    type: UPDATE_CUSTOMER_ERROR,
-                    error: err,
-                });
-            }
+    return async (dispatch) => {
+        const requestOptions = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": 'application/json',
+            },
+            body: JSON.stringify(customer),
         };
-    }
-    return isValid;
+
+        await dispatch({
+            type: UPDATE_CUSTOMER_PENDING,
+        });
+
+        try {
+            const res = await fetch(gCUSTOMER_API_URL, requestOptions);
+            const resObj = await res.json();
+
+            // throw an error if the response is not successful
+            if (!res.ok) {
+                throw new Error(`Could update customer By Id, status: ${res.status}`);
+            }
+            
+            return dispatch({
+                type: UPDATE_CUSTOMER_SUCCESS,
+                data: resObj,
+            });
+        } catch (err) {
+            return dispatch({
+                type: UPDATE_CUSTOMER_ERROR,
+                error: err,
+            });
+        }
+    };
 };
 
 //Delete customer
@@ -343,58 +270,6 @@ export const getCustomerInfo = (customer) => {
         country: customer.get('country'),
         city: customer.get('city'),
         address: customer.get('address'),
-    }
-}
-
-//Valid date Customer Input
-export const validateCustomer = (customer) => {
-    if (customer.firstName.trim() === "") {
-        alert("You have entered an invalid First Name")
-        return false
-    }
-    if (customer.lastName.trim() === "") {
-        alert("You have entered an invalid Fast Name")
-        return false
-    }
-    if (!validatePhone(customer.phone)) {
-        alert("You have entered an invalid Phone!")
-        return false
-    }
-    if (!validateEmail(customer.email)) {
-        alert("You have entered an invalid Email!")
-        return false
-    }
-    if (customer.country.trim() === "") {
-        alert("You have entered an invalid Country")
-        return false
-    }
-    if (customer.city.trim() === "") {
-        alert("You have entered an invalid City")
-        return false
-    }
-    if (customer.address.trim() === "") {
-        alert("You have entered an invalid Address")
-        return false
-    }
-    return true
-}
-
-//Valid Email
-export const validateEmail = (paramEmail) => {
-    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(paramEmail)) {
-        return (true)
-    }
-    return (false)
-}
-
-// Validate Phone Number
-export const validatePhone = (paramPhone) => {
-    var phone = /^\+?([0-9]{2})\)?[-. ]?([0-9]{4})[-. ]?([0-9]{4})$/;
-    if ((paramPhone.match(phone))) {
-        return true;
-    }
-    else {
-        return false;
     }
 }
 

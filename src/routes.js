@@ -26,7 +26,7 @@ export default function Router() {
     path: '/dashboard/',
     element: isAuthenticated ? <DashboardLayout /> :  <LoginPage />,
     children: [
-      { element: <Navigate to="/dashboard/app" />, index: true },
+      { element: <Navigate to="/dashboard/createOrder" />, index: true },
       { path: 'app', element: <DashboardAppPage/> },
       { path: 'createOrder', element: <CreateOrderPage/> },
      

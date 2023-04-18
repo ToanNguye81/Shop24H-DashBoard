@@ -39,7 +39,6 @@ export const getAllProduct = ({ productPerPage, page, sortBy, sortOrder, gender,
     // build the request string
     const request = `limit=${productPerPage}&page=${page}&sortBy=${sortBy}&sortOrder=${sortOrder}&gender=${gender.join('&gender=')}&brand=${brand.join('&brand=')}&minPrice=${minPrice}&maxPrice=${maxPrice}&category=${category.join('&category=')}`
 
-    console.log(request)
     // options for the fetch request
     const requestOptions = {
         method: 'GET',

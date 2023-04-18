@@ -12,7 +12,6 @@ import {
     TextField,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { SnackBarAlert } from "../common/SnackBarAlert";
 import { useDispatch, useSelector } from "react-redux";
 import {
     loadCities,
@@ -20,13 +19,14 @@ import {
     getCustomerById,
     updateCustomer,
 } from "../../actions/customer.actions";
+import { enqueueSnackbar } from "notistack";
 
 const validCustomerSchema = Yup.object().shape({
     firstName: Yup.string().required("First Name is required").trim(),
     lastName: Yup.string().required("Last Name is required").trim(),
     phone: Yup.string()
-  .required("Phone is required")
-  .matches(/^[0-9]{10}$/, "Phone number should only contain 10 digits"),
+        .required("Phone is required")
+        .matches(/^[0-9]{10}$/, "Phone number should only contain 10 digits"),
     email: Yup.string().required("Email is required").email("Invalid email").trim(),
     city: Yup.string().required("City is required").trim(),
     country: Yup.string().required("Country is required").trim(),
@@ -42,12 +42,8 @@ export const EditCustomer = () => {
         cityOptions,
         customerById,
         getCustomerByIdPending,
-        updateStatus,
         loadCityOptionsPending,
-        loadCountryOptionsPending,
     } = useSelector((reduxData) => reduxData.customerReducers);
-    const [openSnackBar, setOpenSnackBar] = useState(false);
-
 
     useEffect(() => {
         dispatch(getCustomerById(customerId));
@@ -70,8 +66,14 @@ export const EditCustomer = () => {
     };
 
 
-    const handleSubmit = (values) => {
-        console.log(values);
+    const handleSubmit = async (values) => {
+        const { data } = await dispatch(updateCustomer(values))
+        if (data) {
+            enqueueSnackbar(`Update customer ${values.email} success`, { variant: "success" })
+        }
+        else {
+            enqueueSnackbar(`Update customer ${values.email} fails`, { variant: "error" })
+        }
     };
 
     return (
@@ -232,10 +234,6 @@ export const EditCustomer = () => {
                                     </Form>
                                 )}
                             </Formik>
-                            <SnackBarAlert
-                                status={updateStatus}
-                                openSnackBar={openSnackBar}
-                            />
                         </React.Fragment>
                     )}
                 </React.Fragment>
