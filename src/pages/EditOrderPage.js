@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import { useParams } from "react-router-dom"
 import { getOrderById } from "../actions/order.actions"
-import { OrderData } from "../components/orderPage/OrderData"
+import { OrderData } from "../components/editOrderPage/OrderData"
 import { OrderDetailPage } from "./OrderDetailPage"
 
 export const EditOrderPage = () => {

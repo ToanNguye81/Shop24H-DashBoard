@@ -195,14 +195,14 @@ export const createNewCustomer = (newCustomer) => {
 }
 
 // Update customer
-export const updateCustomer = async (customer) => {
+export const updateCustomer = (customerId,customerData) => {
     return async (dispatch) => {
         const requestOptions = {
             method: 'PUT',
             headers: {
                 "Content-Type": 'application/json',
             },
-            body: JSON.stringify(customer),
+            body: JSON.stringify(customerData),
         };
 
         await dispatch({
@@ -210,7 +210,7 @@ export const updateCustomer = async (customer) => {
         });
 
         try {
-            const res = await fetch(gCUSTOMER_API_URL, requestOptions);
+            const res = await fetch(gCUSTOMER_API_URL + `/${customerId}`, requestOptions);
             const resObj = await res.json();
 
             // throw an error if the response is not successful

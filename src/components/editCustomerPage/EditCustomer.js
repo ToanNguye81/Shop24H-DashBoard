@@ -50,7 +50,7 @@ export const EditCustomer = () => {
     }, []);
 
     useEffect(() => {
-        if (!countryOptions) {
+        if (!countryOptions[0]) {
             dispatch(loadCountries());
         }
     }, []);
@@ -67,13 +67,13 @@ export const EditCustomer = () => {
     };
 
 
-    const handleSubmit = async (values) => {
-        const { data } = await dispatch(updateCustomer(values))
+    const handleSubmit = async (customer) => {
+        const { data } = await dispatch(updateCustomer(customerId,customer))
         if (data) {
-            enqueueSnackbar(`Update customer ${values.email} success`, { variant: "success" })
+            enqueueSnackbar(`Update customer ${customer.email} success`, { variant: "success" })
         }
         else {
-            enqueueSnackbar(`Update customer ${values.email} fails`, { variant: "error" })
+            enqueueSnackbar(`Update customer ${customer.email} fails`, { variant: "error" })
         }
     };
 
