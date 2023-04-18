@@ -202,6 +202,7 @@ export const updateCustomer = (customerId,customerData) => {
             headers: {
                 "Content-Type": 'application/json',
             },
+            credentials: 'include',
             body: JSON.stringify(customerData),
         };
 
