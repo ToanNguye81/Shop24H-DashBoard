@@ -9,7 +9,7 @@ import {
     loadCountries,
     updateNewCustomer,
 } from "../../actions/customer.actions";
-import { createNewOrder, handleCreateOrder } from "../../actions/order.actions";
+import { createNewOrder } from "../../actions/order.actions";
 import { enqueueSnackbar } from "notistack";
 import { createNewOrderDetail } from "../../actions/orderDetail.actions";
 
