@@ -2,31 +2,34 @@ import Cookies from "js-cookie";
 import { AUTHENTICATED, LOGOUT } from "../constants/login.constants";
 
 const initialState = {
-  isAuthenticated:Cookies.get("isAuth"),
+  isAuthenticated: Cookies.get("isAuth"),
   token: Cookies.get("token"),
-  userName:Cookies.get("userName"),
-  email:Cookies.get("email"),
-  role:Cookies.get("role")
+  userName: Cookies.get("userName"),
+  email: Cookies.get("email"),
+  role: Cookies.get("role")
 };
 
 export default function loginReducers(state = initialState, action) {
   switch (action.type) {
     case AUTHENTICATED:
-      state.isAuthenticated = true
-      state.token = action.token
-      state.userName = action.user.userName
-      state.email = action.user.email
-      state.role = action.user.role
-      break;
+      return {
+        ...state,
+        isAuthenticated: true,
+        token: action.token,
+        userName: action.user.userName,
+        email: action.user.email,
+        role: action.user.role,
+      };
     case LOGOUT:
-      state.isAuthenticated = false
-      state.token =null
-      state.userName = null
-      state.email = null
-      state.role = null
-      break;
+      return {
+        ...state,
+        isAuthenticated: false,
+        token: null,
+        userName: null,
+        email: null,
+        role: null,
+      }
     default:
-      break;
+      return { ...state };
   }
-  return { ...state };
 };

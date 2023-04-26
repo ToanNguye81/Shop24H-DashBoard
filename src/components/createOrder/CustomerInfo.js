@@ -36,7 +36,6 @@ export const CustomerInfo = () => {
 
     const { cart } = useSelector(reduxData => reduxData.orderReducers)
 
-
     useEffect(() => {
         if (!countryOptions[0]) {
             dispatch(loadCountries())
@@ -60,6 +59,7 @@ export const CustomerInfo = () => {
             }
     
             if (customerId && cart.length) {
+                //Create New Order 
                 const orderResult = await dispatch(createNewOrder(customerId, customer.note))
     
                 const orderId = orderResult.data._id;

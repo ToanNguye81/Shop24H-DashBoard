@@ -134,7 +134,7 @@ export default function orderDetailReducers(state = initialState, action) {
                 searchQuery: action.payload
             }
         default:
-            return state;
+            return {...state}
     }
 }
 

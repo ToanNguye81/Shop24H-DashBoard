@@ -58,56 +58,76 @@ const initialState = {
 export default function productReducers(state = initialState, action) {
     switch (action.type) {
         case LOAD_PRODUCTS_PENDING:
-            state.pending = true;
-            break;
+            return {
+                ...state,
+                pending: true
+            }
         case LOAD_PRODUCTS_SUCCESS:
-            state.pending = false;
-            state.totalProduct = action.totalProduct;
-            state.products = action.products;
-            state.error = null;
-            break;
+            return {
+                ...state,
+                pending: false,
+                totalProduct: action.totalProduct,
+                products: action.products,
+                error: null,
+            }
         case LOAD_PRODUCTS_ERROR:
-            state.error = action.error
-            break;
-
+            return {
+                ...state,
+                error: action.error
+            }
         //Get product By Id
         case GET_PRODUCT_BY_ID_PENDING:
-            state.getProductByIdPending = true
-            break;
+            return {
+                ...state,
+                getProductByIdPending: true
+            }
         case GET_PRODUCT_BY_ID_SUCCESS:
-            state.getProductByIdPending = false;
-            state.productById = action.productById
-            state.error = null
-            break;
+            return {
+                ...state,
+                getProductByIdPending: false,
+                productById: action.productById,
+                error: null
+            }
         case GET_PRODUCT_BY_ID_ERROR:
-            state.error = action.error
-            break;
-
+            return {
+                ...state,
+                error: action.error
+            }
         //Delete OrderDetail
         case DELETE_PRODUCT_PENDING:
-            state.deleteProductPending = true
-            break;
+            return {
+                ...state,
+                deleteProductPending: true
+            }
         case DELETE_PRODUCT_SUCCESS:
-            state.deleteProductPending = false
-            break;
+            return {
+                ...state,
+                deleteProductPending: false
+            }
         case DELETE_PRODUCT_ERROR:
-            state.error = action.error
-            break;
-
+            return {
+                ...state,
+                error: action.error
+            }
         case UPDATE_PRODUCT_PENDING:
-            state.updateProductPending = true
-            state.updateStatus = null
-            break;
+            return {
+                ...state,
+                updateProductPending: true,
+                updateStatus: null,
+            }
         case UPDATE_PRODUCT_SUCCESS:
-            state.updateProductPending = false
-            state.updateStatus = "success"
-            break;
+            return {
+                ...state,
+                updateStatus: "success",
+                updateProductPending: false
+            }
         case UPDATE_PRODUCT_ERROR:
-            state.updateProductPending = false
-            state.updateStatus = "error"
-            break;
+            return {
+                ...state,
+                updateStatus: "error",
+                updateProductPending: false
+            }
         case SET_PAGE:
-            console.log(action.payload)
             return {
                 ...state,
                 page: action.payload
@@ -157,8 +177,7 @@ export default function productReducers(state = initialState, action) {
                 maxPrice: 2000,
             }
         default:
-            break;
+            return { ...state };
     }
 
-    return { ...state };
 }
