@@ -33,6 +33,7 @@ export const CustomerInfo = () => {
         cityOptions,
         newCustomer
     } = useSelector((reduxData) => reduxData.customerReducers);
+    const {note} = useSelector((reduxData) => reduxData.orderReducers);
 
     const { cart } = useSelector(reduxData => reduxData.orderReducers)
 
@@ -60,7 +61,7 @@ export const CustomerInfo = () => {
     
             if (customerId && cart.length) {
                 //Create New Order 
-                const orderResult = await dispatch(createNewOrder(customerId, customer.note))
+                const orderResult = await dispatch(createNewOrder(customerId, note))
     
                 const orderId = orderResult.data._id;
     

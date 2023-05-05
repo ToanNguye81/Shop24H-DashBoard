@@ -6,7 +6,7 @@ import { TextField, Table, TableRow, TableBody, TableCell, TableContainer, Grid,
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProduct } from "../../actions/product.actions";
 import { Add, Remove } from "@mui/icons-material";
-import { decreaseQuantity, getNote, getOrderNote, increaseQuantity } from "../../actions/order.actions";
+import { decreaseQuantity,  getOrderNote, increaseQuantity } from "../../actions/order.actions";
 
 
 const TABLE_HEAD = [
